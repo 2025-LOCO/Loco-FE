@@ -1,35 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Route, Routes } from "react-router";
+import "./App.css";
+import HomePage from "./pages/HomePage";
+import CustomTripPage from "./pages/CustomTripPage";
+import LocoExplorePage from "./pages/LocoExplorePage";
+import LocoTalkPage from "./pages/LocoTalkPage";
+import MapMakerPage from "./pages/MapMakerPage";
+import GuidePage from "./pages/GuidePage";
+import RootLayout from "./layouts/RootLayout";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Routes>
+        <Route path="/" element={<RootLayout />}>
+          <Route index element={<HomePage />} />
+          <Route path="custom-trip" element={<CustomTripPage />} />
+          <Route path="loco-explore" element={<LocoExplorePage />} />
+          <Route path="loco-talk" element={<LocoTalkPage />} />
+          <Route path="map-maker" element={<MapMakerPage />} />
+          <Route path="guide" element={<GuidePage />} />
+        </Route>
+      </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
