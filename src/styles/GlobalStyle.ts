@@ -21,6 +21,16 @@ const GlobalStyle = createGlobalStyle`
     color: inherit;
   }
 
+  input {
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  input:focus {
+    outline: none;
+  }
+
 
 `;
 
