@@ -1,7 +1,7 @@
-import { regions } from "../../data/regions";
+import { regions } from "@/data/regions";
 import * as S from "./styles/KoreaMap.style";
 import type * as T from "./types/KoreaMap";
-import type { RegionType } from "../../types/region";
+import type { RegionType } from "@/types/region";
 
 export default function KoreaMap({
   hoveredRegion,

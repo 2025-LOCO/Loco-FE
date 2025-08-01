@@ -1,13 +1,12 @@
 import { Route, Routes } from "react-router";
-import "./App.css";
-import HomePage from "./pages/Home";
-
-import RootLayout from "./layouts/RootLayout";
-import CustomTripPage from "./pages/CustomTrip";
-import LocoExplorePage from "./pages/LocoExplore";
-import LocoTalkPage from "./pages/LocoTalk";
-import MapMakerPage from "./pages/MapMaker";
-import GuidePage from "./pages/Guide";
+import "@/App.css";
+import RootLayout from "@/layouts/RootLayout";
+import HomePage from "@/pages/Home";
+import CustomTripPage from "@/pages/CustomTrip";
+import LocoExplorePage from "@/pages/LocoExplore";
+import LocoTalkPage from "@/pages/LocoTalk";
+import MapMakerPage from "@/pages/MapMaker";
+import GuidePage from "@/pages/Guide";
 
 function App() {
   return (

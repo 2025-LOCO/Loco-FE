@@ -1,5 +1,5 @@
 import * as S from "./styles/Header";
-import LogoIcon from "../../assets/images/logo_header.svg";
+import LogoIcon from "@/assets/images/logo_header.svg";
 
 export default function Header() {
   return (
