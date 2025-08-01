@@ -1,14 +1,14 @@
-import { regions } from "../data/regions";
-import { RegionPath, Svg } from "../styles/componentStyles/KoreaMapStyle";
-import type { KoreaMapProps } from "../types/koreaMap";
-import type { RegionType } from "../types/region";
+import { regions } from "../../data/regions";
+import * as S from "./styles/KoreaMap.style";
+import type * as T from "./types/KoreaMap";
+import type { RegionType } from "../../types/region";
 
 export default function KoreaMap({
   hoveredRegion,
   setHoveredRegion,
   selectedRegion,
   setSelectedRegion,
-}: KoreaMapProps) {
+}: T.KoreaMapProps) {
   function handleRegionSelect(region: RegionType) {
     if (region.id === selectedRegion?.id) {
       setSelectedRegion(null);
@@ -19,14 +19,14 @@ export default function KoreaMap({
 
   return (
     <>
-      <Svg
+      <S.Svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 524 631"
         aria-label="Map of South Korea"
         style={{ width: 600, height: 600 }}
       >
         {regions.map((region) => (
-          <RegionPath
+          <S.RegionPath
             key={region.id}
             id={region.id}
             name={region.name}
@@ -42,7 +42,7 @@ export default function KoreaMap({
             onClick={() => handleRegionSelect(region)}
           />
         ))}
-      </Svg>
+      </S.Svg>
     </>
   );
 }

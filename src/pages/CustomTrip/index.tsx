@@ -1,15 +1,8 @@
 import { useState } from "react";
-import KoreaMap from "../components/KoreaMap";
-import {
-  CustomTripSection,
-  DestInput,
-  DestContainer,
-  SelectDesc,
-  SelectContainer,
-  SelectRegion,
-} from "../styles/pageStyles/CustomTripStyle";
-import type { RegionType } from "../types/region";
-import { regions } from "../data/regions";
+import KoreaMap from "../../components/map/KoreaMap";
+import * as S from "./styles/indexStyle";
+import type { RegionType } from "../../types/region";
+import { regions } from "../../data/regions";
 
 export default function CustomTripPage() {
   const [hoveredRegion, setHoveredRegion] = useState<RegionType | null>(null);
@@ -25,19 +18,19 @@ export default function CustomTripPage() {
 
   return (
     <>
-      <CustomTripSection>
+      <S.CustomTripSection>
         <KoreaMap
           hoveredRegion={hoveredRegion}
           setHoveredRegion={setHoveredRegion}
           selectedRegion={selectedRegion}
           setSelectedRegion={setSelectedRegion}
         />
-        <DestContainer>
-          <DestInput placeholder="어디로 여행을 떠나고 싶으신가요?" />
-          <SelectDesc>지도를 눌러 선택해보세요!</SelectDesc>
-          <SelectContainer>
+        <S.DestContainer>
+          <S.DestInput placeholder="어디로 여행을 떠나고 싶으신가요?" />
+          <S.SelectDesc>지도를 눌러 선택해보세요!</S.SelectDesc>
+          <S.SelectContainer>
             {regions.map((region) => (
-              <SelectRegion
+              <S.SelectRegion
                 key={region.id}
                 onMouseEnter={() => setHoveredRegion(region)}
                 onMouseLeave={() => setHoveredRegion(null)}
@@ -50,11 +43,11 @@ export default function CustomTripPage() {
                 }
               >
                 {region.korName}
-              </SelectRegion>
+              </S.SelectRegion>
             ))}
-          </SelectContainer>
-        </DestContainer>
-      </CustomTripSection>
+          </S.SelectContainer>
+        </S.DestContainer>
+      </S.CustomTripSection>
     </>
   );
 }
