@@ -1,8 +1,8 @@
 import { useState } from "react";
-import KoreaMap from "../../components/map/KoreaMap";
+import KoreaMap from "@/components/map/KoreaMap";
 import * as S from "./styles/indexStyle";
-import type { RegionType } from "../../types/region";
-import { regions } from "../../data/regions";
+import type { RegionType } from "@/types/region";
+import { regions } from "@/data/regions";
 
 export default function CustomTripPage() {
   const [hoveredRegion, setHoveredRegion] = useState<RegionType | null>(null);

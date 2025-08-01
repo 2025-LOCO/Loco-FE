@@ -1,11 +1,11 @@
 import * as S from "./styles/indexStyle";
-import LogoIcon from "../../assets/images/logo_home.svg";
-import CircleIcon from "../../assets/images/yellow_eclipse.svg";
-import FindIcon from "../../assets/images/find_travel.svg";
-import DecidedIcon from "../../assets/images/decided_travel.svg";
-import AvatarImg from "../../assets/images/avatar2.svg";
-import StarIcon from "../../assets/images/star.svg";
-import PlusIcon from "../../assets/images/plus.svg";
+import LogoIcon from "@/assets/images/logo_home.svg";
+import CircleIcon from "@/assets/images/yellow_eclipse.svg";
+import FindIcon from "@/assets/images/find_travel.svg";
+import DecidedIcon from "@/assets/images/decided_travel.svg";
+import AvatarImg from "@/assets/images/avatar2.svg";
+import StarIcon from "@/assets/images/star.svg";
+import PlusIcon from "@/assets/images/plus.svg";
 import { useState } from "react";
 
 const dummyUserData = [
