@@ -1,36 +1,11 @@
-import {
-  Badge,
-  BestLocoSection,
-  BestLocoTitle,
-  BestUserCard,
-  BestUserListContainer,
-  DescriptSection,
-  DescriptText,
-  EmailContainer,
-  EmailSubmitButton,
-  EmailTextInput,
-  MainContainer,
-  MainSection,
-  MoreButton,
-  MoreProfileImg,
-  MoreProfileListStack,
-  ProfileImg,
-  ProfileImgWrapper,
-  ProfileIntroduction,
-  ProfileName,
-  SelectContainer,
-  SelectSection,
-  SelectText,
-  Subtitle,
-  UnderLine,
-} from "../styles/pageStyles/HomeStyle";
-import LogoIcon from "../assets/images/logo_home.svg";
-import CircleIcon from "../assets/images/yellow_eclipse.svg";
-import FindIcon from "../assets/images/find_travel.svg";
-import DecidedIcon from "../assets/images/decided_travel.svg";
-import AvatarImg from "../assets/images/avatar2.svg";
-import StarIcon from "../assets/images/star.svg";
-import PlusIcon from "../assets/images/plus.svg";
+import * as S from "./styles";
+import LogoIcon from "@/assets/images/logo_home.svg";
+import CircleIcon from "@/assets/images/yellow_eclipse.svg";
+import FindIcon from "@/assets/images/find_travel.svg";
+import DecidedIcon from "@/assets/images/decided_travel.svg";
+import AvatarImg from "@/assets/images/avatar2.svg";
+import StarIcon from "@/assets/images/star.svg";
+import PlusIcon from "@/assets/images/plus.svg";
 import { useState } from "react";
 
 const dummyUserData = [
@@ -105,51 +80,51 @@ export default function HomePage() {
 
   return (
     <>
-      <MainSection>
-        <MainContainer>
+      <S.MainSection>
+        <S.MainContainer>
           <img src={LogoIcon} alt="logo" />
-          <Subtitle>부제목이나 슬로건</Subtitle>
-          <EmailContainer>
-            <EmailTextInput placeholder="이메일주소@naver.com" />
-            <EmailSubmitButton>Submit</EmailSubmitButton>
-          </EmailContainer>
-        </MainContainer>
-      </MainSection>
+          <S.Subtitle>부제목이나 슬로건</S.Subtitle>
+          <S.EmailContainer>
+            <S.EmailTextInput placeholder="이메일주소@naver.com" />
+            <S.EmailSubmitButton>Submit</S.EmailSubmitButton>
+          </S.EmailContainer>
+        </S.MainContainer>
+      </S.MainSection>
 
-      <DescriptSection>
+      <S.DescriptSection>
         <img src={CircleIcon} alt="circle" />
-        <DescriptText>
+        <S.DescriptText>
           '취향 맞춤형' 현지인 루트
           <span style={{ fontWeight: 300 }}>를 보여드려요 !</span>
-        </DescriptText>
-      </DescriptSection>
+        </S.DescriptText>
+      </S.DescriptSection>
 
-      <SelectSection>
-        <SelectContainer>
-          <SelectText>
+      <S.SelectSection>
+        <S.SelectContainer>
+          <S.SelectText>
             그려둔 여행지
             <span style={{ fontWeight: 300 }}>
               가<br /> 있으신가요?
             </span>
-          </SelectText>
+          </S.SelectText>
           <img src={DecidedIcon} alt="img" />
-        </SelectContainer>
-        <SelectContainer>
-          <SelectText>
+        </S.SelectContainer>
+        <S.SelectContainer>
+          <S.SelectText>
             설레는 여행지
             <span style={{ fontWeight: 300 }}>
               를<br /> 찾고 계신가요?
             </span>
-          </SelectText>
+          </S.SelectText>
           <img src={FindIcon} alt="img" />
-        </SelectContainer>
-      </SelectSection>
+        </S.SelectContainer>
+      </S.SelectSection>
 
-      <UnderLine />
+      <S.UnderLine />
 
-      <BestLocoSection>
-        <BestLocoTitle>Best 로코</BestLocoTitle>
-        <BestUserListContainer>
+      <S.BestLocoSection>
+        <S.BestLocoTitle>Best 로코</S.BestLocoTitle>
+        <S.BestUserListContainer>
           {/* 현재 인덱스 기준 3개 렌더링 */}
           {Array.from({ length: 3 }).map((_, i) => {
             // 길이가 3인 빈 배열 생성 -> [0,1,2]
@@ -158,33 +133,33 @@ export default function HomePage() {
             const user =
               dummyUserData[(startUserIndex + i) % dummyUserData.length];
             return (
-              <BestUserCard key={user.id}>
-                <ProfileImgWrapper>
-                  <ProfileImg src={user.userImg} alt="프로필이미지" />
-                  <Badge src={StarIcon} alt="뱃지" />
-                </ProfileImgWrapper>
-                <ProfileName>{user.userName}</ProfileName>
-                <ProfileIntroduction>
+              <S.BestUserCard key={user.id}>
+                <S.ProfileImgWrapper>
+                  <S.ProfileImg src={user.userImg} alt="프로필이미지" />
+                  <S.Badge src={StarIcon} alt="뱃지" />
+                </S.ProfileImgWrapper>
+                <S.ProfileName>{user.userName}</S.ProfileName>
+                <S.ProfileIntroduction>
                   {user.userIntroduction}
-                </ProfileIntroduction>
-              </BestUserCard>
+                </S.ProfileIntroduction>
+              </S.BestUserCard>
             );
           })}
-          <MoreProfileListStack>
+          <S.MoreProfileListStack>
             {/* 현재 인덱스 기준 다음 3개 렌더링 */}
             {Array.from({ length: 3 }).map((_, i) => {
               const user =
                 dummyUserData[(startUserIndex + 3 + i) % dummyUserData.length];
               return (
-                <MoreProfileImg key={user.id} src={user.userImg} index={i} />
+                <S.MoreProfileImg key={user.id} src={user.userImg} index={i} />
               );
             })}
-            <MoreButton onClick={handleNext}>
+            <S.MoreButton onClick={handleNext}>
               <img src={PlusIcon} alt="plus" />
-            </MoreButton>
-          </MoreProfileListStack>
-        </BestUserListContainer>
-      </BestLocoSection>
+            </S.MoreButton>
+          </S.MoreProfileListStack>
+        </S.BestUserListContainer>
+      </S.BestLocoSection>
     </>
   );
 }
