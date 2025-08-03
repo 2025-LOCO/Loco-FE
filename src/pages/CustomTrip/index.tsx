@@ -34,7 +34,7 @@ export default function CustomTripPage() {
     // 1. 동일 지역 선택: 선택 해제
     if (region.id === selectedRegion?.id) {
       setSelectedRegion(null);
-
+      setSubRegions(null);
       return;
     }
 
@@ -55,12 +55,17 @@ export default function CustomTripPage() {
       try {
         console.log("api 요청 시작");
         const subRegionData = await getSubRegion(region.code);
-        console.log(subRegionData);
+        const subRegionDataWithAll = [
+          { cd: `${region.code}0000`, addr_name: `${region.korName}전체` },
+          ...subRegionData,
+        ];
+
+        console.log(subRegionDataWithAll);
         setAllSubRegions((prev) => ({
           ...prev,
-          [region.code]: subRegionData,
+          [region.code]: subRegionDataWithAll,
         }));
-        setSubRegions(subRegionData);
+        setSubRegions(subRegionDataWithAll);
       } catch (error) {
         console.error("[시/군 데이터 조회 실패] ", error);
       }
