@@ -1,21 +1,21 @@
 import { regions } from "@/data/regions";
-import * as S from "./styles/KoreaMap.style";
+import * as S from "./styles/KoreaMap";
 import type * as T from "./types/KoreaMap";
-import type { RegionType } from "@/types/region";
 
 export default function KoreaMap({
   hoveredRegion,
   setHoveredRegion,
   selectedRegion,
-  setSelectedRegion,
+  // setSelectedRegion,
+  onRegionSelect,
 }: T.KoreaMapProps) {
-  function handleRegionSelect(region: RegionType) {
-    if (region.id === selectedRegion?.id) {
-      setSelectedRegion(null);
-    } else {
-      setSelectedRegion(region);
-    }
-  }
+  // function handleRegionSelect(region: RegionType) {
+  //   if (region.id === selectedRegion?.id) {
+  //     setSelectedRegion(null);
+  //   } else {
+  //     setSelectedRegion(region);
+  //   }
+  // }
 
   return (
     <>
@@ -39,7 +39,7 @@ export default function KoreaMap({
             }
             onMouseEnter={() => setHoveredRegion(region)}
             onMouseLeave={() => setHoveredRegion(null)}
-            onClick={() => handleRegionSelect(region)}
+            onClick={() => onRegionSelect(region)}
           />
         ))}
       </S.Svg>

@@ -1,4 +1,4 @@
-import * as S from "./styles/indexStyle";
+import * as S from "./styles";
 import LogoIcon from "@/assets/images/logo_home.svg";
 import CircleIcon from "@/assets/images/yellow_eclipse.svg";
 import FindIcon from "@/assets/images/find_travel.svg";
