@@ -100,6 +100,7 @@ export default function CustomTripPage() {
           <S.SelectContainer>
             {!selectedRegion
               ? regions.map((region) => (
+                  // 선택된 지역(시/도)이 없다면 시/도 렌더링
                   <S.SelectRegion
                     key={region.id}
                     onMouseEnter={() => setHoveredRegion(region)}
@@ -116,6 +117,7 @@ export default function CustomTripPage() {
                   </S.SelectRegion>
                 ))
               : subRegions?.map((subRegion) => (
+                  // 선택된 지역(시/도)이 있다면 시/군/구 렌더링
                   <S.SelectRegion
                     key={subRegion.cd}
                     onMouseEnter={() => setHoveredSubRegion(subRegion)}
