@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const MainSection = styled.div`
   background-color: #e3f6f5;
-  padding: 119px 503px;
+  padding: 113px 355px;
   display: flex;
   justify-content: center;
 `;
@@ -10,57 +10,19 @@ export const MainSection = styled.div`
 export const MainContainer = styled.div`
   padding: 33px 47px;
   display: flex;
-  flex-direction: column;
-  gap: 25px;
+  gap: 94px;
 `;
 
-export const Subtitle = styled.div`
-  display: flex;
-  height: 58px;
-  flex-direction: column;
-  justify-content: center;
-  flex-shrink: 0;
-  align-self: stretch;
+export const SubContainer = styled.div`
 
-  color: #4e567e;
+`
+
+export const Subtitle = styled.div`
+
+  color: var(--color-mint100);
   text-align: center;
   font-family: Pretendard;
   font-size: 20px;
-  font-style: normal;
-  font-weight: 300;
-  line-height: 100%;
-`;
-
-export const EmailContainer = styled.div`
-  display: flex;
-  gap: 15px;
-`;
-
-export const EmailTextInput = styled.input`
-  background-color: #fff;
-  border-radius: 9px;
-  width: 250px;
-  height: 40px;
-  /* line-height: 1; */
-  padding: 0px 15px;
-  display: flex;
-  align-items: center;
-`;
-
-export const EmailSubmitButton = styled.button`
-  background-color: #bae8e8;
-  border-radius: 9px;
-  display: flex;
-  width: 79px;
-  height: 40px;
-  padding: 0px 13px;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-
-  color: #2d334a;
-  font-family: Pretendard;
-  font-size: 13px;
   font-style: normal;
   font-weight: 300;
   line-height: 100%;

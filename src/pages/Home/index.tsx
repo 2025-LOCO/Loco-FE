@@ -12,10 +12,6 @@ export default function HomePage() {
         <S.MainContainer>
           <img src={LogoIcon} alt="logo" />
           <S.Subtitle>광고에 지친 당신을 위한, 진짜 여행 정보</S.Subtitle>
-          <S.EmailContainer>
-            <S.EmailTextInput placeholder="이메일주소@naver.com" />
-            <S.EmailSubmitButton>Submit</S.EmailSubmitButton>
-          </S.EmailContainer>
         </S.MainContainer>
       </S.MainSection>
 

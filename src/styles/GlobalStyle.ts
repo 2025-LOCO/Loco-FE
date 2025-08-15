@@ -8,6 +8,25 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
 
+  :root{
+    --color-mint100: ${({ theme }) => theme.colors.mint100};
+    --color-mint200: ${({ theme }) => theme.colors.mint200};
+    --color-mint300: ${({ theme }) => theme.colors.mint300};
+    --color-navy: ${({ theme }) => theme.colors.navy};
+    --color-sub100: ${({ theme }) => theme.colors.sub100};
+    --color-sub300: ${({ theme }) => theme.colors.sub300};
+    --color-main50: ${({ theme }) => theme.colors.main50};
+    --color-main100: ${({ theme }) => theme.colors.main100};
+    --color-main150: ${({ theme }) => theme.colors.main150};
+    --color-main200: ${({ theme }) => theme.colors.main200};
+    --color-main250: ${({ theme }) => theme.colors.main250};
+    --color-main300: ${({ theme }) => theme.colors.main300};
+    --color-main350: ${({ theme }) => theme.colors.main350};
+    --color-main400: ${({ theme }) => theme.colors.main400};
+    --color-main450: ${({ theme }) => theme.colors.main450};
+    --color-main500: ${({ theme }) => theme.colors.main500};
+  }
+
   body {
       background-color: #ffffffff;
     }
