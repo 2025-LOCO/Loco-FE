@@ -1,7 +1,7 @@
 import colors from "@/styles/colors";
 
 const theme = {
-    colors
+  colors,
 };
 
 export default theme;

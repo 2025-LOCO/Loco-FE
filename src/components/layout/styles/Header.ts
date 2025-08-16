@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export const HeaderContainer = styled.div`
   background: #fff;
-  padding: 25px 60px;
+  padding: 15px 60px;
   position: sticky;
   top: 0;
   display: flex;
@@ -27,6 +27,9 @@ export const MenuItem = styled(NavLink)`
   color: #272343;
   padding: 8px;
   border-radius: 8px;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
   cursor: pointer;
 
   &.active {
