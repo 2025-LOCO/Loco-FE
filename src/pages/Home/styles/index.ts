@@ -30,6 +30,26 @@ export const Subtitle = styled.div`
   padding-top: 20px;
 `;
 
+export const YelloDot = styled.span`
+  position: relative;
+  display: inline-block;
+  &::before {
+    content: "";
+    position: absolute;
+    top: -0.55em; /* 현재 폰트 크기 기준 단위 (부모보다 위로 0.55em) */
+    left: 50%; /* 가상요소의 왼쪽 모서리를 부모의 가로 중앙(50%)에 */
+    transform: translate(
+      -50%,
+      0
+    ); /*가상요소 자체의 가로 폭의 50%만큼 왼쪽으로*/
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-main350);
+    opacity: 0.7;
+  }
+`;
+
 export const SubDescription = styled.div`
   font-size: 20px;
   font-style: normal;
@@ -103,6 +123,8 @@ const moveHover = keyframes`
 export const DownButton = styled.img`
   display: block;
   will-change: transform;
+  margin-bottom: 50px;
+  cursor: pointer;
 
   /* 초기: LOOPS 회 재생 후 정지 */
   animation-name: ${move};

@@ -1,7 +1,7 @@
 import * as S from "./styles";
 import LogoIcon from "@/assets/images/logo_home.svg";
 import DownIcon from "@/assets/images/arrow_drop_down.svg";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import KoreaMap from "@/components/map/KoreaMap";
 import type {
   AllSubRegionsType,
@@ -13,7 +13,9 @@ import { regions } from "@/data/regions";
 import { getSubRegion } from "@/apis/sgis/sgisService";
 
 export default function HomePage() {
+  // constants
   const exploreMenu = ["로코인", "로코장소", "로코루트", "로코문답"];
+  const HEADER_PX = 86;
 
   // state
   // 상위 지역 (시/도)
@@ -30,6 +32,9 @@ export default function HomePage() {
   const [allSubRegions, setAllSubRegions] = useState<AllSubRegionsType | null>(
     {}
   );
+
+  // ref
+  const mapSelectRef = useRef<HTMLDivElement>(null);
 
   // handler
 
@@ -88,20 +93,36 @@ export default function HomePage() {
     console.log("새로운 지역 선택: ", subRegion);
   }
 
+  function handleScrollToMapSelect() {
+    const element = mapSelectRef.current;
+    if (!element) return;
+
+    // 문서 전체에서의 절대 Y좌표 =현재 스크롤량 + element의 화면 상단까지의 거리 - HEADER_PX
+    const top =
+      window.scrollY + element.getBoundingClientRect().top - HEADER_PX;
+
+    window.scrollTo({ top, behavior: "smooth" });
+    // element.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
   return (
     <>
       <S.MainSection>
         <S.MainContainer>
           <img src={LogoIcon} alt="logo" />
           <S.SubContainer>
-            <S.Subtitle>광고에 지친 당신을 위한, 진짜 여행 정보</S.Subtitle>
+            <S.Subtitle>
+              <S.YelloDot>광</S.YelloDot>
+              <S.YelloDot>고</S.YelloDot>에 지친 당신을 위한,{" "}
+              <S.YelloDot>진</S.YelloDot>
+              <S.YelloDot>짜</S.YelloDot> 여행 정보
+            </S.Subtitle>
             <S.SubDescription>
               현지인과 소통하는 그곳의 진짜 이야기
             </S.SubDescription>
           </S.SubContainer>
         </S.MainContainer>
       </S.MainSection>
-
       <S.DescriptSection>
         <S.DescriptText>
           믿을 수 있는 정보
@@ -115,10 +136,14 @@ export default function HomePage() {
             </S.ExploreItemWrapper>
           ))}
         </S.ExploreNavigator>
-        <S.DownButton src={DownIcon} alt="down-icon" />
+        <S.DownButton
+          src={DownIcon}
+          alt="down-icon"
+          onClick={handleScrollToMapSelect}
+          role="button"
+        />
       </S.DescriptSection>
-
-      <S.MapSelectSection>
+      <S.MapSelectSection ref={mapSelectRef}>
         <KoreaMap
           hoveredRegion={hoveredRegion}
           setHoveredRegion={setHoveredRegion}
