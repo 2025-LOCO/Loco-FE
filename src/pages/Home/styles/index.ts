@@ -1,73 +1,43 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
+// ------------------- 메인 섹션 ---------------------
 export const MainSection = styled.div`
-  background-color: #e3f6f5;
-  padding: 119px 503px;
+  background-color: var(--color-mint100);
+  padding: 130px 355px;
   display: flex;
-  justify-content: center;
+  align-items: center;
 `;
 
 export const MainContainer = styled.div`
-  padding: 33px 47px;
+  display: flex;
+  align-items: center;
+  gap: 94px;
+`;
+
+export const SubContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 25px;
+
+  gap: 5px;
 `;
 
 export const Subtitle = styled.div`
-  display: flex;
-  height: 58px;
-  flex-direction: column;
-  justify-content: center;
-  flex-shrink: 0;
-  align-self: stretch;
+  color: var(--color-navy);
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 119.604%;
+  padding-top: 20px;
+`;
 
-  color: #4e567e;
-  text-align: center;
-  font-family: Pretendard;
+export const SubDescription = styled.div`
   font-size: 20px;
   font-style: normal;
   font-weight: 300;
-  line-height: 100%;
-`;
-
-export const EmailContainer = styled.div`
-  display: flex;
-  gap: 15px;
-`;
-
-export const EmailTextInput = styled.input`
-  background-color: #fff;
-  border-radius: 9px;
-  width: 250px;
-  height: 40px;
-  /* line-height: 1; */
-  padding: 0px 15px;
-  display: flex;
-  align-items: center;
-`;
-
-export const EmailSubmitButton = styled.button`
-  background-color: #bae8e8;
-  border-radius: 9px;
-  display: flex;
-  width: 79px;
-  height: 40px;
-  padding: 0px 13px;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-
-  color: #2d334a;
-  font-family: Pretendard;
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 300;
-  line-height: 100%;
 `;
 
 export const DescriptSection = styled.div`
-  height: 311px;
+  padding-top: 57px;
   display: flex;
   flex-direction: column;
   gap: 25px;
@@ -76,138 +46,148 @@ export const DescriptSection = styled.div`
 `;
 
 export const DescriptText = styled.div`
-  color: #2d334a;
-
+  color: var(--color-navy);
   text-align: center;
-  font-family: "Noto Sans KR";
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
 `;
 
-export const SelectSection = styled.div`
+export const ExploreNavigator = styled.div`
+  color: var(--color-navy);
   display: flex;
-  gap: 80px;
   justify-content: center;
-`;
-
-export const SelectContainer = styled.div`
-  padding: 76px 63px;
-  background-color: #e3f6f5;
-  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1);
-  border-radius: 30px;
-  cursor: pointer;
-
-  display: flex;
-  gap: 40px;
   align-items: center;
 `;
 
-export const SelectText = styled.div`
-  color: #2d334a;
+export const ExploreItemWrapper = styled.div`
+  display: inline-flex;
+`;
+
+export const ExploreItem = styled.div`
+  color: var(--color-navy);
   text-align: center;
-  font-family: "Noto Sans KR";
-  font-size: 20px;
+  font-size: 15px;
   font-style: normal;
-  font-weight: 700;
-  line-height: normal;
+  font-weight: 300;
+  padding: 15px 80px;
+  cursor: pointer;
+`;
+
+export const Divider = styled.span`
+  color: var(--color-navy);
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 300;
+  margin: 15px 0;
+`;
+
+/* 아래로 내리기 버튼 - 위 아래 움직이는 애니메이션 */
+const CYCLE_SEC = 1.2; // 한 사이클 시간
+const PLAY_FOR_SEC = 3.6; // 총 재생 시간
+const LOOPS = Math.max(1, Math.ceil(PLAY_FOR_SEC / CYCLE_SEC));
+
+const move = keyframes`
+  0%   { transform: translate3d(0, 0, 0); }
+  50%  { transform: translate3d(0, -8px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+`;
+
+const moveHover = keyframes`
+  0%   { transform: translate3d(0, 0, 0); }
+  50%  { transform: translate3d(0, -7px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+`;
+
+export const DownButton = styled.img`
+  display: block;
+  will-change: transform;
+
+  /* 초기: LOOPS 회 재생 후 정지 */
+  animation-name: ${move};
+  animation-duration: ${CYCLE_SEC}s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: ${LOOPS};
+  animation-fill-mode: both;
+  /* hover 시: 같은 길이만큼 다시 재생 */
+  &:hover {
+    animation-name: ${moveHover};
+    animation-duration: ${CYCLE_SEC}s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: ${LOOPS};
+    animation-fill-mode: both;
+  }
 `;
 
 export const UnderLine = styled.div`
   margin: 155px 60px 0px 60px;
-  border-bottom: 3px solid #2d334a;
+  border-bottom: 3px solid var(--color-navy);
 `;
 
-export const BestLocoSection = styled.div`
-  padding-bottom: 14px;
-  padding-left: 60px;
-  padding-right: 60px;
-`;
-
-export const BestLocoTitle = styled.div`
-  padding: 20px 0px;
-
-  color: #2d334a;
-  font-family: Pretendard;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-`;
-
-export const BestUserListContainer = styled.div`
+// ------------------- 지도 섹션 ---------------------
+export const MapSelectSection = styled.div`
   display: flex;
-  justify-content: space-between;
-  padding-top: 45px;
+  align-items: flex-start;
+  justify-content: center;
 `;
 
-export const BestUserCard = styled.div`
+export const DestContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  justify-content: center;
+  width: 100%; /* 부모 컨테이너 기준으로 줄어들도록 */
+  max-width: 426px;
 `;
 
-export const ProfileImgWrapper = styled.div`
-  position: relative;
+export const DestInput = styled.input`
+  border: 1px solid #2d334a;
+  border-radius: 30px;
+  padding: 12px 25px;
+  margin-top: 55px;
+
+  &::placeholder {
+    color: #8189b1;
+    font-family: Pretendard;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 100%;
+  }
 `;
 
-export const ProfileImg = styled.img`
-  width: 130px;
-  height: 130px;
-  border-radius: 50%;
-`;
-
-export const Badge = styled.img`
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 43px;
-  height: 43px;
-`;
-
-export const ProfileName = styled.div`
-  padding-top: 27px;
-  color: #2d334a;
-
+export const SelectDesc = styled.div`
+  margin-top: 119px;
+  margin-bottom: 42px;
+  padding: 13px;
+  color: #a1a7c4;
+  text-align: center;
   font-family: Pretendard;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 140%;
-`;
-export const ProfileIntroduction = styled.div`
-  color: #2d334a;
-
-  font-family: Pretendard;
-  font-size: 13px;
+  font-size: 20px;
   font-style: normal;
   font-weight: 300;
-  line-height: 140%;
-  max-width: 130px;
+  line-height: 100%;
 `;
 
-export const MoreProfileListStack = styled.div`
-  display: flex;
-  align-items: center;
-  position: relative;
+export const SelectContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 26px;
+  width: 100%;
 `;
 
-export const MoreProfileImg = styled.img<{ index: number }>`
-  width: 130px;
-  height: 130px;
-  border-radius: 50%;
-  position: relative;
-  z-index: ${({ index }) => 10 - index}; // index가 증가할수록 z-index 감소
-  margin-left: ${({ index }) =>
-    index === 0 ? 0 : "-30px"}; // 이미지가 겹치도록 음수 마진
-`;
-
-export const MoreButton = styled.button`
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background-color: #e3f6f5;
-  margin-left: 20px;
+export const SelectRegion = styled.div<{ $backgroundColor: string }>`
+  border-radius: 9px;
+  background: ${(props) => props.$backgroundColor};
+  padding: 13px 17px;
   cursor: pointer;
+
+  &:hover {
+    background-color: #ccd2d5;
+  }
+`;
+
+export const RouteExploreSection = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
