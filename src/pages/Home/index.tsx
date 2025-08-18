@@ -1,165 +1,213 @@
 import * as S from "./styles";
 import LogoIcon from "@/assets/images/logo_home.svg";
-import CircleIcon from "@/assets/images/yellow_eclipse.svg";
-import FindIcon from "@/assets/images/find_travel.svg";
-import DecidedIcon from "@/assets/images/decided_travel.svg";
-import AvatarImg from "@/assets/images/avatar2.svg";
-import StarIcon from "@/assets/images/star.svg";
-import PlusIcon from "@/assets/images/plus.svg";
-import { useState } from "react";
-
-const dummyUserData = [
-  {
-    id: 1,
-    userName: "여행러버",
-    userIntroduction: "맛집 탐방과 숨겨진 명소를 좋아해요!",
-    userImg: AvatarImg,
-  },
-  {
-    id: 2,
-    userName: "로컬가이드",
-    userIntroduction: "서울 골목 구석구석을 소개합니다.",
-    userImg: AvatarImg,
-  },
-  {
-    id: 3,
-    userName: "바다소년",
-    userIntroduction: "바다만 보면 행복한 해변 덕후",
-    userImg: AvatarImg,
-  },
-  {
-    id: 4,
-    userName: "산악인",
-    userIntroduction: "등산은 나의 삶, 전국 산 정복 중!",
-    userImg: AvatarImg,
-  },
-  {
-    id: 5,
-    userName: "여행초보",
-    userIntroduction: "이제 막 여행 시작한 초보",
-    userImg: AvatarImg,
-  },
-  {
-    id: 6,
-    userName: "맛집헌터",
-    userIntroduction: "전국 맛집 탐방 중!",
-    userImg: AvatarImg,
-  },
-  {
-    id: 7,
-    userName: "캠핑러",
-    userIntroduction: "자연 속 캠핑이 최고!",
-    userImg: AvatarImg,
-  },
-  {
-    id: 8,
-    userName: "문화러버",
-    userIntroduction: "전시회와 공연 덕후",
-    userImg: AvatarImg,
-  },
-  {
-    id: 9,
-    userName: "도시인",
-    userIntroduction: "도시 속 새로운 핫플레이스 발굴",
-    userImg: AvatarImg,
-  },
-  {
-    id: 10,
-    userName: "사진가",
-    userIntroduction: "여행 사진 찍는 게 취미",
-    userImg: AvatarImg,
-  },
-];
+import DownIcon from "@/assets/images/arrow_drop_down.svg";
+import { useRef, useState } from "react";
+import KoreaMap from "@/components/map/KoreaMap";
+import type {
+  AllSubRegionsType,
+  RegionType,
+  SubRegionsType,
+  SubRegionType,
+} from "@/types/region";
+import { regions } from "@/data/regions";
+import { getSubRegion } from "@/apis/sgis/sgisService";
+import FirstButton from "@/components/FirstButton";
 
 export default function HomePage() {
-  const [startUserIndex, setStartUserIndex] = useState(0);
+  // constants
+  const exploreMenu = ["로코인", "로코장소", "로코루트", "로코문답"];
+  const HEADER_PX = 86;
 
-  const handleNext = () => {
-    setStartUserIndex((prev) => (prev + 1) % dummyUserData.length);
-  };
+  // state
+  // 상위 지역 (시/도)
+  const [hoveredRegion, setHoveredRegion] = useState<RegionType | null>(null);
+  const [selectedRegion, setSelectedRegion] = useState<RegionType | null>(null);
+
+  // 하위 지역 (시/군/구)
+  const [subRegions, setSubRegions] = useState<SubRegionsType | null>(null);
+  const [hoveredSubRegion, setHoveredSubRegion] =
+    useState<SubRegionType | null>(null);
+  const [selectedSubRegion, setSelectedSubRegion] =
+    useState<SubRegionType | null>(null);
+  // 캐시용 전체 하위 지역
+  const [allSubRegions, setAllSubRegions] = useState<AllSubRegionsType | null>(
+    {}
+  );
+
+  // ref
+  const mapSelectRef = useRef<HTMLDivElement>(null);
+
+  // handler
+
+  async function handleRegionSelect(region: RegionType) {
+    setSubRegions([]);
+    // 1. 동일 지역 선택: 선택 해제
+    if (region.id === selectedRegion?.id) {
+      setSelectedRegion(null);
+      setSubRegions(null);
+      return;
+    }
+
+    // 2. 새로운 지역 선택
+    setSelectedRegion(region);
+    console.log("새로운 지역 선택: ", region);
+
+    const cachedData = allSubRegions?.[region.code];
+
+    // 2-1. 캐시 존재: 사용
+    if (cachedData) {
+      console.log("캐시 데이터 사용");
+      setSubRegions(cachedData);
+      console.log(cachedData);
+    }
+    // 2-2. 캐시 존재 X: API 요청 후 캐시 저장
+    else {
+      try {
+        console.log("api 요청 시작");
+        const subRegionData = await getSubRegion(region.code);
+        const subRegionDataWithAll = [
+          { cd: `${region.code}0000`, addr_name: `${region.korName}전체` },
+          ...subRegionData,
+        ];
+
+        console.log(subRegionDataWithAll);
+        setAllSubRegions((prev) => ({
+          ...prev,
+          [region.code]: subRegionDataWithAll,
+        }));
+        setSubRegions(subRegionDataWithAll);
+      } catch (error) {
+        console.error("[시/군 데이터 조회 실패] ", error);
+      }
+    }
+  }
+
+  function handleSubRegionSelect(subRegion: SubRegionType) {
+    // 1. 동일 지역 선택: 선택 해제
+    if (subRegion.cd === selectedSubRegion?.cd) {
+      setSelectedSubRegion(null);
+      return;
+    }
+
+    // 2. 새로운 지역 선택
+    setSelectedSubRegion(subRegion);
+    console.log("새로운 지역 선택: ", subRegion);
+  }
+
+  function handleScrollToMapSelect() {
+    const element = mapSelectRef.current;
+    if (!element) return;
+
+    // 문서 전체에서의 절대 Y좌표 =현재 스크롤량 + element의 화면 상단까지의 거리 - HEADER_PX
+    const top =
+      window.scrollY + element.getBoundingClientRect().top - HEADER_PX;
+
+    window.scrollTo({ top, behavior: "smooth" });
+    // element.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 
   return (
     <>
       <S.MainSection>
         <S.MainContainer>
           <img src={LogoIcon} alt="logo" />
-          <S.Subtitle>부제목이나 슬로건</S.Subtitle>
-          <S.EmailContainer>
-            <S.EmailTextInput placeholder="이메일주소@naver.com" />
-            <S.EmailSubmitButton>Submit</S.EmailSubmitButton>
-          </S.EmailContainer>
+          <S.SubContainer>
+            <S.Subtitle>
+              <S.YelloDot>광</S.YelloDot>
+              <S.YelloDot>고</S.YelloDot>에 지친 당신을 위한,{" "}
+              <S.YelloDot>진</S.YelloDot>
+              <S.YelloDot>짜</S.YelloDot> 여행 정보
+            </S.Subtitle>
+            <S.SubDescription>
+              현지인과 소통하는 그곳의 진짜 이야기
+            </S.SubDescription>
+          </S.SubContainer>
         </S.MainContainer>
       </S.MainSection>
-
       <S.DescriptSection>
-        <img src={CircleIcon} alt="circle" />
         <S.DescriptText>
-          '취향 맞춤형' 현지인 루트
-          <span style={{ fontWeight: 300 }}>를 보여드려요 !</span>
+          믿을 수 있는 정보
+          <span style={{ fontWeight: 300 }}>로 시작해 보세요!</span>
         </S.DescriptText>
+        <S.ExploreNavigator>
+          {exploreMenu.map((menuItem, index) => (
+            <S.ExploreItemWrapper key={`${menuItem}`}>
+              <S.ExploreItem>{menuItem}</S.ExploreItem>
+              {index < exploreMenu.length - 1 && <S.Divider>ㅣ</S.Divider>}
+            </S.ExploreItemWrapper>
+          ))}
+        </S.ExploreNavigator>
+        <S.DownButton
+          src={DownIcon}
+          alt="down-icon"
+          onClick={handleScrollToMapSelect}
+          role="button"
+        />
       </S.DescriptSection>
-
-      <S.SelectSection>
-        <S.SelectContainer>
-          <S.SelectText>
-            그려둔 여행지
-            <span style={{ fontWeight: 300 }}>
-              가<br /> 있으신가요?
-            </span>
-          </S.SelectText>
-          <img src={DecidedIcon} alt="img" />
-        </S.SelectContainer>
-        <S.SelectContainer>
-          <S.SelectText>
-            설레는 여행지
-            <span style={{ fontWeight: 300 }}>
-              를<br /> 찾고 계신가요?
-            </span>
-          </S.SelectText>
-          <img src={FindIcon} alt="img" />
-        </S.SelectContainer>
-      </S.SelectSection>
-
-      <S.UnderLine />
-
-      <S.BestLocoSection>
-        <S.BestLocoTitle>Best 로코</S.BestLocoTitle>
-        <S.BestUserListContainer>
-          {/* 현재 인덱스 기준 3개 렌더링 */}
-          {Array.from({ length: 3 }).map((_, i) => {
-            // 길이가 3인 빈 배열 생성 -> [0,1,2]
-
-            // index i를 사용해 dummyUserData에서 유저 가져오기
-            const user =
-              dummyUserData[(startUserIndex + i) % dummyUserData.length];
-            return (
-              <S.BestUserCard key={user.id}>
-                <S.ProfileImgWrapper>
-                  <S.ProfileImg src={user.userImg} alt="프로필이미지" />
-                  <S.Badge src={StarIcon} alt="뱃지" />
-                </S.ProfileImgWrapper>
-                <S.ProfileName>{user.userName}</S.ProfileName>
-                <S.ProfileIntroduction>
-                  {user.userIntroduction}
-                </S.ProfileIntroduction>
-              </S.BestUserCard>
-            );
-          })}
-          <S.MoreProfileListStack>
-            {/* 현재 인덱스 기준 다음 3개 렌더링 */}
-            {Array.from({ length: 3 }).map((_, i) => {
-              const user =
-                dummyUserData[(startUserIndex + 3 + i) % dummyUserData.length];
-              return (
-                <S.MoreProfileImg key={user.id} src={user.userImg} index={i} />
-              );
-            })}
-            <S.MoreButton onClick={handleNext}>
-              <img src={PlusIcon} alt="plus" />
-            </S.MoreButton>
-          </S.MoreProfileListStack>
-        </S.BestUserListContainer>
-      </S.BestLocoSection>
+      <S.MapSelectSection ref={mapSelectRef}>
+        <S.MapLayer>
+          <KoreaMap
+            hoveredRegion={hoveredRegion}
+            setHoveredRegion={setHoveredRegion}
+            selectedRegion={selectedRegion}
+            setSelectedRegion={setSelectedRegion}
+            onRegionSelect={handleRegionSelect}
+          />
+        </S.MapLayer>
+        <S.DestContainer>
+          <div>
+            <S.SelectTitle>
+              <S.SelectTitleHighlignt>그려둔 여행지</S.SelectTitleHighlignt>가
+              있으신가요?
+            </S.SelectTitle>
+            <S.SelectDesc>지도를 눌러 여행지를 선택해보세요!</S.SelectDesc>
+          </div>
+          <S.SelectContainer>
+            {!selectedRegion
+              ? regions.map((region) => (
+                  <S.SelectRegion
+                    key={region.id}
+                    onMouseEnter={() => setHoveredRegion(region)}
+                    onMouseLeave={() => setHoveredRegion(null)}
+                    onClick={() => handleRegionSelect(region)}
+                    $backgroundColor={
+                      hoveredRegion?.id === region.id ||
+                      selectedRegion?.id === region.id
+                        ? "#E3F6F5"
+                        : "none"
+                    }
+                  >
+                    {region.korName}
+                  </S.SelectRegion>
+                ))
+              : subRegions?.map((subRegion) => (
+                  <S.SelectRegion
+                    key={subRegion.cd}
+                    onMouseEnter={() => setHoveredSubRegion(subRegion)}
+                    onMouseLeave={() => setHoveredSubRegion(null)}
+                    onClick={() => handleSubRegionSelect(subRegion)}
+                    $backgroundColor={
+                      hoveredSubRegion?.cd === subRegion.cd ||
+                      selectedSubRegion?.cd === subRegion.cd
+                        ? "#E3F6F5"
+                        : "none"
+                    }
+                  >
+                    {subRegion.addr_name}
+                  </S.SelectRegion>
+                ))}
+          </S.SelectContainer>
+          <FirstButton>바로 탐색하기</FirstButton>
+        </S.DestContainer>
+        <S.DestContainer>
+          <S.SelectTitle>
+            <S.SelectTitleHighlignt>설레는 여행지</S.SelectTitleHighlignt>를
+            찾고 계신가요?
+          </S.SelectTitle>
+          <S.VerticalLineAndCircle />
+          <FirstButton isRecommendBtn={true}>맞춤 루트 추천받기</FirstButton>
+        </S.DestContainer>
+      </S.MapSelectSection>
     </>
   );
 }

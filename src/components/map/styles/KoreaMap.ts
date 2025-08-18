@@ -11,6 +11,7 @@ export const RegionPath = styled.path<{ $fill: string }>`
   transition: fill 0.3s;
 
   &:hover {
-    fill: #ffd803;
+    /* fill: var(--color-main350); */
+    fill: var(--color-main350);
   }
 `;
