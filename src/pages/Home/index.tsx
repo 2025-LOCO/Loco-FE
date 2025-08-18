@@ -1,7 +1,7 @@
 import * as S from "./styles";
 import LogoIcon from "@/assets/images/logo_home.svg";
 import DownIcon from "@/assets/images/arrow_drop_down.svg";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import KoreaMap from "@/components/map/KoreaMap";
 import type {
   AllSubRegionsType,
@@ -11,9 +11,12 @@ import type {
 } from "@/types/region";
 import { regions } from "@/data/regions";
 import { getSubRegion } from "@/apis/sgis/sgisService";
+import FirstButton from "@/components/FirstButton";
 
 export default function HomePage() {
+  // constants
   const exploreMenu = ["로코인", "로코장소", "로코루트", "로코문답"];
+  const HEADER_PX = 86;
 
   // state
   // 상위 지역 (시/도)
@@ -30,6 +33,9 @@ export default function HomePage() {
   const [allSubRegions, setAllSubRegions] = useState<AllSubRegionsType | null>(
     {}
   );
+
+  // ref
+  const mapSelectRef = useRef<HTMLDivElement>(null);
 
   // handler
 
@@ -88,20 +94,36 @@ export default function HomePage() {
     console.log("새로운 지역 선택: ", subRegion);
   }
 
+  function handleScrollToMapSelect() {
+    const element = mapSelectRef.current;
+    if (!element) return;
+
+    // 문서 전체에서의 절대 Y좌표 =현재 스크롤량 + element의 화면 상단까지의 거리 - HEADER_PX
+    const top =
+      window.scrollY + element.getBoundingClientRect().top - HEADER_PX;
+
+    window.scrollTo({ top, behavior: "smooth" });
+    // element.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
   return (
     <>
       <S.MainSection>
         <S.MainContainer>
           <img src={LogoIcon} alt="logo" />
           <S.SubContainer>
-            <S.Subtitle>광고에 지친 당신을 위한, 진짜 여행 정보</S.Subtitle>
+            <S.Subtitle>
+              <S.YelloDot>광</S.YelloDot>
+              <S.YelloDot>고</S.YelloDot>에 지친 당신을 위한,{" "}
+              <S.YelloDot>진</S.YelloDot>
+              <S.YelloDot>짜</S.YelloDot> 여행 정보
+            </S.Subtitle>
             <S.SubDescription>
               현지인과 소통하는 그곳의 진짜 이야기
             </S.SubDescription>
           </S.SubContainer>
         </S.MainContainer>
       </S.MainSection>
-
       <S.DescriptSection>
         <S.DescriptText>
           믿을 수 있는 정보
@@ -115,20 +137,31 @@ export default function HomePage() {
             </S.ExploreItemWrapper>
           ))}
         </S.ExploreNavigator>
-        <S.DownButton src={DownIcon} alt="down-icon" />
-      </S.DescriptSection>
-
-      <S.MapSelectSection>
-        <KoreaMap
-          hoveredRegion={hoveredRegion}
-          setHoveredRegion={setHoveredRegion}
-          selectedRegion={selectedRegion}
-          setSelectedRegion={setSelectedRegion}
-          onRegionSelect={handleRegionSelect}
+        <S.DownButton
+          src={DownIcon}
+          alt="down-icon"
+          onClick={handleScrollToMapSelect}
+          role="button"
         />
+      </S.DescriptSection>
+      <S.MapSelectSection ref={mapSelectRef}>
+        <S.MapLayer>
+          <KoreaMap
+            hoveredRegion={hoveredRegion}
+            setHoveredRegion={setHoveredRegion}
+            selectedRegion={selectedRegion}
+            setSelectedRegion={setSelectedRegion}
+            onRegionSelect={handleRegionSelect}
+          />
+        </S.MapLayer>
         <S.DestContainer>
-          <S.DestInput placeholder="어디로 여행을 떠나고 싶으신가요?" />
-          <S.SelectDesc>지도를 눌러 선택해보세요!</S.SelectDesc>
+          <div>
+            <S.SelectTitle>
+              <S.SelectTitleHighlignt>그려둔 여행지</S.SelectTitleHighlignt>가
+              있으신가요?
+            </S.SelectTitle>
+            <S.SelectDesc>지도를 눌러 여행지를 선택해보세요!</S.SelectDesc>
+          </div>
           <S.SelectContainer>
             {!selectedRegion
               ? regions.map((region) => (
@@ -140,8 +173,8 @@ export default function HomePage() {
                     $backgroundColor={
                       hoveredRegion?.id === region.id ||
                       selectedRegion?.id === region.id
-                        ? "#ccd2d5"
-                        : "#e1e3ec"
+                        ? "#E3F6F5"
+                        : "none"
                     }
                   >
                     {region.korName}
@@ -156,14 +189,23 @@ export default function HomePage() {
                     $backgroundColor={
                       hoveredSubRegion?.cd === subRegion.cd ||
                       selectedSubRegion?.cd === subRegion.cd
-                        ? "#ccd2d5"
-                        : "#e1e3ec"
+                        ? "#E3F6F5"
+                        : "none"
                     }
                   >
                     {subRegion.addr_name}
                   </S.SelectRegion>
                 ))}
           </S.SelectContainer>
+          <FirstButton>바로 탐색하기</FirstButton>
+        </S.DestContainer>
+        <S.DestContainer>
+          <S.SelectTitle>
+            <S.SelectTitleHighlignt>설레는 여행지</S.SelectTitleHighlignt>를
+            찾고 계신가요?
+          </S.SelectTitle>
+          <S.VerticalLineAndCircle />
+          <FirstButton isRecommendBtn={true}>맞춤 루트 추천받기</FirstButton>
         </S.DestContainer>
       </S.MapSelectSection>
     </>
