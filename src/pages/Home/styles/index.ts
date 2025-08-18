@@ -204,7 +204,7 @@ export const SelectContainer = styled.div<{ $isSelect?: boolean }>`
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 17px 31px;
   width: 100%;
-  max-width: 248px;
+  min-width: 248px;
 `;
 
 export const SelectRegion = styled.div<{ $backgroundColor: string }>`
