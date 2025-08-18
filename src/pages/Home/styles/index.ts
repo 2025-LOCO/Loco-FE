@@ -162,7 +162,6 @@ export const MapSelectSection = styled.div`
 export const MapLayer = styled.div`
   position: absolute;
   z-index: 0;
-  align-items: top;
   inset: 0; /* 부모 요소의 모든 면에 맞춤 */
   display: flex;
   justify-content: center;
