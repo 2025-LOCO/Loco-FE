@@ -14,6 +14,7 @@ const GlobalStyle = createGlobalStyle`
     --color-mint200: ${({ theme }) => theme.colors.mint200};
     --color-mint300: ${({ theme }) => theme.colors.mint300};
     --color-navy: ${({ theme }) => theme.colors.navy};
+    --color-darknavy: ${({ theme }) => theme.colors.darknavy};
     --color-sub100: ${({ theme }) => theme.colors.sub100};
     --color-sub300: ${({ theme }) => theme.colors.sub300};
     --color-main50: ${({ theme }) => theme.colors.main50};

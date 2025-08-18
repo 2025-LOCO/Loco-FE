@@ -23,7 +23,7 @@ export default function KoreaMap({
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 524 631"
         aria-label="Map of South Korea"
-        style={{ width: 600, height: 600 }}
+        style={{ width: 630, height: 630 }}
       >
         {regions.map((region) => (
           <S.RegionPath
@@ -36,7 +36,8 @@ export default function KoreaMap({
               hoveredRegion?.id === region.id
                 ? "#ffd803"
                 : region.color
-            }
+            } // #ffd803
+            // #E3F6F5
             onMouseEnter={() => setHoveredRegion(region)}
             onMouseLeave={() => setHoveredRegion(null)}
             onClick={() => onRegionSelect(region)}

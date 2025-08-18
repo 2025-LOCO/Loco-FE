@@ -11,6 +11,7 @@ import type {
 } from "@/types/region";
 import { regions } from "@/data/regions";
 import { getSubRegion } from "@/apis/sgis/sgisService";
+import FirstButton from "@/components/FirstButton";
 
 export default function HomePage() {
   // constants
@@ -144,16 +145,23 @@ export default function HomePage() {
         />
       </S.DescriptSection>
       <S.MapSelectSection ref={mapSelectRef}>
-        <KoreaMap
-          hoveredRegion={hoveredRegion}
-          setHoveredRegion={setHoveredRegion}
-          selectedRegion={selectedRegion}
-          setSelectedRegion={setSelectedRegion}
-          onRegionSelect={handleRegionSelect}
-        />
+        <S.MapLayer>
+          <KoreaMap
+            hoveredRegion={hoveredRegion}
+            setHoveredRegion={setHoveredRegion}
+            selectedRegion={selectedRegion}
+            setSelectedRegion={setSelectedRegion}
+            onRegionSelect={handleRegionSelect}
+          />
+        </S.MapLayer>
         <S.DestContainer>
-          <S.DestInput placeholder="어디로 여행을 떠나고 싶으신가요?" />
-          <S.SelectDesc>지도를 눌러 선택해보세요!</S.SelectDesc>
+          <div>
+            <S.SelectTitle>
+              <S.SelectTitleHighlignt>그려둔 여행지</S.SelectTitleHighlignt>가
+              있으신가요?
+            </S.SelectTitle>
+            <S.SelectDesc>지도를 눌러 여행지를 선택해보세요!</S.SelectDesc>
+          </div>
           <S.SelectContainer>
             {!selectedRegion
               ? regions.map((region) => (
@@ -165,8 +173,8 @@ export default function HomePage() {
                     $backgroundColor={
                       hoveredRegion?.id === region.id ||
                       selectedRegion?.id === region.id
-                        ? "#ccd2d5"
-                        : "#e1e3ec"
+                        ? "#E3F6F5"
+                        : "none"
                     }
                   >
                     {region.korName}
@@ -181,14 +189,23 @@ export default function HomePage() {
                     $backgroundColor={
                       hoveredSubRegion?.cd === subRegion.cd ||
                       selectedSubRegion?.cd === subRegion.cd
-                        ? "#ccd2d5"
-                        : "#e1e3ec"
+                        ? "#E3F6F5"
+                        : "none"
                     }
                   >
                     {subRegion.addr_name}
                   </S.SelectRegion>
                 ))}
           </S.SelectContainer>
+          <FirstButton>바로 탐색하기</FirstButton>
+        </S.DestContainer>
+        <S.DestContainer>
+          <S.SelectTitle>
+            <S.SelectTitleHighlignt>설레는 여행지</S.SelectTitleHighlignt>를
+            찾고 계신가요?
+          </S.SelectTitle>
+          <S.VerticalLineAndCircle />
+          <FirstButton isRecommendBtn={true}>맞춤 루트 추천받기</FirstButton>
         </S.DestContainer>
       </S.MapSelectSection>
     </>

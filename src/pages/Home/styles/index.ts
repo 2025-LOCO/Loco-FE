@@ -147,55 +147,65 @@ export const UnderLine = styled.div`
   border-bottom: 3px solid var(--color-navy);
 `;
 
-// ------------------- 지도 섹션 ---------------------
+// ------------------- 지역 선택 섹션 ---------------------
 export const MapSelectSection = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
+  position: relative;
+  isolation: isolate; /* 이 박스 안에서만 z-index 비교 */
+  justify-content: space-between;
+  padding: 0 130px;
+  min-height: 630px;
+`;
+
+// 지도: 절대배치
+export const MapLayer = styled.div`
+  position: absolute;
+  z-index: 0;
+  align-items: top;
+  inset: 0; /* 부모 요소의 모든 면에 맞춤 */
+  display: flex;
   justify-content: center;
+  padding-left: 80px;
 `;
 
 export const DestContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  width: 100%; /* 부모 컨테이너 기준으로 줄어들도록 */
-  max-width: 426px;
+  align-items: center;
+  gap: 35px;
+  z-index: 1;
 `;
 
-export const DestInput = styled.input`
-  border: 1px solid #2d334a;
-  border-radius: 30px;
-  padding: 12px 25px;
-  margin-top: 55px;
+export const SelectTitle = styled.div`
+  color: var(--color-sub300);
+  font-size: 20px;
+  font-size: 25px;
+  font-weight: 400;
+  margin-top: 10px;
+`;
 
-  &::placeholder {
-    color: #8189b1;
-    font-family: Pretendard;
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: 100%;
-  }
+export const SelectTitleHighlignt = styled.span`
+  color: var(--color-navy);
+  font-size: 25px;
+  font-weight: 700;
 `;
 
 export const SelectDesc = styled.div`
-  margin-top: 119px;
-  margin-bottom: 42px;
   padding: 13px;
-  color: #a1a7c4;
+  color: var(--color-sub300);
   text-align: center;
-  font-family: Pretendard;
-  font-size: 20px;
-  font-style: normal;
+  font-size: 15px;
   font-weight: 300;
-  line-height: 100%;
+  line-height: 115%;
 `;
 
-export const SelectContainer = styled.div`
+export const SelectContainer = styled.div<{ $isSelect?: boolean }>`
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 26px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 17px 31px;
   width: 100%;
+  max-width: 248px;
 `;
 
 export const SelectRegion = styled.div<{ $backgroundColor: string }>`
@@ -203,13 +213,49 @@ export const SelectRegion = styled.div<{ $backgroundColor: string }>`
   background: ${(props) => props.$backgroundColor};
   padding: 13px 17px;
   cursor: pointer;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--color-navy);
 
   &:hover {
-    background-color: #ccd2d5;
+    background-color: var(--color-mint200);
   }
 `;
 
 export const RouteExploreSection = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+export const VerticalLineAndCircle = styled.div`
+  position: relative;
+  top: 20px;
+  --c: var(--color-main350);
+  width: 2px;
+  height: 350px;
+  margin: 0 auto 50px;
+
+  /* 아래로 갈수록 불투명해지는 선 */
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--c) 0%, transparent) 0%,
+    color-mix(in srgb, var(--c) 25%, transparent) 20%,
+    var(--c) 70%,
+    var(--c) 100%
+  );
+
+  /* 아래 동그라미 */
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -6px; // 아래로 반지름만큼 이동
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--c);
+    pointer-events: none;
+  }
 `;

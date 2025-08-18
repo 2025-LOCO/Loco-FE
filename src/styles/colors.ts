@@ -13,7 +13,6 @@ const colors = {
   main300: "#ffdc66",
   main350: "#FFD803",
   main400: "#ffd133",
-
   main450: "#ffcb1a",
   main500: "#ffc500",
 };
