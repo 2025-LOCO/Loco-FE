@@ -29,7 +29,7 @@ export const FormFieldLabel = styled.div`
 `;
 
 export const FormFieldInput = styled.input`
-  color: var(--color-sub300);
+  color: var(--color-navy);
   font-size: 15px;
   font-weight: 400;
   padding: 10px 0;
