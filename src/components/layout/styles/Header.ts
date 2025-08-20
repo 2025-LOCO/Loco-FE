@@ -1,4 +1,4 @@
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import styled from "styled-components";
 
 export const HeaderContainer = styled.div`
@@ -44,7 +44,7 @@ export const LoginContainer = styled.div`
   gap: 12px;
 `;
 
-export const LoginButton = styled.button`
+export const LoginButton = styled(Link)`
   background-color: #bae8e8;
   color: #272343;
   padding: 8px 24px;
@@ -52,7 +52,7 @@ export const LoginButton = styled.button`
   cursor: pointer;
 `;
 
-export const SignUpButton = styled.button`
+export const SignUpButton = styled(Link)`
   background-color: #2d334a;
   color: #f5f5f5;
   padding: 8px 24px;
