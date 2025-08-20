@@ -1,67 +1,119 @@
 import styled from "styled-components";
 
-export const CustomTripSection = styled.div`
+export const CustomTripContainer = styled.div`
+  padding-top: 70px;
   display: flex;
-  align-items: flex-start;
+  flex-shrink: 1;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
 `;
 
-export const DestContainer = styled.div`
+export const ProgressBarContainer = styled.div`
+  width: 100%;
+  max-width: 900px;
+`;
+
+export const Progress = styled.div`
+  height: 5px;
+  background: var(--color-gray);
+  border-radius: 999px;
+  overflow: hidden;
+`;
+export const ProgressFill = styled.div`
+  height: 100%;
+  background: var(--color-main350);
+  transition: width 0.25s ease;
+`;
+
+export const Description = styled.div`
+  color: var(--color-navy);
+  font-size: 15px;
+  font-weight: 300;
+  padding: 23px 0;
+`;
+
+export const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  width: 100%; /* 부모 컨테이너 기준으로 줄어들도록 */
-  max-width: 426px;
+  gap: 160px;
+  width: 100%;
+  max-width: 900px;
+  flex-shrink: 1;
 `;
 
-export const DestInput = styled.input`
-  border: 1px solid #2d334a;
-  border-radius: 30px;
-  padding: 12px 25px;
-  margin-top: 55px;
-
-  &::placeholder {
-    color: #8189b1;
-    font-family: Pretendard;
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: 100%;
-  }
+export const QuestionHighlight = styled.span`
+  color: var(--color-navy);
+  font-size: 30px;
+  font-weight: 600;
 `;
 
-export const SelectDesc = styled.div`
-  margin-top: 119px;
-  margin-bottom: 42px;
-  padding: 13px;
-  color: #a1a7c4;
-  text-align: center;
-  font-family: Pretendard;
-  font-size: 20px;
-  font-style: normal;
+export const Question = styled.div`
+  color: var(--color-navy);
+  font-size: 30px;
   font-weight: 300;
-  line-height: 100%;
 `;
 
-export const SelectContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 26px;
+export const AnswerContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
 `;
 
-export const SelectRegion = styled.div<{ $backgroundColor: string }>`
-  border-radius: 9px;
-  background: ${(props) => props.$backgroundColor};
-  padding: 13px 17px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #ccd2d5;
-  }
+const selectButtonCommon = `
+  height: 60px;
+  background-color: var(--color-mint200);
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: 300;
+  position: relative;
 `;
 
-export const RouteExploreSection = styled.div`
+export const SelectButtonLarge = styled.button`
+  ${selectButtonCommon}
+  flex: 0 1 200px;
+`;
+
+export const SelectButtonMedium = styled.button<{ $isSelected?: boolean }>`
+  border: ${({ $isSelected }) => $isSelected && "2px solid var(--color-navy)"};
+  ${selectButtonCommon}
+  flex: 0 1 180px;
+`;
+
+export const SelectButtonSmall = styled.button`
+  ${selectButtonCommon}
+  flex: 0 1 142px;
+`;
+
+export const CheckIcon = styled.img`
+  position: absolute;
+  width: 17px;
+  height: 17px;
+  top: 8px;
+  right: 8px;
+`;
+
+export const NextButtonContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+`;
+
+export const PassButton = styled.button`
+  border-radius: 28.5px;
+  background-color: var(--color-gray);
+  padding: 17px 29px;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--color-sub400);
+`;
+
+export const SelectButton = styled.button`
+  border-radius: 28.5px;
+  background-color: var(--color-navy);
+  padding: 17px 81px;
+  font-size: 20px;
+  font-weight: 400;
+  color: white;
 `;
