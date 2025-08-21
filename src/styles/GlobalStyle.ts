@@ -61,6 +61,9 @@ const GlobalStyle = createGlobalStyle`
     outline: none;
   }
 
+  button {
+    background: transparent;
+  }
 
 `;
 
