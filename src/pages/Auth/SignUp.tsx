@@ -1,5 +1,7 @@
 import Divider from "@/components/Divider";
+import { registerInfos } from "@/data/registerInfo";
 import * as S from "@/pages/Auth/styles";
+
 export default function SignUpPage() {
   return (
     <>
@@ -10,67 +12,24 @@ export default function SignUpPage() {
         <S.FormContainer>
           <S.FormTitle>가입정보</S.FormTitle>
           <Divider />
-          <S.FormFieldRow>
-            <S.FormFieldLabel>아이디 (이메일)</S.FormFieldLabel>
-            <S.FormFieldInput
-              type="text"
-              id="user_id"
-              name="user_id"
-              placeholder="이메일 주소"
-            />
-            <S.DupCheckButton>중복확인</S.DupCheckButton>
-          </S.FormFieldRow>
+          {registerInfos.map((registerInfo) => (
+            <>
+              <S.FormFieldRow>
+                <S.FormFieldLabel>{registerInfo.label}</S.FormFieldLabel>
+                <S.FormFieldInput
+                  type={registerInfo.type}
+                  id={registerInfo.name}
+                  name={registerInfo.name}
+                  placeholder={registerInfo.placeholder}
+                />
+                {registerInfo.hasDupCheckButton && (
+                  <S.DupCheckButton>중복확인</S.DupCheckButton>
+                )}
+              </S.FormFieldRow>
 
-          <Divider height="1px" />
-
-          <S.FormFieldRow>
-            <S.FormFieldLabel>닉네임</S.FormFieldLabel>
-            <S.FormFieldInput
-              type="text"
-              id="user_nickname"
-              name="user_nickname"
-              placeholder="별명을 입력하세요"
-            />
-            <S.DupCheckButton>중복확인</S.DupCheckButton>
-          </S.FormFieldRow>
-
-          <Divider height="1px" />
-
-          <S.FormFieldRow>
-            <S.FormFieldLabel>비밀번호</S.FormFieldLabel>
-            <S.FormFieldInput
-              type="text"
-              id="user_password"
-              name="user_password"
-              placeholder="비밀번호"
-            />
-          </S.FormFieldRow>
-
-          <Divider height="1px" />
-
-          <S.FormFieldRow>
-            <S.FormFieldLabel>비밀번호 확인</S.FormFieldLabel>
-            <S.FormFieldInput
-              type="text"
-              id="user_password"
-              name="user_password"
-              placeholder="비밀번호 확인"
-            />
-          </S.FormFieldRow>
-
-          <Divider height="1px" />
-
-          <S.FormFieldRow>
-            <S.FormFieldLabel>생년월일</S.FormFieldLabel>
-            <S.FormFieldInput
-              type="text"
-              id="user_password"
-              name="user_password"
-              placeholder="8자리 입력"
-            />
-          </S.FormFieldRow>
-
-          <Divider height="1px" />
+              <Divider height="1px" />
+            </>
+          ))}
         </S.FormContainer>
 
         {/* 마케팅 수신 동의 */}
