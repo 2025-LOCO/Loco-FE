@@ -7,6 +7,8 @@ import LocoExplorePage from "@/pages/LocoExplore";
 import LocoTalkPage from "@/pages/LocoTalk";
 import MapMakerPage from "@/pages/MapMaker";
 import GuidePage from "@/pages/Guide";
+import LoginPage from "./pages/Auth/Login";
+import SignUpPage from "./pages/Auth/SignUp";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
           <Route path="loco-talk" element={<LocoTalkPage />} />
           <Route path="map-maker" element={<MapMakerPage />} />
           <Route path="guide" element={<GuidePage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="sign-up" element={<SignUpPage />} />
         </Route>
       </Routes>
     </>
