@@ -1,5 +1,6 @@
 import * as S from "./styles/header";
 import LogoIcon from "@/assets/images/logo_header.svg";
+import MyIcon from "@/assets/images/profile_small.svg";
 
 export default function Header() {
   return (
@@ -18,10 +19,17 @@ export default function Header() {
           <S.MenuItem to="guide">이용안내</S.MenuItem>
         </S.MenuContainer>
 
-        <S.LoginContainer>
+        {/* <S.LoginContainer>
           <S.LoginButton to="login">로그인</S.LoginButton>
           <S.SignUpButton to="sign-up">회원가입</S.SignUpButton>
-        </S.LoginContainer>
+        </S.LoginContainer> */}
+
+        <S.MyContainer>
+          <img src={MyIcon} alt="마이아이콘" style={{ paddingRight: "10px" }} />
+          <S.MyItem to="my-page">마이</S.MyItem>
+          <S.MyItem to="loco-map">로코지도</S.MyItem>
+          <S.MyItem to="travel-map">여행지도</S.MyItem>
+        </S.MyContainer>
       </S.HeaderContainer>
     </>
   );

@@ -9,6 +9,9 @@ import MapMakerPage from "@/pages/MapMaker";
 import GuidePage from "@/pages/Guide";
 import LoginPage from "./pages/Auth/Login";
 import SignUpPage from "./pages/Auth/SignUp";
+import MyPage from "./pages/My/MyPage";
+import LocoMapPage from "./pages/My/LocoMap";
+import TravelMapPage from "./pages/My/TravelMap";
 
 function App() {
   return (
@@ -23,6 +26,9 @@ function App() {
           <Route path="guide" element={<GuidePage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="sign-up" element={<SignUpPage />} />
+          <Route path="my-page" element={<MyPage />} />
+          <Route path="loco-map" element={<LocoMapPage />} />
+          <Route path="travel-map" element={<TravelMapPage />} />
         </Route>
       </Routes>
     </>

@@ -29,7 +29,6 @@ export const MenuItem = styled(NavLink)`
   padding: 8px;
   border-radius: 8px;
   font-size: 13px;
-  font-style: normal;
   font-weight: 400;
   cursor: pointer;
 
@@ -58,4 +57,23 @@ export const SignUpButton = styled(Link)`
   padding: 8px 24px;
   border-radius: 8px;
   cursor: pointer;
+`;
+
+export const MyContainer = styled.div`
+  margin-left: 60px;
+  display: flex;
+`;
+
+export const MyItem = styled(NavLink)`
+  color: #7a7a7a;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 400;
+  cursor: pointer;
+
+  &.active {
+    background-color: var(--color-sub100);
+    color: #272343;
+  }
 `;
