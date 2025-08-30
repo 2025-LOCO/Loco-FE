@@ -1,4 +1,4 @@
-// components/PaginationDots.tsx
+// components/PagenationDots.tsx
 import styled from "styled-components";
 import { useCallback, useEffect, useRef } from "react";
 
@@ -18,10 +18,6 @@ export default function PagenationDots({
   const dots = Array.from({ length: 5 });
   const activeBtnRef = useRef<HTMLButtonElement | null>(null);
 
-  // 활성 dot으로 포커스 이동(로빙 포커스)
-  useEffect(() => {
-    activeBtnRef.current?.focus();
-  }, [active]);
   const clamp = (n: number) => Math.max(0, Math.min(5 - 1, n));
 
   const getOpacity = (i: number) => {
