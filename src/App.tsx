@@ -3,7 +3,6 @@ import "@/App.css";
 import RootLayout from "@/layouts/RootLayout";
 import HomePage from "@/pages/Home";
 import CustomTripPage from "@/pages/CustomTrip";
-import LocoExplorePage from "@/pages/LocoExplore";
 import LocoTalkPage from "@/pages/LocoTalk";
 import MapMakerPage from "@/pages/MapMaker";
 import GuidePage from "@/pages/Guide";
@@ -12,6 +11,10 @@ import SignUpPage from "./pages/Auth/SignUp";
 import MyPage from "./pages/My/MyPage";
 import LocoMapPage from "./pages/My/LocoMap";
 import TravelMapPage from "./pages/My/TravelMap";
+import ExploreLayout from "./pages/LocoExplore/ExploreLayout";
+import LocoGuidePage from "./pages/LocoExplore/LocoGuidePage";
+import LocoPlacePage from "./pages/LocoExplore/LocoPlacePage";
+import LocoRoutePage from "./pages/LocoExplore/LocoRoutePage";
 
 function App() {
   return (
@@ -20,7 +23,11 @@ function App() {
         <Route path="/" element={<RootLayout />}>
           <Route index element={<HomePage />} />
           <Route path="custom-trip" element={<CustomTripPage />} />
-          <Route path="loco-explore" element={<LocoExplorePage />} />
+          <Route path="explore" element={<ExploreLayout />}>
+            <Route path="loco-guide" element={<LocoGuidePage />} />
+            <Route path="loco-place" element={<LocoPlacePage />} />
+            <Route path="loco-route" element={<LocoRoutePage />} />
+          </Route>
           <Route path="loco-talk" element={<LocoTalkPage />} />
           <Route path="map-maker" element={<MapMakerPage />} />
           <Route path="guide" element={<GuidePage />} />
