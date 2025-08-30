@@ -12,21 +12,6 @@ export const Card = styled.div`
   min-height: 240px;
 `;
 
-export const CardContentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-`;
-
-export const ImgWrapper = styled.div<{ $hasImg: boolean }>`
-  position: relative;
-  width: 170px;
-  height: 110px;
-  border-radius: 8px;
-  border: 2px solid var(--color-sub200);
-  margin-bottom: 20px;
-`;
-
 export const LocationBadge = styled.div`
   position: absolute;
   bottom: 0;
@@ -42,22 +27,24 @@ export const LocationBadge = styled.div`
   font-weight: 700;
 `;
 
-export const PlaceTitle = styled.div`
+export const Title = styled.div`
   color: var(--color-navy);
-  /* font-size: 20px; */
   font-size: 17px;
   font-weight: 700;
 `;
-export const PlaceContent = styled.div`
+
+export const Intro = styled.div`
   color: var(--color-navy);
   font-size: 13px;
   font-weight: 300;
 `;
+
 export const LikedContainer = styled.div`
   padding-top: 25px;
   display: inline-flex;
   gap: 5px;
 `;
+
 export const LikedNum = styled.div`
   color: #484f56;
   font-size: 13px;
