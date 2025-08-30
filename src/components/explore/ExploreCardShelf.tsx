@@ -1,4 +1,4 @@
-import { type ReactNode, type Key, useState } from "react";
+import { type ReactNode, type Key, useState, useMemo } from "react";
 import styled from "styled-components";
 import PagenationDots from "../PagenationDots";
 
@@ -18,6 +18,11 @@ export default function ExploreCardShelf<T extends { id: Key }>({
   const hasItems = cardDataItems.length > 0;
   const [page, setPage] = useState(0);
 
+  const CARD_PER_PAGE = 5;
+  const startVisibleIdx = page * CARD_PER_PAGE;
+  const endVisibleIdx = startVisibleIdx + CARD_PER_PAGE;
+  const visibleItems = cardDataItems.slice(startVisibleIdx, endVisibleIdx);
+
   return (
     <>
       <Section>
@@ -27,8 +32,8 @@ export default function ExploreCardShelf<T extends { id: Key }>({
         </TitleContainer>
         <CardContainer>
           {hasItems ? (
-            cardDataItems.map((cardDataItem, i) => (
-              <div key={cardDataItem.id}>{exploreCard(cardDataItem, i)}</div>
+            visibleItems.map((visibleItem, i) => (
+              <div key={visibleItem.id}>{exploreCard(visibleItem, i)}</div>
             ))
           ) : (
             <Empty>표시할 항목이 없습니다.</Empty>
@@ -53,7 +58,6 @@ const TitleContainer = styled.div`
 `;
 const Title = styled.div`
   color: var(--color-navy);
-  /* font-size: 25px; */
   font-size: 22px;
   font-weight: 700;
 `;
