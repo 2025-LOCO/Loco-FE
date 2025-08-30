@@ -18,6 +18,7 @@ export default function PlaceCard({ data }: { data: Place }) {
         </S.Guide.ImgWrapper>
         <div>
           <S.Common.Title>{data.name}</S.Common.Title>
+          <div style={{ paddingTop: "5px" }} />
           <S.Common.Intro>{data.intro}</S.Common.Intro>
         </div>
       </S.Guide.CardContentContainer>

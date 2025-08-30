@@ -4,7 +4,7 @@ export interface LocoRoute {
   imageUrl: string | null;
   location: string;
   intro: string;
-  period: string;
+  liked: number;
   tags: HashTag[];
   places: Place[];
   transportations: Transportation[];
@@ -21,7 +21,7 @@ interface Place {
   name: string;
 }
 
-// 순서는 day,order로 정렬된 상태로 백엔드에서 받아야 함
+// 순서는 day,order로 중복없이 정렬된 상태로 백엔드에서 받아야 함
 interface Transportation {
   id: number;
   name: string;
