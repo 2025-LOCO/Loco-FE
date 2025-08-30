@@ -9,7 +9,7 @@ export const Card = styled.div`
   background: white;
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1);
   width: 170px;
-  min-height: 240px;
+  height: 245px;
 `;
 
 export const Title = styled.div`

@@ -37,7 +37,6 @@ export const LocationBadge = styled.div`
 export const StatsListContainer = styled.div`
   display: flex;
   gap: 30px;
-  padding-top: 10px;
 `;
 
 export const StatContainer = styled.div`
