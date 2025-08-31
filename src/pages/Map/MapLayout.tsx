@@ -1,4 +1,4 @@
-import type { MapType } from "@/types/mapType";
+import type { MapType } from "@/types/map";
 import { Outlet } from "react-router";
 
 export default function MapLayout({ mapType }: { mapType: MapType }) {
@@ -17,7 +17,7 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
   return (
     <>
       <div>{titleMap[mapType]}</div>
-      <Outlet />
+      <Outlet context={{ mapType }} />
     </>
   );
 }

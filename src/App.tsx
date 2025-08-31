@@ -8,7 +8,7 @@ import MapMakerPage from "@/pages/MapMaker";
 import GuidePage from "@/pages/Guide";
 import LoginPage from "./pages/Auth/Login";
 import SignUpPage from "./pages/Auth/SignUp";
-import MyPage from "./pages/My/MyPage";
+import MyPage from "./pages/My/Mypage";
 import ExploreLayout from "./pages/LocoExplore/ExploreLayout";
 import LocoGuidePage from "./pages/LocoExplore/LocoGuidePage";
 import LocoPlacePage from "./pages/LocoExplore/LocoPlacePage";
@@ -56,7 +56,7 @@ function App() {
             <Route path="route" element={<RoutePanel />} />
           </Route>
           {/* 2. 다른 사람들이 보는 map 페이지 (readOnly)*/}
-          {/* <Route path="u/:slug/map" element={<MapLayout mapType="public" />}> */}
+          {/* <Route path="u/:nickname/map" element={<MapLayout mapType="public" />}> */}
           <Route path="public-map" element={<MapLayout mapType="public" />}>
             <Route index element={<Navigate to="profile" replace />} />
             <Route path="profile" element={<ProfilePanel />} />
