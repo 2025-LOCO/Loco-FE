@@ -10,6 +10,7 @@ export const Card = styled.div`
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1);
   width: 180px;
   min-height: 350px;
+  cursor: pointer;
 `;
 
 export const CardContentContainer = styled.div`
@@ -20,7 +21,6 @@ export const CardContentContainer = styled.div`
 
 export const ImgWrapper = styled.div<{ $hasImg: boolean }>`
   position: relative;
-  width: 170px;
   height: 110px;
   border-radius: 8px;
   border: 2px solid var(--color-sub200);
@@ -54,7 +54,7 @@ export const TagContainer = styled.div`
 export const PlaceTransportContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 10px;
 `;
 
 export const PlaceContainer = styled.div`
