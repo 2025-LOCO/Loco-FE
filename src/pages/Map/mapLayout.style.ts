@@ -30,14 +30,90 @@ export const PanelSection = styled.div`
   height: 100%;
 `;
 
-export const LeftPanelContainer = styled.div`
+export const LeftPanelContainer = styled.div<{ $isOpen: boolean }>`
+  position: relative;
   background-color: white;
   width: 300px;
+  overflow: ${({ $isOpen }) => ($isOpen ? "hidden" : "")};
+  transform: translateX(${({ $isOpen }) => ($isOpen ? "0" : "calc(-100%)")});
+
+  @media (max-width: 800px) {
+    display: none;
+  }
 `;
-export const TabContainer = styled.div``;
-export const TabItem = styled(NavLink)``;
+export const TabContainer = styled.div`
+  padding-left: 43px;
+  padding-top: 35px;
+  padding-bottom: 20px;
+
+  font-size: 16px;
+  font-weight: 700;
+`;
+
+export const TabItemContainer = styled.div`
+  display: inline-flex;
+  &:not(:last-child)::after {
+    content: "ㅣ";
+    margin: 0 5px;
+    color: var(--color-sub300);
+    pointer-events: none;
+    user-select: none;
+  }
+`;
+
+export const TabItem = styled(NavLink)`
+  color: var(--color-sub300);
+
+  &.active {
+    color: var(--color-navy);
+  }
+`;
+
+export const LeftPanelToggleBtn = styled.button<{ $isOpen: boolean }>`
+  position: absolute;
+  top: 0;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%; /* 원 */
+  background: #fff;
+  filter: drop-shadow(-3px 0 4px rgba(0, 0, 0, 0.1));
+  display: inline-flex;
+  cursor: pointer;
+  z-index: 2;
+
+  transform: rotate(${({ $isOpen }) => ($isOpen ? "0deg" : "180deg")});
+  right: -45px; /* 반지름 */
+`;
+
+export const LeftArrowIcon = styled.img`
+  width: 50px;
+`;
+
 export const LeftPanelBody = styled.div``;
-export const RightPanelContainer = styled.div`
+export const RightPanelContainer = styled.div<{ $showRightPanel: boolean }>`
   background-color: white;
+  position: relative;
   width: 300px;
+
+  transform: translateX(
+    ${({ $showRightPanel }) => ($showRightPanel ? "0" : "calc(100%)")}
+  );
+
+  @media (max-width: 1024px) {
+    display: none;
+  }
+`;
+
+export const LocationBadge = styled.div`
+  position: absolute;
+  right: 330px;
+  border-radius: 10px;
+  background: var(--color-navy);
+  padding: 11px 25px;
+  width: max-content;
+
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
 `;
