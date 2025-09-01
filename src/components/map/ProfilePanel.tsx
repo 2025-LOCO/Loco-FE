@@ -5,7 +5,8 @@ import AvatarImg from "@/assets/images/avatar1.svg";
 import BookMarkIcon from "@/assets/images/mini_bookmark.svg";
 import RankIcon from "@/assets/images/mini_rank.svg";
 import CertifiacteIcon from "@/assets/images/mini_certificate.svg";
-import VoteBar from "../VoteBar";
+import VoteBar from "@/components/VoteBar";
+import EditIcon from "@/assets/images/edit_profile.svg";
 
 export default function ProfilePanel() {
   const context = useOutletContext<MapOutletContext>();
@@ -13,11 +14,23 @@ export default function ProfilePanel() {
   return (
     <>
       <S.ProfilePanel>
-        <S.ProfileImg src={AvatarImg} alt="프로필이미지" />
+        {/* 프로필 */}
+        <S.ProfileImgContainer>
+          <S.ProfileImg src={AvatarImg} alt="프로필이미지" />
+
+          {/* 마이 지도에서만 마이프로필로 이동 및 프로필 수정 가능 */}
+          {mapType !== "public" && (
+            <S.EditWrapper to="/my-page">
+              <img src={EditIcon} alt="수정아이콘" />
+            </S.EditWrapper>
+          )}
+        </S.ProfileImgContainer>
         <div>
           <S.Nickname>닉네임</S.Nickname>
           <S.Intro>한 줄 소개 또는 상태 메시지</S.Intro>
         </div>
+
+        {/* 사용자를 표현하는 수치들 */}
         <S.StatsCard>
           <S.StatContainer>
             <S.StatTitle>
