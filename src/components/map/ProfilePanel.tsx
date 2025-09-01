@@ -11,6 +11,29 @@ import EditIcon from "@/assets/images/edit_profile.svg";
 export default function ProfilePanel() {
   const context = useOutletContext<MapOutletContext>();
   const { mapType } = context;
+
+  // constants
+  const stats = [
+    {
+      iconSrc: BookMarkIcon,
+      iconAlt: "담아요아이콘",
+      title: "담아요",
+      value: "105",
+    },
+    {
+      iconSrc: RankIcon,
+      iconAlt: "등급아이콘",
+      title: "등급",
+      value: "GOLD",
+    },
+    {
+      iconSrc: CertifiacteIcon,
+      iconAlt: "방문인증아이콘",
+      title: "방문인증",
+      value: "21",
+    },
+  ];
+
   return (
     <>
       <S.ProfilePanel>
@@ -32,29 +55,19 @@ export default function ProfilePanel() {
 
         {/* 사용자를 표현하는 수치들 */}
         <S.StatsCard>
-          <S.StatContainer>
-            <S.StatTitle>
-              <img src={BookMarkIcon} alt="담아요아이콘" />
-              <div>담아요</div>
-            </S.StatTitle>
-            <S.StatValue>105</S.StatValue>
-          </S.StatContainer>
-          <S.StatContainer>
-            <S.StatTitle>
-              <img src={RankIcon} alt="등급아이콘" />
-              <div>등급</div>
-            </S.StatTitle>
-            <S.StatValue>GOLD</S.StatValue>
-          </S.StatContainer>
-          <S.StatContainer>
-            <S.StatTitle>
-              <img src={CertifiacteIcon} alt="방문인증아이콘" />
-              <div>방문인증</div>
-            </S.StatTitle>
-            <S.StatValue>21</S.StatValue>
-          </S.StatContainer>
+          {stats.map((stat) => (
+            <S.StatContainer key={stat.title}>
+              <S.StatTitle>
+                <img src={stat.iconSrc} alt={stat.iconAlt} />
+                <div>{stat.title}</div>
+              </S.StatTitle>
+              <S.StatValue>{stat.value}</S.StatValue>
+            </S.StatContainer>
+          ))}
         </S.StatsCard>
         <div style={{ padding: "5px 0" }} />
+
+        {/* 투표결과 바 */}
         <VoteBar counts={[60, 10, 30]} />
       </S.ProfilePanel>
       {/* <div>{mapType} 프로필패널</div> */}
