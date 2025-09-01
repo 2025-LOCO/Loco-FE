@@ -27,8 +27,8 @@ export default function Header() {
         <S.MyContainer>
           <img src={MyIcon} alt="마이아이콘" style={{ paddingRight: "10px" }} />
           <S.MyItem to="my-page">마이</S.MyItem>
-          <S.MyItem to="loco-map">로코지도</S.MyItem>
-          <S.MyItem to="travel-map">여행지도</S.MyItem>
+          <S.MyItem to="my-loco-map">로코지도</S.MyItem>
+          <S.MyItem to="my-travel-map">여행지도</S.MyItem>
         </S.MyContainer>
       </S.HeaderContainer>
     </>

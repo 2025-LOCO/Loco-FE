@@ -10,6 +10,7 @@ export const Card = styled.div`
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1);
   width: 170px;
   height: 250px;
+  cursor: pointer;
 `;
 
 export const Title = styled.div`
