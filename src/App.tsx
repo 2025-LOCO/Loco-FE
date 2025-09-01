@@ -15,6 +15,7 @@ import ExploreLayout from "./pages/LocoExplore/ExploreLayout";
 import LocoGuidePage from "./pages/LocoExplore/LocoGuidePage";
 import LocoPlacePage from "./pages/LocoExplore/LocoPlacePage";
 import LocoRoutePage from "./pages/LocoExplore/LocoRoutePage";
+import DetailPage from "./pages/LocoTalk/DetailPage";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route path="loco-route" element={<LocoRoutePage />} />
           </Route>
           <Route path="loco-talk" element={<LocoTalkPage />} />
+          <Route path="loco-talk-detail" element={<DetailPage />} />
           <Route path="map-maker" element={<MapMakerPage />} />
           <Route path="guide" element={<GuidePage />} />
           <Route path="login" element={<LoginPage />} />

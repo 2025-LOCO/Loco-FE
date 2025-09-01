@@ -64,7 +64,12 @@ const GlobalStyle = createGlobalStyle`
   button {
     background: transparent;
   }
-
+    
+/* 🔥 이미지 focus 시 브라우저 기본 outline 제거 */
+  img:focus {
+    outline: none;
+    border: none;
+  }
 `;
 
 export default GlobalStyle;
