@@ -5,6 +5,7 @@ import AvatarImg from "@/assets/images/avatar1.svg";
 import BookMarkIcon from "@/assets/images/mini_bookmark.svg";
 import RankIcon from "@/assets/images/mini_rank.svg";
 import CertifiacteIcon from "@/assets/images/mini_certificate.svg";
+import VoteBar from "../VoteBar";
 
 export default function ProfilePanel() {
   const context = useOutletContext<MapOutletContext>();
@@ -40,14 +41,10 @@ export default function ProfilePanel() {
             <S.StatValue>21</S.StatValue>
           </S.StatContainer>
         </S.StatsCard>
-        <S.VoteContainer>
-          <S.VoteTitleContainer>
-            <S.VoteTitle>다른 사용자들의 의견</S.VoteTitle>
-            <S.VoteNum>답변 716</S.VoteNum>
-          </S.VoteTitleContainer>
-        </S.VoteContainer>
+        <div style={{ padding: "5px 0" }} />
+        <VoteBar counts={[60, 10, 30]} />
       </S.ProfilePanel>
-      <div>{mapType} 프로필패널</div>
+      {/* <div>{mapType} 프로필패널</div> */}
     </>
   );
 }
