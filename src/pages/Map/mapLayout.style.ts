@@ -33,7 +33,8 @@ export const PanelSection = styled.div`
 export const LeftPanelContainer = styled.div<{ $isOpen: boolean }>`
   position: relative;
   background-color: white;
-  width: 300px;
+  padding: 0 40px;
+  width: 220px;
   overflow: ${({ $isOpen }) => ($isOpen ? "hidden" : "")};
   transform: translateX(${({ $isOpen }) => ($isOpen ? "0" : "calc(-100%)")});
 
@@ -42,7 +43,6 @@ export const LeftPanelContainer = styled.div<{ $isOpen: boolean }>`
   }
 `;
 export const TabContainer = styled.div`
-  padding-left: 43px;
   padding-top: 35px;
   padding-bottom: 20px;
 
