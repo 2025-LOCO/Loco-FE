@@ -4,7 +4,7 @@ import * as S from "./styles/layout";
 import Divider from "@/components/Divider";
 
 export default function ExploreLayout() {
-  const TabMenus = [
+  const TAB_MENUS = [
     { name: "로코지기", to: "loco-guide" },
     { name: "로코장소", to: "loco-place" },
     { name: "로코루트", to: "loco-route" },
@@ -22,7 +22,7 @@ export default function ExploreLayout() {
 
         {/* 로코지기, 로코장소, 로코루트, 로코문답 탐색 메뉴 탭 */}
         <S.TabContainer>
-          {TabMenus.map((tabMenu) => (
+          {TAB_MENUS.map((tabMenu) => (
             <S.TabItem to={tabMenu.to} key={tabMenu.name}>
               {tabMenu.name}
             </S.TabItem>
