@@ -1,12 +1,209 @@
 import type { MapOutletContext } from "@/types/map";
 import { useOutletContext } from "react-router";
+import CheckIcon from "@/assets/images/circle_check.svg";
+import * as S from "./styles/PlacePanel";
+import LikedIcon from "@/assets/images/explore_liked.svg";
+import SearchIcon from "@/assets/images/search_places.svg";
+import SmallCheckIcon from "@/assets/images/check circle_17.svg";
+import FilledMarkIcon from "@/assets/images/bookmark_filled_17.svg";
+import AddPlaceIcon from "@/assets/images/add_place.svg";
+import BackIcon from "@/assets/images/back.svg";
+import { bestPlaces } from "@/data/dummy/explorePlaces";
+import { useState } from "react";
+import SearchBar from "../SearchBar";
+import type { Place } from "@/types/place";
+import PlaceDetailsKakao from "../place/PlaceDetailsKakao";
+import PlaceDetailsUser from "../place/PlaceDetailsUser";
 
 export default function ProfilePanel() {
   const context = useOutletContext<MapOutletContext>();
   const { mapType } = context;
+
+  // state
+  const [isSearchTabOpened, setIsSearchTabOpened] = useState<boolean>(false);
+  // const [placeSearchText, setPlaceSearchText] = useState<string>("");
+  const [selectedSearchPlace, setSelectedSearchPlace] = useState<Place | null>(
+    null
+  );
+  const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
+  const [isLiked, setIsLiked] = useState<boolean>(false);
+
+  // boolean
+  const hasSelectedSearchPlace = selectedSearchPlace !== null;
+  const hasSelectedPlace = selectedPlace !== null;
+
+  // handler
+  function handleToggleSearchPlace() {
+    setIsSearchTabOpened((prev) => !prev);
+  }
+
+  function handleSelectSearchPlace(place: Place) {
+    setSelectedSearchPlace((prev) => (prev?.id === place.id ? null : place));
+  }
+
+  function handleSelectPlace(place: Place) {
+    setSelectedPlace((prev) => (prev?.id === place.id ? null : place));
+  }
+
+  function handleClickBack() {
+    window.location.reload();
+  }
+
+  function handleClickLike() {
+    setIsLiked((prev) => !prev);
+  }
+
+  // function handleClickSearchBtn() {
+
+  // }
+
   return (
     <>
-      <div>{mapType} 장소패널</div>
+      <S.PlacePanel>
+        {hasSelectedPlace ? (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              paddingLeft: "35px",
+              paddingTop: "15px",
+              cursor: "pointer",
+            }}
+            onClick={handleClickBack}
+          >
+            <img src={BackIcon} width="12" alt="뒤로가기아이콘" />
+            <S.Back>장소 목록으로 돌아가기</S.Back>
+          </div>
+        ) : (
+          <>
+            {mapType == "public" ? (
+              <S.PanelTitleContainer>
+                <S.PanelTitleImg src={CheckIcon} alt="체크아이콘" />
+                <S.PanelTitle>인증 장소</S.PanelTitle>
+              </S.PanelTitleContainer>
+            ) : (
+              // 장소 검색 토글
+              <S.PanelTitleContainer $isSearch={true}>
+                <S.PanelTitleImg src={SearchIcon} alt="검색아이콘" />
+                <S.PanelTitle onClick={handleToggleSearchPlace}>
+                  {isSearchTabOpened ? "탐색창 닫기" : "장소 탐색하기"}
+                </S.PanelTitle>
+              </S.PanelTitleContainer>
+            )}
+          </>
+        )}
+        {/* 탐색창이 열린 경우 */}
+        {isSearchTabOpened ? (
+          <S.PlaceSection>
+            <div style={{ paddingRight: "45px", paddingTop: "15px" }}></div>
+            {hasSelectedSearchPlace ? (
+              <>
+                <S.PlaceItem
+                  key={selectedSearchPlace.id}
+                  $isSelected={true}
+                  onClick={() => {
+                    handleSelectSearchPlace(selectedSearchPlace);
+                  }}
+                >
+                  <S.SearchPlaceContentsContainer $isSelected={true}>
+                    <S.PlaceTitle>{selectedSearchPlace.name}</S.PlaceTitle>
+                    <S.PlaceLocation>장소 위치</S.PlaceLocation>
+                  </S.SearchPlaceContentsContainer>
+                </S.PlaceItem>
+                <S.AddPlaceBtn>
+                  <div>장소 추가하기</div>
+                  <img src={AddPlaceIcon} alt="장소추가아이콘" />
+                </S.AddPlaceBtn>
+                <div style={{ paddingTop: "190px" }} />
+                <PlaceDetailsKakao isCard={false}></PlaceDetailsKakao>
+              </>
+            ) : (
+              <>
+                {/* 장소 검색 결과 리스트 - 추후 데이터 변경 필요  */}
+                <SearchBar width="170px" />
+                <S.PlaceContainer>
+                  {bestPlaces.map((place) => (
+                    <S.PlaceItem
+                      key={place.id}
+                      onClick={() => {
+                        handleSelectSearchPlace(place);
+                      }}
+                    >
+                      <S.SearchPlaceContentsContainer>
+                        <S.PlaceTitle>{place.name}</S.PlaceTitle>
+                        <S.PlaceLocation>장소 위치</S.PlaceLocation>
+                      </S.SearchPlaceContentsContainer>
+                    </S.PlaceItem>
+                  ))}
+                </S.PlaceContainer>
+              </>
+            )}
+          </S.PlaceSection>
+        ) : (
+          // 탐색창이 닫힌 경우
+          <S.PlaceSection>
+            {hasSelectedPlace ? (
+              <>
+                <PlaceDetailsKakao
+                  isCard={false}
+                  isInSelectedPlaceDetail={true}
+                />
+
+                <PlaceDetailsUser
+                  isCard={false}
+                  mapType={mapType}
+                  handleClickLike={handleClickLike}
+                  isLiked={isLiked}
+                />
+              </>
+            ) : (
+              <>
+                {mapType === "public" ? (
+                  ""
+                ) : mapType === "loco" ? (
+                  <S.PlaceListTypeContainer>
+                    <S.PlaceListTypeImg
+                      src={SmallCheckIcon}
+                      alt="작은체크아이콘"
+                    />
+                    <S.PlaceListTypeTitle>인증 장소</S.PlaceListTypeTitle>
+                  </S.PlaceListTypeContainer>
+                ) : (
+                  <S.PlaceListTypeContainer>
+                    <S.PlaceListTypeImg
+                      src={FilledMarkIcon}
+                      alt="담아요아이콘"
+                    />
+                    <S.PlaceListTypeTitle>담은 장소</S.PlaceListTypeTitle>
+                  </S.PlaceListTypeContainer>
+                )}
+                {/* 장소 리스트 - 추후 데이터 변경 필요  */}
+                <S.PlaceContainer>
+                  {bestPlaces.map((place) => (
+                    <S.PlaceItem
+                      key={place.id}
+                      onClick={() => {
+                        handleSelectPlace(place);
+                      }}
+                    >
+                      <S.PlaceImgWrapper></S.PlaceImgWrapper>
+                      <S.PlaceContentsContainer>
+                        <S.PlaceTitle>{place.name}</S.PlaceTitle>
+                        <S.PlaceType>{place.type}</S.PlaceType>
+                        <S.LikedContainer>
+                          <img src={LikedIcon} alt="담아요아이콘" />
+                          <S.LikedNum>{place.liked}</S.LikedNum>
+                        </S.LikedContainer>
+                      </S.PlaceContentsContainer>
+                    </S.PlaceItem>
+                  ))}
+                </S.PlaceContainer>
+              </>
+            )}
+          </S.PlaceSection>
+        )}
+      </S.PlacePanel>
+      {/* <div>{mapType} 장소패널</div> */}
     </>
   );
 }

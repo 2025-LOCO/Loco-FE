@@ -6,6 +6,7 @@ export const ProfilePanel = styled.div`
   gap: 20px;
   padding-top: 20px;
   flex-direction: column;
+  padding: 20px 40px 0 40px;
 `;
 
 export const ProfileImg = styled.img``;

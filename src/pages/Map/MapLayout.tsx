@@ -4,6 +4,7 @@ import { Outlet, useLocation } from "react-router";
 import * as S from "./mapLayout.style";
 import ArrowIcon from "@/assets/images/arrow_left.svg";
 import { useState } from "react";
+import PlaceCard from "@/components/place/placeCard";
 
 export default function MapLayout({ mapType }: { mapType: MapType }) {
   // constant
@@ -20,17 +21,21 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
 
   // state
   const [isLPanelOpen, setIsLPanelOpen] = useState(true);
+  const [isLiked, setIsLiked] = useState<boolean>(false);
 
   // handler
   function handleToggleOpen() {
     setIsLPanelOpen((prev) => !prev);
   }
 
+  function handleClickLike() {
+    setIsLiked((prev) => !prev);
+  }
+
   return (
     <>
       <S.MapLayoutRoot>
         <S.MapSection>
-          배경지도
           <S.MapCanvas />
         </S.MapSection>
 
@@ -57,7 +62,7 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
                 <Outlet context={{ mapType }} />
               </S.LeftPanelBody>
             </S.LeftPanelContainer>
-
+            <PlaceCard handleClickLike={handleClickLike} isLiked={isLiked} />
             {/* 현재 탭이 루트인 경우만 우측패널 표시 */}
             <S.RightPanelContainer $showRightPanel={showRightPanel}>
               <div>우측패널</div>

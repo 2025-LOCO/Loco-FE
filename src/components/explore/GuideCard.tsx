@@ -1,10 +1,10 @@
-import type { Place } from "@/types/place";
+import type { Guide } from "@/types/guide";
 import * as S from "./styles";
 import RankIcon from "@/assets/images/explore_rank.svg";
 import LikedIcon from "@/assets/images/explore_liked.svg";
 import ProfileAvatarImg from "@/assets/images/avatar2.svg";
 
-export default function PlaceCard({ data }: { data: Place }) {
+export default function GuideCard({ data }: { data: Guide }) {
   return (
     <S.Common.Card>
       <S.Guide.CardContentContainer>

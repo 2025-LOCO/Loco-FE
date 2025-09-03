@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const FooterContainer = styled.div`
   background-color: var(--color-navy);
   height: 170px;
-  margin-top: 100px;
+  /* margin-top: 100px; */
   padding: 40px 60px;
 `;
 
