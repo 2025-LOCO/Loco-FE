@@ -3,13 +3,13 @@ import styled from "styled-components";
 
 export const MapLayoutRoot = styled.div`
   position: relative;
-  height: 100dvh;
+  height: calc(100dvh - 90px);
 `;
 
 export const MapSection = styled.div`
   position: absolute;
   z-index: 0;
-  background-color: var(--color-mint200);
+  background-color: var(--color-gray);
   color: white;
   width: 100%;
   height: 100%;
@@ -33,8 +33,9 @@ export const PanelSection = styled.div`
 export const LeftPanelContainer = styled.div<{ $isOpen: boolean }>`
   position: relative;
   background-color: white;
-  padding: 0 40px;
-  width: 220px;
+
+  width: 300px;
+  height: 100%;
   overflow: ${({ $isOpen }) => ($isOpen ? "hidden" : "")};
   transform: translateX(${({ $isOpen }) => ($isOpen ? "0" : "calc(-100%)")});
 
@@ -43,9 +44,7 @@ export const LeftPanelContainer = styled.div<{ $isOpen: boolean }>`
   }
 `;
 export const TabContainer = styled.div`
-  padding-top: 35px;
-  padding-bottom: 20px;
-
+  padding: 35px 40px 20px 40px;
   font-size: 16px;
   font-weight: 700;
 `;
@@ -75,7 +74,7 @@ export const LeftPanelToggleBtn = styled.button<{ $isOpen: boolean }>`
   width: 90px;
   height: 90px;
   border-radius: 50%; /* 원 */
-  background: #fff;
+  background: white;
   filter: drop-shadow(-3px 0 4px rgba(0, 0, 0, 0.1));
   display: inline-flex;
   cursor: pointer;
@@ -89,7 +88,9 @@ export const LeftArrowIcon = styled.img`
   width: 50px;
 `;
 
-export const LeftPanelBody = styled.div``;
+export const LeftPanelBody = styled.div`
+  height: 100%;
+`;
 export const RightPanelContainer = styled.div<{ $showRightPanel: boolean }>`
   background-color: white;
   position: relative;
