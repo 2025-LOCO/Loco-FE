@@ -1,17 +1,29 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-export const PlaceDetailKakao = styled.div`
-  width: 42%;
+export const PlaceDetailKakao = styled.div<{ $isCard: boolean }>`
+  width: ${(props) => (props.$isCard ? "42%" : "calc(100% + 45px)")};
+  margin-left: ${(props) => (props.$isCard ? "0" : "-45px")};
   display: flex;
   justify-content: center;
+  background-color: white;
 `;
 
-export const Content = styled.div`
-  padding-top: 30px;
+export const Content = styled.div<{
+  $isCard: boolean;
+  $isInSelectedPlaceDetail?: boolean;
+}>`
   display: flex;
-  flex-direction: column;
+  flex-direction: ${(props) => (props.$isCard ? "column" : "row")};
   gap: 2px;
-  width: 114px;
+  width: ${(props) => (props.$isCard ? "114px" : "100%")};
+  padding: ${(props) => (props.$isCard ? "30px 0 0 0" : "50px 20px 50px 25px")};
+  ${({ $isInSelectedPlaceDetail }) =>
+    $isInSelectedPlaceDetail &&
+    css`
+      padding-top: 40px;
+    `}
+
+  z-index: 100;
 `;
 
 export const PlaceTitle = styled.div`
@@ -26,14 +38,20 @@ export const PlaceType = styled.div`
   font-weight: 700;
 `;
 
-export const ImgWrapper = styled.div`
+export const ImgWrapper = styled.div<{ $isCard: boolean }>`
   width: 114px;
   height: 84px;
 
   margin: 3px 0;
+  margin-top: ${(props) => (props.$isCard ? "3px" : "10px")};
   border-radius: 8px;
   border: 2px solid var(--color-sub300);
   background-color: white;
+`;
+
+export const DetailListContainer = styled.div<{ $isCard: boolean }>`
+  padding-top: ${(props) => (props.$isCard ? "0" : "45px")};
+  padding-left: ${(props) => (props.$isCard ? "0" : "13px")};
 `;
 
 export const DetailContainer = styled.div`

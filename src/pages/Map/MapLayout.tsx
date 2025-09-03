@@ -21,10 +21,15 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
 
   // state
   const [isLPanelOpen, setIsLPanelOpen] = useState(true);
+  const [isLiked, setIsLiked] = useState<boolean>(false);
 
   // handler
   function handleToggleOpen() {
     setIsLPanelOpen((prev) => !prev);
+  }
+
+  function handleClickLike() {
+    setIsLiked((prev) => !prev);
   }
 
   return (
@@ -57,7 +62,7 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
                 <Outlet context={{ mapType }} />
               </S.LeftPanelBody>
             </S.LeftPanelContainer>
-            <PlaceCard />
+            <PlaceCard handleClickLike={handleClickLike} isLiked={isLiked} />
             {/* 현재 탭이 루트인 경우만 우측패널 표시 */}
             <S.RightPanelContainer $showRightPanel={showRightPanel}>
               <div>우측패널</div>

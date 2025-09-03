@@ -1,3 +1,5 @@
+import type { MapType } from "./map";
+
 export const PLACE_TYPES = [
   "공원",
   "전시/컨벤션",
@@ -24,4 +26,10 @@ export interface Place {
 
 export interface PlaceCardProps {
   place?: Place;
+  isCard?: boolean;
+  mapType?: MapType;
+  isInSelectedPlaceDetail?: boolean;
+  handleClickLike?: () => void;
+  isLiked?: boolean;
+  //  handleClickLike?: (placeId: number) => void;
 }

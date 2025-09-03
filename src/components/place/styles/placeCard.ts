@@ -24,7 +24,7 @@ export const CloseIconWrapper = styled.img`
   width: 18px;
   z-index: 16;
 `;
-export const LikeContainer = styled.div`
+export const LikeContainer = styled.div<{ $isLiked?: boolean }>`
   cursor: pointer;
   position: absolute;
   padding-left: 2px;
@@ -36,7 +36,8 @@ export const LikeContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 2px;
-  background-color: white;
+  background-color: ${(props) =>
+    props.$isLiked ? "var(--color-main350)" : "white"};
   border-radius: 13px;
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1);
 

@@ -6,6 +6,13 @@ export const PlacePanel = styled.div`
   height: 100%;
 `;
 
+export const Back = styled.span`
+  color: var(--color-navy);
+  font-size: 10px;
+  font-weight: 600;
+  padding-left: 5px;
+`;
+
 export const PanelTitleContainer = styled.button<{ $isSearch?: boolean }>`
   display: flex;
   gap: 10px;
@@ -109,14 +116,13 @@ export const PlaceItem = styled.div<{ $isSelected?: boolean }>`
   }
 `;
 
-export const PlaceImgWrapper = styled.div<{ $isSelected?: boolean }>`
+export const PlaceImgWrapper = styled.div`
   width: 75px;
   height: 55px;
 
   border-radius: 8px;
   border: 1px solid var(--color-sub300);
   background-color: white;
-  margin-left: ${({ $isSelected }) => ($isSelected ? "10px" : "0")};
 `;
 
 export const PlaceContentsContainer = styled.div`
@@ -125,10 +131,13 @@ export const PlaceContentsContainer = styled.div`
   justify-content: space-between;
 `;
 
-export const SearchPlaceContentsContainer = styled.div`
+export const SearchPlaceContentsContainer = styled.div<{
+  $isSelected?: boolean;
+}>`
   display: flex;
   flex-direction: column;
   gap: 5px;
+  padding-left: ${({ $isSelected }) => ($isSelected ? "10px" : "0")};
 `;
 
 export const PlaceTitle = styled.div`
