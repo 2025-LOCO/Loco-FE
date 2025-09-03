@@ -9,19 +9,19 @@ export const VoteTitleContainer = styled.div`
 
 export const VoteTitle = styled.div`
   color: var(--color-navy);
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 700;
 `;
 
 export const VoteNum = styled.div`
   color: var(--sub-500);
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 700;
 `;
 
 export const Bar = styled.div`
   width: 100%;
-  height: 8px;
+  height: 6px;
   border-radius: 9999px;
   display: flex;
   margin-top: 8px;
@@ -46,6 +46,6 @@ export const Label = styled.div`
   justify-content: space-between;
 
   color: #484f56;
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 400;
 `;

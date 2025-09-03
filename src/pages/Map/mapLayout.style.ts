@@ -3,7 +3,8 @@ import styled from "styled-components";
 
 export const MapLayoutRoot = styled.div`
   position: relative;
-  height: calc(100dvh - 100px); /* 전체 - 헤더 높이 */
+  height: calc(100dvh - 86px); /* 전체 - 헤더 높이 */
+  overflow: hidden;
 `;
 
 export const MapSection = styled.div`

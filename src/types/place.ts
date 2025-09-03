@@ -21,3 +21,7 @@ export interface Place {
   intro: string;
   type: PlaceType;
 }
+
+export interface PlaceCardProps {
+  place?: Place;
+}
