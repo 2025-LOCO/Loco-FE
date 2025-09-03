@@ -59,7 +59,7 @@ export default function ProfilePanel() {
 
   return (
     <>
-      <S.PlacePanel>
+      <S.Panel>
         {hasSelectedPlace ? (
           <div
             style={{
@@ -94,11 +94,11 @@ export default function ProfilePanel() {
         )}
         {/* 탐색창이 열린 경우 */}
         {isSearchTabOpened ? (
-          <S.PlaceSection>
+          <S.Section>
             <div style={{ paddingRight: "45px", paddingTop: "15px" }}></div>
             {hasSelectedSearchPlace ? (
               <>
-                <S.PlaceItem
+                <S.ItemContainer
                   key={selectedSearchPlace.id}
                   $isSelected={true}
                   onClick={() => {
@@ -106,10 +106,10 @@ export default function ProfilePanel() {
                   }}
                 >
                   <S.SearchPlaceContentsContainer $isSelected={true}>
-                    <S.PlaceTitle>{selectedSearchPlace.name}</S.PlaceTitle>
+                    <S.ItemTitle>{selectedSearchPlace.name}</S.ItemTitle>
                     <S.PlaceLocation>장소 위치</S.PlaceLocation>
                   </S.SearchPlaceContentsContainer>
-                </S.PlaceItem>
+                </S.ItemContainer>
                 <S.AddPlaceBtn>
                   <div>장소 추가하기</div>
                   <img src={AddPlaceIcon} alt="장소추가아이콘" />
@@ -121,27 +121,27 @@ export default function ProfilePanel() {
               <>
                 {/* 장소 검색 결과 리스트 - 추후 데이터 변경 필요  */}
                 <SearchBar width="170px" />
-                <S.PlaceContainer>
+                <S.ItemListContainer>
                   {bestPlaces.map((place) => (
-                    <S.PlaceItem
+                    <S.ItemContainer
                       key={place.id}
                       onClick={() => {
                         handleSelectSearchPlace(place);
                       }}
                     >
                       <S.SearchPlaceContentsContainer>
-                        <S.PlaceTitle>{place.name}</S.PlaceTitle>
+                        <S.ItemTitle>{place.name}</S.ItemTitle>
                         <S.PlaceLocation>장소 위치</S.PlaceLocation>
                       </S.SearchPlaceContentsContainer>
-                    </S.PlaceItem>
+                    </S.ItemContainer>
                   ))}
-                </S.PlaceContainer>
+                </S.ItemListContainer>
               </>
             )}
-          </S.PlaceSection>
+          </S.Section>
         ) : (
           // 탐색창이 닫힌 경우
-          <S.PlaceSection>
+          <S.Section>
             {hasSelectedPlace ? (
               <>
                 <PlaceDetailsKakao
@@ -161,48 +161,48 @@ export default function ProfilePanel() {
                 {mapType === "public" ? (
                   ""
                 ) : mapType === "loco" ? (
-                  <S.PlaceListTypeContainer>
-                    <S.PlaceListTypeImg
+                  <S.ItemListTypeContainer>
+                    <S.ItemListTypeImg
                       src={SmallCheckIcon}
                       alt="작은체크아이콘"
                     />
-                    <S.PlaceListTypeTitle>인증 장소</S.PlaceListTypeTitle>
-                  </S.PlaceListTypeContainer>
+                    <S.ItemListTypeTitle>인증 장소</S.ItemListTypeTitle>
+                  </S.ItemListTypeContainer>
                 ) : (
-                  <S.PlaceListTypeContainer>
-                    <S.PlaceListTypeImg
+                  <S.ItemListTypeContainer>
+                    <S.ItemListTypeImg
                       src={FilledMarkIcon}
                       alt="담아요아이콘"
                     />
-                    <S.PlaceListTypeTitle>담은 장소</S.PlaceListTypeTitle>
-                  </S.PlaceListTypeContainer>
+                    <S.ItemListTypeTitle>담은 장소</S.ItemListTypeTitle>
+                  </S.ItemListTypeContainer>
                 )}
                 {/* 장소 리스트 - 추후 데이터 변경 필요  */}
-                <S.PlaceContainer>
+                <S.ItemListContainer>
                   {bestPlaces.map((place) => (
-                    <S.PlaceItem
+                    <S.ItemContainer
                       key={place.id}
                       onClick={() => {
                         handleSelectPlace(place);
                       }}
                     >
-                      <S.PlaceImgWrapper></S.PlaceImgWrapper>
-                      <S.PlaceContentsContainer>
-                        <S.PlaceTitle>{place.name}</S.PlaceTitle>
-                        <S.PlaceType>{place.type}</S.PlaceType>
+                      <S.ItemImgWrapper></S.ItemImgWrapper>
+                      <S.ItemContentsContainer>
+                        <S.ItemTitle>{place.name}</S.ItemTitle>
+                        <S.ItemType>{place.type}</S.ItemType>
                         <S.LikedContainer>
                           <img src={LikedIcon} alt="담아요아이콘" />
                           <S.LikedNum>{place.liked}</S.LikedNum>
                         </S.LikedContainer>
-                      </S.PlaceContentsContainer>
-                    </S.PlaceItem>
+                      </S.ItemContentsContainer>
+                    </S.ItemContainer>
                   ))}
-                </S.PlaceContainer>
+                </S.ItemListContainer>
               </>
             )}
-          </S.PlaceSection>
+          </S.Section>
         )}
-      </S.PlacePanel>
+      </S.Panel>
       {/* <div>{mapType} 장소패널</div> */}
     </>
   );

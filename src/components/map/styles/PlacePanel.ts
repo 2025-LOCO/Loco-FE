@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const PlacePanel = styled.div`
+export const Panel = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -32,7 +32,7 @@ export const PanelTitle = styled.div`
   font-weight: 700;
 `;
 
-export const PlaceSection = styled.div`
+export const Section = styled.div`
   background-color: var(--color-mint200);
   width: calc(100% - 45px);
   flex: 1 1 auto;
@@ -42,23 +42,23 @@ export const PlaceSection = styled.div`
   padding-left: 45px;
 `;
 
-export const PlaceListTypeContainer = styled.div`
+export const ItemListTypeContainer = styled.div`
   display: flex;
   gap: 10px;
   padding-top: 25px;
 `;
 
-export const PlaceListTypeImg = styled.img`
+export const ItemListTypeImg = styled.img`
   width: 17px;
 `;
 
-export const PlaceListTypeTitle = styled.div`
+export const ItemListTypeTitle = styled.div`
   color: var(--color-navy);
   font-size: 15px;
   font-weight: 700;
 `;
 
-export const PlaceContainer = styled.div`
+export const ItemListContainer = styled.div`
   position: relative;
   margin-top: 20px;
   width: 200px;
@@ -99,7 +99,7 @@ export const PlaceContainer = styled.div`
   );
 `;
 
-export const PlaceItem = styled.div<{ $isSelected?: boolean }>`
+export const ItemContainer = styled.div<{ $isSelected?: boolean }>`
   display: flex;
   gap: 10px;
   cursor: pointer;
@@ -116,7 +116,7 @@ export const PlaceItem = styled.div<{ $isSelected?: boolean }>`
   }
 `;
 
-export const PlaceImgWrapper = styled.div`
+export const ItemImgWrapper = styled.div`
   width: 75px;
   height: 55px;
 
@@ -125,7 +125,7 @@ export const PlaceImgWrapper = styled.div`
   background-color: white;
 `;
 
-export const PlaceContentsContainer = styled.div`
+export const ItemContentsContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -140,13 +140,13 @@ export const SearchPlaceContentsContainer = styled.div<{
   padding-left: ${({ $isSelected }) => ($isSelected ? "10px" : "0")};
 `;
 
-export const PlaceTitle = styled.div`
+export const ItemTitle = styled.div`
   color: var(--color-navy);
   font-size: 13px;
   font-weight: 700;
 `;
 
-export const PlaceType = styled.div`
+export const ItemType = styled.div`
   color: var(--color-navy);
   font-size: 12px;
   font-weight: 300;
