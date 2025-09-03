@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export const MapLayoutRoot = styled.div`
   position: relative;
-  height: calc(100dvh - 90px);
+  height: calc(100dvh - 100px); /* 전체 - 헤더 높이 */
 `;
 
 export const MapSection = styled.div`
@@ -44,7 +44,7 @@ export const LeftPanelContainer = styled.div<{ $isOpen: boolean }>`
   }
 `;
 export const TabContainer = styled.div`
-  padding: 35px 40px 20px 40px;
+  padding: 35px 40px 0 40px;
   font-size: 16px;
   font-weight: 700;
 `;

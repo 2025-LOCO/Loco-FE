@@ -6,11 +6,11 @@ export const PlacePanel = styled.div`
   height: 100%;
 `;
 
-export const PanelTitleContainer = styled.div<{ $isSearch?: boolean }>`
+export const PanelTitleContainer = styled.button<{ $isSearch?: boolean }>`
   display: flex;
   gap: 10px;
   align-items: center;
-  padding: 0 40px 20px 40px;
+  padding: 20px 40px;
   cursor: ${({ $isSearch }) => ($isSearch ? "pointer" : "")};
 `;
 
@@ -53,7 +53,7 @@ export const PlaceListTypeTitle = styled.div`
 
 export const PlaceContainer = styled.div`
   position: relative;
-  margin-top: 15px;
+  margin-top: 20px;
   width: 200px;
   height: 400px;
   overflow-y: auto;
@@ -92,31 +92,43 @@ export const PlaceContainer = styled.div`
   );
 `;
 
-export const PlaceItem = styled.div`
+export const PlaceItem = styled.div<{ $isSelected?: boolean }>`
   display: flex;
   gap: 10px;
   cursor: pointer;
   padding: 15px 0;
-  margin-right: 10px;
+  margin-right: ${({ $isSelected }) => ($isSelected ? "45px" : "10px")};
+  border-radius: ${({ $isSelected }) => ($isSelected ? "12px" : "0px")};
+
+  background-color: ${({ $isSelected }) =>
+    $isSelected ? "var(--color-mint300)" : "transparent"};
 
   &:not(:last-child) {
-    border-bottom: 1px solid var(--color-sub300);
+    border-bottom: ${({ $isSelected }) =>
+      $isSelected ? "none" : "1px solid var(--color-sub300);"};
   }
 `;
 
-export const PlaceImgWrapper = styled.div`
+export const PlaceImgWrapper = styled.div<{ $isSelected?: boolean }>`
   width: 75px;
   height: 55px;
 
   border-radius: 8px;
   border: 1px solid var(--color-sub300);
   background-color: white;
+  margin-left: ${({ $isSelected }) => ($isSelected ? "10px" : "0")};
 `;
 
 export const PlaceContentsContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+`;
+
+export const SearchPlaceContentsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 `;
 
 export const PlaceTitle = styled.div`
@@ -131,6 +143,12 @@ export const PlaceType = styled.div`
   font-weight: 300;
 `;
 
+export const PlaceLocation = styled.div`
+  color: var(--color-navy);
+  font-size: 12px;
+  font-weight: 300;
+`;
+
 export const LikedContainer = styled.div`
   display: inline-flex;
   gap: 5px;
@@ -140,4 +158,17 @@ export const LikedNum = styled.div`
   color: #484f56;
   font-size: 13px;
   font-weight: 600;
+`;
+
+export const AddPlaceBtn = styled.button`
+  display: flex;
+  gap: 5px;
+  padding-left: 60px;
+  padding-top: 15px;
+  cursor: pointer;
+
+  color: var(--color-navy);
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
 `;
