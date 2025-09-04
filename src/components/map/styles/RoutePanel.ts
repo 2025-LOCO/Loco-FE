@@ -56,3 +56,15 @@ export const TransportSvg = styled.div<{ $isSelected?: boolean }>`
 
   color: ${(props) => (props.$isSelected ? "var(--color-navy)" : "")};
 `;
+
+export const RouteSection = styled.div``;
+
+export const RouteListSection = styled.div<{ $isOpened?: boolean }>`
+  width: calc(100% - 45px);
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding-left: 45px;
+  display: ${(props) => (props.$isOpened ? "" : "none")};
+`;

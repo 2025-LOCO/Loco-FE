@@ -8,17 +8,20 @@ export const Panel = styled.div`
   height: 100%;
 `;
 
-export const PanelTitleContainer = styled.button<{ $isSearch?: boolean }>`
+export const PanelTitleContainer = styled.button<{ $isTravelMap?: boolean }>`
   display: flex;
   gap: 10px;
   align-items: center;
-  padding: 20px 40px;
-  cursor: ${({ $isSearch }) => ($isSearch ? "pointer" : "")};
+  /* padding: 20px 40px; */
+  padding: 20px 40px 0; // 바뀜
+  width: 100%;
+  cursor: ${({ $isTravelMap }) => ($isTravelMap ? "pointer" : "")};
 `;
 
-export const PanelTitleImg = styled.img`
+export const PanelTitleImg = styled.img<{ $isOpened?: boolean }>`
   width: 20px;
   height: 20px;
+  transform: ${({ $isOpened }) => ($isOpened ? "" : "rotate(180deg)")};
 `;
 
 export const PanelTitle = styled.div`
@@ -27,7 +30,7 @@ export const PanelTitle = styled.div`
   font-weight: 700;
 `;
 
-export const Section = styled.div`
+export const ItemListSection = styled.div`
   background-color: var(--color-mint200);
   width: calc(100% - 45px);
   flex: 1 1 auto;

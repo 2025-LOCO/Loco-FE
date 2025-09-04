@@ -19,10 +19,22 @@ export default function ProfilePanel() {
 
   // state
   const [selectedRoute, setSelectedRoute] = useState<LocoRoute | null>(null);
+  const [isMyRouteOpened, setIsMyRouteOpened] = useState<boolean>(true);
+  const [isLikedRouteOpened, setIsLikedRouteOpened] = useState<boolean>(false);
 
   // handler
   function handleSelectRoute(route: LocoRoute) {
     setSelectedRoute((prev) => (prev?.id === route.id ? null : route));
+  }
+
+  function handleToggleMyRoute() {
+    setIsMyRouteOpened((prev) => !prev);
+    setIsLikedRouteOpened(false);
+  }
+
+  function handleToggleLikedRoute() {
+    setIsLikedRouteOpened((prev) => !prev);
+    setIsMyRouteOpened(false);
   }
 
   return (
@@ -30,14 +42,148 @@ export default function ProfilePanel() {
       <Common.Panel>
         {mapType == "travel" ? (
           <>
-            <Common.PanelTitleContainer>
-              <Common.PanelTitleImg src={DownIcon} alt="루트아이콘" />
-              <Common.PanelTitle>만든 여행 루트</Common.PanelTitle>
-            </Common.PanelTitleContainer>
-            <Common.PanelTitleContainer>
-              <Common.PanelTitleImg src={DownIcon} alt="루트아이콘" />
-              <Common.PanelTitle>담은 여행 루트</Common.PanelTitle>
-            </Common.PanelTitleContainer>
+            <S.RouteSection>
+              <Common.PanelTitleContainer
+                $isTravelMap={true}
+                onClick={handleToggleLikedRoute}
+              >
+                <Common.PanelTitleImg
+                  src={DownIcon}
+                  alt="루트아이콘"
+                  $isOpened={isLikedRouteOpened}
+                />
+                <Common.PanelTitle>담은 여행 루트</Common.PanelTitle>
+              </Common.PanelTitleContainer>
+              <S.RouteListSection $isOpened={isLikedRouteOpened}>
+                <Common.ItemListContainer>
+                  {bestRoutes.map((route) => (
+                    <Common.ItemContainer
+                      key={route.id}
+                      onClick={() => {
+                        handleSelectRoute(route);
+                      }}
+                    >
+                      <S.TagContainer>
+                        {route.tags.map((tag) => (
+                          <div key={tag.id}># {tag.name}</div>
+                        ))}
+                      </S.TagContainer>
+                      <S.ItemHeaderContentsContainer>
+                        <Common.ItemImgWrapper></Common.ItemImgWrapper>
+
+                        <Common.ItemContentsContainer>
+                          <Common.ItemTitle>{route.name}</Common.ItemTitle>
+                          <Common.LikedContainer>
+                            <img src={LikedIcon} alt="담아요아이콘" />
+                            <Common.LikedNum>{route.liked}</Common.LikedNum>
+                          </Common.LikedContainer>
+                        </Common.ItemContentsContainer>
+                      </S.ItemHeaderContentsContainer>
+                      <Common.ItemType>{route.intro}</Common.ItemType>
+                      <S.PlaceTransportContainer>
+                        <S.PlaceContainer>
+                          {route.places.map((place) => (
+                            <S.PlaceTag
+                              key={place.id}
+                              $isSelected={route.id === selectedRoute?.id}
+                            >
+                              {place.name}
+                            </S.PlaceTag>
+                          ))}
+                        </S.PlaceContainer>
+                        <S.TransportContainer>
+                          {route.transportations.map((by) => {
+                            const Icon =
+                              TRANSPORTATION_ICON_SRC[
+                                by.name as TransportationName
+                              ];
+                            return (
+                              <S.TransportSvg
+                                key={by.id}
+                                $isSelected={route.id === selectedRoute?.id}
+                              >
+                                <Icon />
+                              </S.TransportSvg>
+                            );
+                          })}
+                        </S.TransportContainer>
+                      </S.PlaceTransportContainer>
+                    </Common.ItemContainer>
+                  ))}
+                </Common.ItemListContainer>
+              </S.RouteListSection>
+            </S.RouteSection>
+            <S.RouteSection>
+              <Common.PanelTitleContainer
+                $isTravelMap={true}
+                onClick={handleToggleMyRoute}
+              >
+                <Common.PanelTitleImg
+                  src={DownIcon}
+                  alt="루트아이콘"
+                  $isOpened={isMyRouteOpened}
+                />
+                <Common.PanelTitle>나의 여행 루트</Common.PanelTitle>
+              </Common.PanelTitleContainer>
+              <S.RouteListSection $isOpened={isMyRouteOpened}>
+                <Common.ItemListContainer>
+                  {bestRoutes.map((route) => (
+                    <Common.ItemContainer
+                      key={route.id}
+                      onClick={() => {
+                        handleSelectRoute(route);
+                      }}
+                    >
+                      <S.TagContainer>
+                        {route.tags.map((tag) => (
+                          <div key={tag.id}># {tag.name}</div>
+                        ))}
+                      </S.TagContainer>
+                      <S.ItemHeaderContentsContainer>
+                        <Common.ItemImgWrapper></Common.ItemImgWrapper>
+
+                        <Common.ItemContentsContainer>
+                          <Common.ItemTitle>{route.name}</Common.ItemTitle>
+                          <Common.LikedContainer>
+                            <img src={LikedIcon} alt="담아요아이콘" />
+                            <Common.LikedNum>{route.liked}</Common.LikedNum>
+                          </Common.LikedContainer>
+                        </Common.ItemContentsContainer>
+                      </S.ItemHeaderContentsContainer>
+                      <Common.ItemType>{route.intro}</Common.ItemType>
+                      <S.PlaceTransportContainer>
+                        <S.PlaceContainer>
+                          {route.places.map((place) => (
+                            <S.PlaceTag
+                              key={place.id}
+                              $isSelected={route.id === selectedRoute?.id}
+                            >
+                              {place.name}
+                            </S.PlaceTag>
+                          ))}
+                        </S.PlaceContainer>
+                        <S.TransportContainer>
+                          {route.transportations.map((by) => {
+                            const Icon =
+                              TRANSPORTATION_ICON_SRC[
+                                by.name as TransportationName
+                              ];
+                            return (
+                              <S.TransportSvg
+                                key={by.id}
+                                $isSelected={route.id === selectedRoute?.id}
+                              >
+                                <Icon />
+                              </S.TransportSvg>
+                            );
+                          })}
+                        </S.TransportContainer>
+                      </S.PlaceTransportContainer>
+                    </Common.ItemContainer>
+                  ))}
+                </Common.ItemListContainer>
+              </S.RouteListSection>
+            </S.RouteSection>
           </>
         ) : (
           <>
@@ -45,7 +191,7 @@ export default function ProfilePanel() {
               <Common.PanelTitleImg src={RouteIcon} alt="루트아이콘" />
               <Common.PanelTitle>추천 루트</Common.PanelTitle>
             </Common.PanelTitleContainer>
-            <Common.Section>
+            <Common.ItemListSection>
               <Common.ItemListContainer>
                 {bestRoutes.map((route) => (
                   <Common.ItemContainer
@@ -102,7 +248,7 @@ export default function ProfilePanel() {
                   </Common.ItemContainer>
                 ))}
               </Common.ItemListContainer>
-            </Common.Section>
+            </Common.ItemListSection>
           </>
         )}
       </Common.Panel>
