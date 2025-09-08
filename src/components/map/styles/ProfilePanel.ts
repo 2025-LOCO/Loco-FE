@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import styled from "styled-components";
 
 export const ProfilePanel = styled.div`
@@ -5,11 +6,23 @@ export const ProfilePanel = styled.div`
   gap: 20px;
   padding-top: 20px;
   flex-direction: column;
+  padding: 20px 40px 0 40px;
 `;
 
-export const ProfileImg = styled.img`
+export const ProfileImg = styled.img``;
+
+export const ProfileImgContainer = styled.div`
+  position: relative;
   width: 135px;
   height: 135px;
+`;
+
+export const EditWrapper = styled(Link)`
+  position: absolute;
+  bottom: -8px;
+  right: 0;
+
+  cursor: pointer;
 `;
 
 export const Nickname = styled.div`
@@ -53,27 +66,4 @@ export const StatValue = styled.div`
   font-size: 15px;
   font-weight: 700;
   padding-top: 5px;
-`;
-
-export const VoteContainer = styled.div``;
-
-export const VoteTitleContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-export const VoteTitle = styled.div`
-  color: var(--color-navy);
-  font-size: 10px;
-  font-weight: 700;
-  line-height: 150%; /* 15px */
-  letter-spacing: 0.04px;
-`;
-
-export const VoteNum = styled.div`
-  color: var(--sub-500);
-  font-size: 10px;
-  font-weight: 700;
-  line-height: 150%; /* 15px */
-  letter-spacing: 0.06px;
 `;
