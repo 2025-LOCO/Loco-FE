@@ -2,6 +2,8 @@ import LocationDropDown from "@/components/LocationDropDown";
 // import * as S from "./styles/layout";
 import * as S from "./styles";
 import Divider from "@/components/Divider";
+import PopupPlaceEdit from "@/components/PopupPlaceEdit";
+import PopupHashTagEdit from "@/components/PopupHashTagEdit";
 
 export default function LocoTalkPage() {
   const TabMenus = [
@@ -12,7 +14,9 @@ export default function LocoTalkPage() {
   ];
    return (
     <S.TalkSection>
-      {/* 헤더 섹션 */}
+      {/* 헤더 섹션 */} 
+      <PopupPlaceEdit></PopupPlaceEdit>
+      <PopupHashTagEdit></PopupHashTagEdit>
       <div>
         <LocationDropDown />
         <S.LocationIntroduce>지역에 대한 한 줄 설명</S.LocationIntroduce>
@@ -57,7 +61,7 @@ export default function LocoTalkPage() {
 
           <S.ListRow>
             <span>1</span>
-            <S.PostTitle>홍천에 부모님과 갈만한 조용한 공원이 있을까요?</S.PostTitle>
+            <S.PostTitle>퇴근후 세영쌤과 쉬어갈만한 조용한 공원이 있을까요?</S.PostTitle>
             <span>3</span>
             <span>5</span>
             <span>2025.08.10</span>
@@ -66,7 +70,7 @@ export default function LocoTalkPage() {
           <S.ListRow>
             <span>2</span>
             <S.PostTitle>
-              파주에 영어마을형 임진각을 가고 싶은데 차가 없는데 어떻게 이동하는게 좋을까요?
+              조세영쌤 빨리 집에가세요!!!
             </S.PostTitle>
             <span>0</span>
             <span>3</span>
