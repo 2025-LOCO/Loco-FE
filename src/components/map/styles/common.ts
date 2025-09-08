@@ -12,8 +12,8 @@ export const PanelTitleContainer = styled.button<{ $isTravelMap?: boolean }>`
   display: flex;
   gap: 10px;
   align-items: center;
-  /* padding: 20px 40px; */
-  padding: 20px 40px 0; // 바뀜
+  padding: 20px 40px;
+  /* padding: 20px 40px 0; // 바뀜 */
   width: 100%;
   cursor: ${({ $isTravelMap }) => ($isTravelMap ? "pointer" : "")};
 `;
@@ -21,7 +21,7 @@ export const PanelTitleContainer = styled.button<{ $isTravelMap?: boolean }>`
 export const PanelTitleImg = styled.img<{ $isOpened?: boolean }>`
   width: 20px;
   height: 20px;
-  transform: ${({ $isOpened }) => ($isOpened ? "" : "rotate(180deg)")};
+  transform: ${({ $isOpened }) => ($isOpened ? "rotate(180deg)" : "")};
 `;
 
 export const PanelTitle = styled.div`
@@ -58,22 +58,25 @@ export const ItemListTypeTitle = styled.div`
 
 export const ItemListContainer = styled.div`
   position: relative;
-  margin-top: 20px;
+  /* margin-top: 20px; */
   width: 200px;
   height: 400px;
   overflow-y: auto;
+  margin-bottom: 10px;
 
   padding-right: 25px;
 
   /* 스크롤바*/
   &::-webkit-scrollbar {
     width: 6px;
+    height: 300px;
   }
 
   /* 스크롤바 막대 */
   &::-webkit-scrollbar-thumb {
     background-color: var(--color-main500);
     border-radius: 9999px;
+    height: 30%;
   }
 
   /* 스크롤바 배경*/
@@ -85,16 +88,17 @@ export const ItemListContainer = styled.div`
   /* 장소 리스트 아래 50px만 흐리게 */
   -webkit-mask-image: linear-gradient(
     to bottom,
-    black 0%,
-    black calc(100% - 50px),
-    transparent 100%
+    white 0%,
+    white calc(100% - 50px),
+    transparent 0%
   );
   mask-image: linear-gradient(
     to bottom,
-    black 0%,
-    black calc(100% - 50px),
-    transparent 100%
+    white 0%,
+    white calc(100% - 50px),
+    transparent 90%
   );
+  // transparent 바뀜 100->90
 `;
 
 export const ItemContainer = styled.div<{ $isSelected?: boolean }>`

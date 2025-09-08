@@ -6,6 +6,7 @@ export const PlaceDetailKakao = styled.div<{ $isCard: boolean }>`
   display: flex;
   justify-content: center;
   background-color: white;
+  margin-top: auto;
 `;
 
 export const Content = styled.div<{

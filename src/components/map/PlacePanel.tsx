@@ -46,7 +46,7 @@ export default function ProfilePanel() {
   }
 
   function handleClickBack() {
-    window.location.reload();
+    setSelectedPlace(null);
   }
 
   function handleClickLike() {
@@ -114,7 +114,6 @@ export default function ProfilePanel() {
                   <div>장소 추가하기</div>
                   <img src={AddPlaceIcon} alt="장소추가아이콘" />
                 </S.AddPlaceBtn>
-                <div style={{ paddingTop: "190px" }} />
                 <PlaceDetailsKakao isCard={false}></PlaceDetailsKakao>
               </>
             ) : (

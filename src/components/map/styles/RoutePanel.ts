@@ -57,9 +57,13 @@ export const TransportSvg = styled.div<{ $isSelected?: boolean }>`
   color: ${(props) => (props.$isSelected ? "var(--color-navy)" : "")};
 `;
 
-export const RouteSection = styled.div``;
+export const RouteSection = styled.div`
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+`;
 
 export const RouteListSection = styled.div<{ $isOpened?: boolean }>`
+  position: relative;
+
   width: calc(100% - 45px);
   flex: 1 1 auto;
   min-height: 0;
@@ -67,4 +71,11 @@ export const RouteListSection = styled.div<{ $isOpened?: boolean }>`
   flex-direction: column;
   padding-left: 45px;
   display: ${(props) => (props.$isOpened ? "" : "none")};
+`;
+
+export const AddRouteIcon = styled.div`
+  cursor: pointer;
+  position: absolute;
+  bottom: 10px;
+  right: 38px;
 `;

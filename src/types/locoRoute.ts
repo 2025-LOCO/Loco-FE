@@ -19,6 +19,8 @@ interface HashTag {
 interface Place {
   id: number;
   name: string;
+  type?: string;
+  day?: number;
 }
 
 // 순서는 day,order로 중복없이 정렬된 상태로 백엔드에서 받아야 함

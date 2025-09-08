@@ -36,7 +36,6 @@ export const Section = styled.div`
   background-color: var(--color-mint200);
   width: calc(100% - 45px);
   flex: 1 1 auto;
-  min-height: 0;
   display: flex;
   flex-direction: column;
   padding-left: 45px;
@@ -101,6 +100,8 @@ export const ItemListContainer = styled.div`
 
 export const ItemContainer = styled.div<{ $isSelected?: boolean }>`
   display: flex;
+  max-height: fit-content;
+  flex: 1 1 auto;
   gap: 10px;
   cursor: pointer;
   padding: 15px 0;
@@ -135,6 +136,7 @@ export const SearchPlaceContentsContainer = styled.div<{
   $isSelected?: boolean;
 }>`
   display: flex;
+
   flex-direction: column;
   gap: 5px;
   padding-left: ${({ $isSelected }) => ($isSelected ? "10px" : "0")};
