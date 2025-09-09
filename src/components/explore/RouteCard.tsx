@@ -35,13 +35,11 @@ export default function RouteCard({ data }: { data: LocoRoute }) {
             ))}
           </S.Route.PlaceContainer>
           <S.Route.TransportContainer>
-            {data.transportations.map((by) => (
-              <S.Route.TransportImg
-                key={by.id}
-                src={TRANSPORTATION_ICON_SRC[by.name as TransportationName]}
-                alt={`${by.name} 아이콘`}
-              />
-            ))}
+            {data.transportations.map((by) => {
+              const TransportIcon =
+                TRANSPORTATION_ICON_SRC[by.name as TransportationName];
+              return <TransportIcon key={by.id} />;
+            })}
           </S.Route.TransportContainer>
         </S.Route.PlaceTransportContainer>
       </S.Route.CardContentContainer>

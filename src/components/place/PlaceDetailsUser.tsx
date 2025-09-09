@@ -7,7 +7,6 @@ import FilledMarkIcon from "@/assets/images/bookmark_filled_8.svg";
 import EmptyMarkIcon from "@/assets/images/bookmark_empty_8.svg";
 
 export default function PlaceDetailsUser({
-  place,
   mapType,
   isCard = true,
   handleClickLike,

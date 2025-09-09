@@ -1,4 +1,4 @@
-import * as S from "./styles/header";
+import * as S from "./styles/Header";
 import LogoIcon from "@/assets/images/logo_header.svg";
 import MyIcon from "@/assets/images/profile_small.svg";
 

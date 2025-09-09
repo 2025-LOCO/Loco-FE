@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useParams, useNavigate } from "react-router";
 import * as S from "./styles/detail";
 import LocationDropDown from "@/components/LocationDropDown";
 import Divider from "@/components/Divider";
@@ -10,10 +9,10 @@ import SlightlyHappy from "@/assets/images/Slightly-happy.svg";
 import Pleading from "@/assets/images/Pleading.svg";
 
 export default function PostDetailPage() {
-  const { id } = useParams();
-  const navigate = useNavigate();
   const [sortOrder, setSortOrder] = useState("최신순");
-  const [selectedHearts, setSelectedHearts] = useState<Record<number, string>>({});
+  const [selectedHearts, setSelectedHearts] = useState<Record<number, string>>(
+    {}
+  );
 
   const TabMenus = [
     { name: "로코지기", to: "loco-guide" },
@@ -38,28 +37,44 @@ export default function PostDetailPage() {
     {
       id: 1,
       author: "인돌돌기",
-      content: "북부시 근처에 000 공원이 있는데 , 다른곳보다 여기가 돗자리 펴고 놀기 좋아요! 그리고 버스랑 자전거로도 갈 수 있는 거리입니다.!",
+      content:
+        "북부시 근처에 000 공원이 있는데 , 다른곳보다 여기가 돗자리 펴고 놀기 좋아요! 그리고 버스랑 자전거로도 갈 수 있는 거리입니다.!",
       createdAt: "2025.08.10",
     },
     {
       id: 2,
       author: "전또해기",
-      content: "콘국시 근저에 000 공원이 있는데 팜구 시원한 주댔에 어기서 뽓차리 퍼고 놀이요!",
+      content:
+        "콘국시 근저에 000 공원이 있는데 팜구 시원한 주댔에 어기서 뽓차리 퍼고 놀이요!",
       createdAt: "2025.08.10",
     },
-    { id: 3, author: "사용자3", content: "추가 댓글 내용입니다.", createdAt: "2025.08.10" },
-    { id: 4, author: "사용자4", content: "또 다른 댓글입니다.", createdAt: "2025.08.10" },
-    { id: 5, author: "사용자5", content: "마지막 댓글입니다.", createdAt: "2025.08.10" },
+    {
+      id: 3,
+      author: "사용자3",
+      content: "추가 댓글 내용입니다.",
+      createdAt: "2025.08.10",
+    },
+    {
+      id: 4,
+      author: "사용자4",
+      content: "또 다른 댓글입니다.",
+      createdAt: "2025.08.10",
+    },
+    {
+      id: 5,
+      author: "사용자5",
+      content: "마지막 댓글입니다.",
+      createdAt: "2025.08.10",
+    },
   ];
 
   // 이모지 선택 핸들러
   const handleHeartClick = (commentId: number, emoji: string) => {
-  setSelectedHearts((prev) => ({
-    ...prev,
-    [commentId]: emoji,
-  }));
-};
-
+    setSelectedHearts((prev) => ({
+      ...prev,
+      [commentId]: emoji,
+    }));
+  };
 
   return (
     <S.TalkSection>
@@ -98,7 +113,10 @@ export default function PostDetailPage() {
         <S.CommentSection>
           <S.CommentHeader>
             <S.CommentCount>댓글</S.CommentCount>
-            <S.SortSelect value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
+            <S.SortSelect
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value)}
+            >
               <option>최신순</option>
               <option>인기순</option>
             </S.SortSelect>
@@ -106,34 +124,34 @@ export default function PostDetailPage() {
 
           <S.CommentList>
             {replies.map((reply) => (
-                <S.CommentItem key={reply.id}>
-                   <S.CommentContent>
-                   {/* 작성자 + 날짜 */}
-                    <S.CommentAuthorRow>
-                        <S.CommentAuthor>{reply.author}</S.CommentAuthor>
-                    </S.CommentAuthorRow>
+              <S.CommentItem key={reply.id}>
+                <S.CommentContent>
+                  {/* 작성자 + 날짜 */}
+                  <S.CommentAuthorRow>
+                    <S.CommentAuthor>{reply.author}</S.CommentAuthor>
+                  </S.CommentAuthorRow>
 
-                   {/* 댓글 내용 + 이모지 */}
-                       <S.CommentBodyRow>
-                         <S.CommentText>{reply.content}</S.CommentText>
-                         <S.HeartContainer>
-                           {[HeartFace, SlightlyHappy, Pleading].map((emoji) => (
-                             <S.Emoji
-                             key={emoji}
-                             src={emoji}
-                             alt={emoji}
-                             $isSelected={selectedHearts[reply.id] === emoji}
-                             onClick={() => handleHeartClick(reply.id, emoji)}
-                             />
-                           ))}
-                         </S.HeartContainer>
-                        </S.CommentBodyRow>
-                          <S.CommentAuthorRow> 
-                            <S.CommentDate>{reply.createdAt}</S.CommentDate>
-                         </S.CommentAuthorRow>
-                    </S.CommentContent>
-                 </S.CommentItem>
-              ))}
+                  {/* 댓글 내용 + 이모지 */}
+                  <S.CommentBodyRow>
+                    <S.CommentText>{reply.content}</S.CommentText>
+                    <S.HeartContainer>
+                      {[HeartFace, SlightlyHappy, Pleading].map((emoji) => (
+                        <S.Emoji
+                          key={emoji}
+                          src={emoji}
+                          alt={emoji}
+                          $isSelected={selectedHearts[reply.id] === emoji}
+                          onClick={() => handleHeartClick(reply.id, emoji)}
+                        />
+                      ))}
+                    </S.HeartContainer>
+                  </S.CommentBodyRow>
+                  <S.CommentAuthorRow>
+                    <S.CommentDate>{reply.createdAt}</S.CommentDate>
+                  </S.CommentAuthorRow>
+                </S.CommentContent>
+              </S.CommentItem>
+            ))}
           </S.CommentList>
         </S.CommentSection>
       </S.PostDetailContainer>
