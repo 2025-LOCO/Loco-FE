@@ -14,21 +14,8 @@ import PlaceCard from "@/components/place/placeCard";
 import VoteBar from "@/components/VoteBar";
 import RouteTimeline from "@/components/route/RouteTimeLine";
 import { bestPlaces } from "@/data/dummy/explorePlaces";
+import MapCanvas from "@/components/map/MapCanvas";
 // import { buildDays } from "@/utils/buildDays";
-
-type Visit = {
-  id: number;
-  title: string;
-  category: string;
-  meta?: string;
-  icon?: React.ReactNode;
-  day?: number; // 1..N (없으면 1일로 간주)
-};
-
-type RoutePlan = {
-  period?: string; // "1박2일" | "당일치기" ...
-  visits: Visit[]; // 전체 방문지 (day 포함)
-};
 
 export default function MapLayout({ mapType }: { mapType: MapType }) {
   // constant
@@ -75,7 +62,7 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
     <>
       <S.MapLayoutRoot>
         <S.MapSection>
-          <S.MapCanvas />
+          <MapCanvas />
         </S.MapSection>
 
         <S.OverlaySection>

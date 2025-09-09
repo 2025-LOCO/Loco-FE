@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 export const MapLayoutRoot = styled.div`
   position: relative;
+  width: 100dvw;
   height: calc(100dvh - 86px); /*  전체 - 헤더 높이 */
   overflow: hidden;
 `;
@@ -22,6 +23,7 @@ export const OverlaySection = styled.div`
   position: relative;
   height: 100%;
   z-index: 1;
+  pointer-events: none; // 오버레이는 클릭되지 않고 지도만 클릭 가능하도록
 `;
 
 export const PanelSection = styled.div`
@@ -34,6 +36,7 @@ export const PanelSection = styled.div`
 export const LeftPanelContainer = styled.div<{ $isOpen: boolean }>`
   position: relative;
   background-color: white;
+  pointer-events: auto;
 
   width: 300px;
   height: 100%;
@@ -101,6 +104,7 @@ export const RightPanelContainer = styled.div<{
   background-color: white;
   position: relative;
   width: 300px;
+  pointer-events: auto;
 
   transform: translateX(
     ${(props) => (props.$showRightPanel && props.$isOpen ? "0" : "calc(100%)")}
