@@ -40,7 +40,7 @@ export default function HomePage() {
   // handler
 
   async function handleRegionSelect(region: RegionType) {
-    setSubRegions([]);
+    setSubRegions([] as SubRegionsType);
     // 1. 동일 지역 선택: 선택 해제
     if (region.id === selectedRegion?.id) {
       setSelectedRegion(null);
@@ -164,17 +164,14 @@ export default function HomePage() {
           </div>
           <S.SelectContainer>
             {!selectedRegion
-              ? regions.map((region) => (
+              ? regions.map((region: RegionType) => (
                   <S.SelectRegion
                     key={region.id}
                     onMouseEnter={() => setHoveredRegion(region)}
                     onMouseLeave={() => setHoveredRegion(null)}
                     onClick={() => handleRegionSelect(region)}
                     $backgroundColor={
-                      hoveredRegion?.id === region.id ||
-                      selectedRegion?.id === region.id
-                        ? "#E3F6F5"
-                        : "none"
+                      hoveredRegion?.id === region.id ? "#E3F6F5" : "none"
                     }
                   >
                     {region.korName}

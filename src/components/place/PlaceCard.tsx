@@ -1,4 +1,4 @@
-import type { Place, PlaceCardProps } from "@/types/place";
+import type { PlaceCardProps } from "@/types/place";
 import * as S from "./styles/placeCard";
 import PlaceDetailsKakao from "./PlaceDetailsKakao";
 import PlaceDetailsUser from "./PlaceDetailsUser";

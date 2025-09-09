@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { useEffect, useRef, useState } from "react";
+// import { useEffect, useRef, useState } from "react";
 import DownIcon from "@/assets/images/arrow_drop_down_navy.svg";
-import type { RegionType } from "@/types/region"; // 추후 시도 말고 전체로 바꿀 예정
+// import type { RegionType } from "@/types/region";
 
 // interface LocationDropdownProps {
 //   regions: RegionType[];

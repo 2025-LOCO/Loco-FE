@@ -1,4 +1,4 @@
-import type { MapType } from "@/types/map";
+// import type { MapType } from "@/types/map";
 import styled from "styled-components";
 
 export const PlaceDetailUser = styled.div<{ $isCard: boolean }>`

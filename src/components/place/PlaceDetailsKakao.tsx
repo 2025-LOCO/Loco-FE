@@ -6,7 +6,6 @@ import PhoneIcon from "@/assets/images/place_phone.svg";
 import LinkIcon from "@/assets/images/place_link.svg";
 
 export default function PlaceDetailsKakao({
-  place,
   isInSelectedPlaceDetail,
   isCard = true,
 }: PlaceCardProps) {

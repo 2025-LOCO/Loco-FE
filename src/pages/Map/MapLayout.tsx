@@ -10,7 +10,7 @@ import DeleteIcon from "@/assets/images/delete.svg";
 import EditIcon from "@/assets/images/edit.svg";
 
 import { useState } from "react";
-import PlaceCard from "@/components/place/placeCard";
+// import PlaceCard from "@/components/place/placeCard";
 import VoteBar from "@/components/VoteBar";
 import RouteTimeline from "@/components/route/RouteTimeLine";
 import { bestPlaces } from "@/data/dummy/explorePlaces";
@@ -33,7 +33,7 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
   // state
   const [isLPanelOpen, setIsLPanelOpen] = useState(true);
   const [isRPanelOpen, setIsRPanelOpen] = useState(true);
-  const [isLiked, setIsLiked] = useState<boolean>(false);
+  // const [isLiked, setIsLiked] = useState<boolean>(false);
   const [isRouteDetailOpen, setIsRouteDetailOpen] = useState(true);
   const [isRouteRecommendOpen, setIsRouteRecommendOpen] = useState(false);
 
@@ -46,9 +46,9 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
     setIsRPanelOpen(false);
   }
 
-  function handleClickLike() {
-    setIsLiked((prev) => !prev);
-  }
+  // function handleClickLike() {
+  //   setIsLiked((prev) => !prev);
+  // }
 
   function handleToggleRouteDetail() {
     setIsRouteDetailOpen((prev) => !prev);

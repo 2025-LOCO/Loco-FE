@@ -1,11 +1,9 @@
 // RouteTimeline.tsx
 import * as S from "./styles/routeTimeLine";
-interface RouteTimelineProps {
-  isOpen: boolean;
-}
-export default function RouteTimeline({ isOpen }: RouteTimelineProps) {
+
+export default function RouteTimeline() {
   return (
-    <S.Wrap $isOpen={isOpen}>
+    <S.Wrap>
       <S.DayGroup>
         <S.Row>
           <S.DayLabel>Day 1</S.DayLabel>
