@@ -19,6 +19,7 @@ import { placeDetails } from "@/data/dummy/placeDetail";
 
 export interface MapCanvasRef {
   kakaoMap: any;
+  fitBounds: any;
 }
 
 type MapCanvasProps = {
@@ -33,18 +34,7 @@ type MapCanvasProps = {
 };
 
 const MapCanvas = forwardRef<MapCanvasRef, MapCanvasProps>(
-  (
-    {
-      places,
-      routes,
-      selectedPlaceId,
-      selectedRouteId,
-      selectedRoutePlaces,
-      onPlaceClick,
-      onRouteClick,
-    },
-    ref
-  ) => {
+  ({ places, selectedPlaceId, selectedRoutePlaces, onPlaceClick }, ref) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const kakaoMapRef = useRef<any>(null);
     const markersRef = useRef<any[]>([]);

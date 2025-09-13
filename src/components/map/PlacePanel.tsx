@@ -33,7 +33,6 @@ export default function PlacePanel() {
     null
   );
   const [searchPlaces, setSearchPlaces] = useState<any[]>([]); // 카카오 검색 결과
-  const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [placeDetail, setPlaceDetail] = useState<Place | null>(null);
 
@@ -93,16 +92,15 @@ export default function PlacePanel() {
   }
 
   function handleSelectPlace(place: Place) {
-    setSelectedPlace((prev) => (prev?.id === place.id ? null : place));
     setSelectedPlaceId(place.id);
   }
 
   function handleClickBack() {
-    setSelectedPlace(null);
     setSelectedPlaceId(null);
   }
 
-  function handleClickLike() {
+  function handleClickLike(e: React.MouseEvent<HTMLDivElement>) {
+    e.stopPropagation();
     setIsLiked((prev) => !prev);
   }
 
@@ -134,6 +132,7 @@ export default function PlacePanel() {
           type: d.category_group_name,
           link: d.place_url,
           location: d.address_name,
+          phone: d.phone,
         })) as KakaoPlace[];
 
         setSearchPlaces(mapped);

@@ -29,13 +29,13 @@ export default function PlaceDetailsKakao({
           </S.DetailContainer>
           <S.DetailContainer>
             <S.DetailIcon src={PhoneIcon} alt="번호아이콘" />
-            <S.DetailDescription>031-5173-4300</S.DetailDescription>
+            <S.DetailDescription>{place?.phone}</S.DetailDescription>
           </S.DetailContainer>
           <S.DetailTitle>상세 정보 보기</S.DetailTitle>
           <S.DetailContainer>
             <S.DetailIcon src={LinkIcon} alt="링크아이콘" />
-            <a href="https://www.naver.com/" style={{ color: "#0063E4" }}>
-              <S.DetailDescription>https://www.naver.com/</S.DetailDescription>
+            <a href={place?.link} style={{ color: "#0063E4" }}>
+              <S.DetailDescription>{place?.link}</S.DetailDescription>
             </a>
           </S.DetailContainer>
         </S.DetailListContainer>

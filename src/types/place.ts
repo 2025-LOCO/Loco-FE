@@ -31,6 +31,8 @@ export interface Place {
   count_soso?: number;
   count_bad?: number;
   kakao_place_id?: number;
+  link?: string;
+  phone?: string;
 }
 
 export interface KakaoPlace {
@@ -42,6 +44,7 @@ export interface KakaoPlace {
   latitude: number;
   longitude: number;
   kakao_place_id: string;
+  phone: string;
 }
 
 export interface PlaceCardProps {
@@ -49,7 +52,7 @@ export interface PlaceCardProps {
   isCard?: boolean;
   mapType?: MapType;
   isInSelectedPlaceDetail?: boolean;
-  handleClickLike?: () => void;
+  handleClickLike?: (e: React.MouseEvent<HTMLDivElement>) => void;
   isLiked?: boolean;
   //  handleClickLike?: (placeId: number) => void;
 }

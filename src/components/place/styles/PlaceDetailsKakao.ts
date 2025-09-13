@@ -78,4 +78,5 @@ export const DetailDescription = styled.div`
   font-size: 9px;
   font-weight: 300;
   overflow-wrap: anywhere;
+  color: black;
 `;

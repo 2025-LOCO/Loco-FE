@@ -37,8 +37,11 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
   // const [isLiked, setIsLiked] = useState<boolean>(false);
   const [isRouteDetailOpen, setIsRouteDetailOpen] = useState(true);
   const [isRouteRecommendOpen, setIsRouteRecommendOpen] = useState(false);
-  const [places, setPlaces] = useState(bestPlaces);
-  const [routes, setRoutes] = useState(bestRoutes);
+  // api 사용 시 변경
+  // const [places, setPlaces] = useState(bestPlaces);
+  // const [routes, setRoutes] = useState(bestRoutes);
+  const places = bestPlaces;
+  const routes = bestRoutes;
   const [selectedRouteId, setSelectedRouteId] = useState<number | null>(null);
   const [selectedPlaceId, setSelectedPlaceId] = useState<number | null>(null);
 

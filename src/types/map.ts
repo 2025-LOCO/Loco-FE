@@ -12,4 +12,5 @@ export interface MapOutletContext {
   selectedPlaceId: number | null;
   selectedRouteId: number | null;
   kakaoMap?: any;
+  fitBounds?: any;
 }
