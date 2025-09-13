@@ -9,7 +9,7 @@ import LikedIcon from "@/assets/images/explore_liked.svg";
 import DeleteIcon from "@/assets/images/delete.svg";
 import EditIcon from "@/assets/images/edit.svg";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import PlaceCard from "@/components/place/placeCard";
 import VoteBar from "@/components/VoteBar";
 import RouteTimeline from "@/components/route/RouteTimeLine";
@@ -28,8 +28,8 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
 
   // 현재 탭이 루트인지 확인
   const location = useLocation();
-  const lastSeg = location.pathname.split("/").pop();
-  const showRightPanel = lastSeg === "route";
+  const panel = location.pathname.split("/").pop();
+  const showRightPanel = panel === "route";
 
   // states
   const [isLPanelOpen, setIsLPanelOpen] = useState(true);
@@ -40,6 +40,13 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
   const [places, setPlaces] = useState(bestPlaces);
   const [routes, setRoutes] = useState(bestRoutes);
   const [selectedRouteId, setSelectedRouteId] = useState<number | null>(null);
+  const [selectedPlaceId, setSelectedPlaceId] = useState<number | null>(null);
+
+  // 탭 변경 시 선택된 상태 초기화
+  useEffect(() => {
+    setSelectedPlaceId(null);
+    setSelectedRouteId(null);
+  }, [panel]);
 
   // 현재 루트 데이터
   const selectedRoute = routes.find((r) => r.id === selectedRouteId);
@@ -65,6 +72,14 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
     setIsRouteRecommendOpen((prev) => !prev);
   }
 
+  function handlePlaceClick(placeId: number | null) {
+    setSelectedPlaceId((prev) => (prev === placeId ? null : placeId));
+  }
+
+  function handleRouteClick(routeId: number | null) {
+    setSelectedRouteId((prev) => (prev === routeId ? null : routeId));
+  }
+
   // effects
   // 나중에 API로 교체
   // useEffect(() => {
@@ -76,7 +91,16 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
     <>
       <S.MapLayoutRoot>
         <S.MapSection>
-          <MapCanvas mapType={mapType} places={places} routes={routes} />
+          <MapCanvas
+            mapType={mapType}
+            places={places}
+            routes={routes}
+            selectedPlaceId={selectedPlaceId}
+            selectedRouteId={selectedRouteId}
+            selectedRoutePlaces={selectedRoute?.places ?? []}
+            onPlaceClick={handlePlaceClick}
+            onRouteClick={handleRouteClick}
+          />
         </S.MapSection>
 
         <S.OverlaySection>
@@ -100,7 +124,15 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
 
               <S.LeftPanelBody>
                 <Outlet
-                  context={{ mapType, places, routes, setSelectedRouteId }}
+                  context={{
+                    mapType,
+                    places,
+                    routes,
+                    setSelectedRouteId,
+                    setSelectedPlaceId,
+                    selectedPlaceId,
+                    selectedRouteId,
+                  }}
                 />
               </S.LeftPanelBody>
             </S.LeftPanelContainer>

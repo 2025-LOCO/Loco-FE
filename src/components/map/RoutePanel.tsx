@@ -15,17 +15,23 @@ import type { LocoRoute } from "@/types/locoRoute";
 
 export default function RoutePanel() {
   const context = useOutletContext<MapOutletContext>();
-  const { mapType, routes, setSelectedRouteId } = context;
+  const { mapType, routes, setSelectedRouteId, selectedRouteId } = context;
 
   // state
-  const [selectedRoute, setSelectedRoute] = useState<LocoRoute | null>(null);
+  // const [selectedRoute, setSelectedRoute] = useState<LocoRoute | null>(null);
   const [isMyRouteOpened, setIsMyRouteOpened] = useState<boolean>(true);
   const [isLikedRouteOpened, setIsLikedRouteOpened] = useState<boolean>(false);
 
+  // computed
+  const selectedRoute = routes.find((r) => r.id === selectedRouteId) ?? null;
+
   // handler
   function handleSelectRoute(route: LocoRoute) {
-    setSelectedRoute((prev) => (prev?.id === route.id ? null : route));
-    setSelectedRouteId(route.id);
+    if (selectedRouteId === route.id) {
+      setSelectedRouteId(null);
+    } else {
+      setSelectedRouteId(route.id);
+    }
   }
 
   function handleToggleMyRoute() {
@@ -86,7 +92,7 @@ export default function RoutePanel() {
                           {route.places.map((place) => (
                             <S.PlaceTag
                               key={place.id}
-                              $isSelected={route.id === selectedRoute?.id}
+                              $isSelected={route.id === selectedRouteId}
                             >
                               {place.name}
                             </S.PlaceTag>
@@ -101,7 +107,7 @@ export default function RoutePanel() {
                             return (
                               <S.TransportSvg
                                 key={by.id}
-                                $isSelected={route.id === selectedRoute?.id}
+                                $isSelected={route.id === selectedRouteId}
                               >
                                 <Icon />
                               </S.TransportSvg>

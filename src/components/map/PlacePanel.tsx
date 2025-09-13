@@ -17,7 +17,7 @@ import { placeDetails } from "@/data/dummy/placeDetail";
 
 export default function ProfilePanel() {
   const context = useOutletContext<MapOutletContext>();
-  const { mapType, places } = context;
+  const { mapType, places, setSelectedPlaceId, selectedPlaceId } = context;
 
   // states
   const [isSearchTabOpened, setIsSearchTabOpened] = useState<boolean>(false);
@@ -31,7 +31,7 @@ export default function ProfilePanel() {
 
   // computed values
   const hasSelectedSearchPlace = selectedSearchPlace !== null;
-  const hasSelectedPlace = selectedPlace !== null;
+  const hasSelectedPlace = selectedPlaceId !== null;
 
   // handlers
   function handleToggleSearchPlace() {
@@ -44,10 +44,12 @@ export default function ProfilePanel() {
 
   function handleSelectPlace(place: Place) {
     setSelectedPlace((prev) => (prev?.id === place.id ? null : place));
+    setSelectedPlaceId(place.id);
   }
 
   function handleClickBack() {
     setSelectedPlace(null);
+    setSelectedPlaceId(null);
   }
 
   function handleClickLike() {
@@ -56,13 +58,11 @@ export default function ProfilePanel() {
 
   // effects
   useEffect(() => {
-    if (selectedPlace?.id !== null) {
-      const place = placeDetails.find(
-        (place) => place.id === selectedPlace?.id
-      );
+    if (selectedPlaceId !== null) {
+      const place = placeDetails.find((place) => place.id === selectedPlaceId);
       setPlaceDetail(place ?? null);
     }
-  }, [selectedPlace]);
+  }, [selectedPlaceId]);
 
   // function handleClickSearchBtn() {
 

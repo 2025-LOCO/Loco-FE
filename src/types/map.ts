@@ -7,5 +7,8 @@ export interface MapOutletContext {
   mapType: MapType;
   places: Place[];
   routes: LocoRoute[];
-  setSelectedRouteId: (id: number) => void;
+  setSelectedRouteId: (id: number | null) => void;
+  setSelectedPlaceId: (id: number | null) => void;
+  selectedPlaceId: number | null;
+  selectedRouteId: number | null;
 }
