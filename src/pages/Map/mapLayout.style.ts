@@ -226,7 +226,7 @@ export const ToggleIconWrapper = styled.div<{ $isOpen: boolean }>`
   transform: rotate(${({ $isOpen }) => ($isOpen ? "0deg" : "180deg")});
 `;
 
-export const ToggleContentContainer = styled.div<{ $isOpen: boolean }>`
+export const ToggleContentContainer = styled.div<{ $isOpen?: boolean }>`
   padding: 10px 0;
   display: ${(props) => (props.$isOpen ? "" : "none")};
 `;

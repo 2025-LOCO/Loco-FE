@@ -6,7 +6,6 @@ import RouteIcon from "@/assets/images/recommend_route.svg";
 import DownIcon from "@/assets/images/down_20.svg";
 import LikedIcon from "@/assets/images/explore_liked.svg";
 import AddIcon from "@/assets/images/add.svg";
-import { bestRoutes } from "@/data/dummy/exploreRoutes";
 import {
   TRANSPORTATION_ICON_SRC,
   type TransportationName,
@@ -14,9 +13,9 @@ import {
 import { useState } from "react";
 import type { LocoRoute } from "@/types/locoRoute";
 
-export default function ProfilePanel() {
+export default function RoutePanel() {
   const context = useOutletContext<MapOutletContext>();
-  const { mapType } = context;
+  const { mapType, routes, setSelectedRouteId } = context;
 
   // state
   const [selectedRoute, setSelectedRoute] = useState<LocoRoute | null>(null);
@@ -26,6 +25,7 @@ export default function ProfilePanel() {
   // handler
   function handleSelectRoute(route: LocoRoute) {
     setSelectedRoute((prev) => (prev?.id === route.id ? null : route));
+    setSelectedRouteId(route.id);
   }
 
   function handleToggleMyRoute() {
@@ -57,7 +57,7 @@ export default function ProfilePanel() {
               </Common.PanelTitleContainer>
               <S.RouteListSection $isOpened={isMyRouteOpened}>
                 <Common.ItemListContainer>
-                  {bestRoutes.map((route) => (
+                  {routes.map((route) => (
                     <Common.ItemContainer
                       key={route.id}
                       onClick={() => {
@@ -131,7 +131,7 @@ export default function ProfilePanel() {
               </Common.PanelTitleContainer>
               <S.RouteListSection $isOpened={isLikedRouteOpened}>
                 <Common.ItemListContainer>
-                  {bestRoutes.map((route) => (
+                  {routes.map((route) => (
                     <Common.ItemContainer
                       key={route.id}
                       onClick={() => {
@@ -199,7 +199,7 @@ export default function ProfilePanel() {
             <Common.ItemListSection>
               <div style={{ paddingTop: "40px" }} />
               <Common.ItemListContainer>
-                {bestRoutes.map((route) => (
+                {routes.map((route) => (
                   <Common.ItemContainer
                     key={route.id}
                     onClick={() => {

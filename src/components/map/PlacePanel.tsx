@@ -8,7 +8,6 @@ import SmallCheckIcon from "@/assets/images/check circle_17.svg";
 import FilledMarkIcon from "@/assets/images/bookmark_filled_17.svg";
 import AddPlaceIcon from "@/assets/images/add_place.svg";
 import BackIcon from "@/assets/images/back.svg";
-import { bestPlaces } from "@/data/dummy/explorePlaces";
 import { useEffect, useState } from "react";
 import SearchBar from "../SearchBar";
 import type { Place } from "@/types/place";
@@ -18,7 +17,7 @@ import { placeDetails } from "@/data/dummy/placeDetail";
 
 export default function ProfilePanel() {
   const context = useOutletContext<MapOutletContext>();
-  const { mapType } = context;
+  const { mapType, places } = context;
 
   // states
   const [isSearchTabOpened, setIsSearchTabOpened] = useState<boolean>(false);
@@ -133,7 +132,7 @@ export default function ProfilePanel() {
                 {/* 장소 검색 결과 리스트 - 추후 데이터 변경 필요  */}
                 <SearchBar width="170px" />
                 <S.ItemListContainer>
-                  {bestPlaces.map((place) => (
+                  {places.map((place) => (
                     <S.ItemContainer
                       key={place.id}
                       onClick={() => {
@@ -192,7 +191,7 @@ export default function ProfilePanel() {
                 )}
                 {/* 장소 리스트 - 추후 데이터 변경 필요  */}
                 <S.ItemListContainer>
-                  {bestPlaces.map((place) => (
+                  {places.map((place) => (
                     <S.ItemContainer
                       key={place.id}
                       onClick={() => {
