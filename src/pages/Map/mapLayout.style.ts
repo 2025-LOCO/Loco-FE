@@ -142,6 +142,7 @@ export const LocationBadge = styled.div`
   background: var(--color-navy);
   padding: 11px 25px;
   width: max-content;
+  z-index: 9999;
 
   text-align: center;
   font-size: 13px;

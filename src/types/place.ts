@@ -22,6 +22,8 @@ export interface Place {
   location: string;
   intro: string;
   type: PlaceType;
+  latitude?: number;
+  longitude?: number;
 }
 
 export interface PlaceCardProps {

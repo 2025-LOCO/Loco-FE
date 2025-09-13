@@ -10,7 +10,6 @@ export default function MapCanvas() {
       level: 3,
     };
     new window.kakao.maps.Map(mapRef.current, options);
-    console.log("지도 로드 완료");
   }, []);
 
   return <S.MapCanvas ref={mapRef} id="map" />;
