@@ -9,16 +9,17 @@ import LikedIcon from "@/assets/images/explore_liked.svg";
 import DeleteIcon from "@/assets/images/delete.svg";
 import EditIcon from "@/assets/images/edit.svg";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 // import PlaceCard from "@/components/place/placeCard";
 import VoteBar from "@/components/VoteBar";
 import RouteTimeline from "@/components/route/RouteTimeLine";
+import MapCanvas, { type MapCanvasRef } from "@/components/map/MapCanvas";
 import { bestPlaces } from "@/data/dummy/explorePlaces";
-import MapCanvas from "@/components/map/MapCanvas";
+import { bestRoutes } from "@/data/dummy/exploreRoutes";
 // import { buildDays } from "@/utils/buildDays";
 
 export default function MapLayout({ mapType }: { mapType: MapType }) {
-  // constant
+  // constants
   const TAB_MENUS = [
     { name: "프로필", to: "profile" },
     { name: "장소", to: "place" },
@@ -27,17 +28,36 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
 
   // 현재 탭이 루트인지 확인
   const location = useLocation();
-  const lastSeg = location.pathname.split("/").pop();
-  const showRightPanel = lastSeg === "route";
+  const panel = location.pathname.split("/").pop();
+  const showRightPanel = panel === "route";
 
-  // state
+  // states
   const [isLPanelOpen, setIsLPanelOpen] = useState(true);
   const [isRPanelOpen, setIsRPanelOpen] = useState(true);
   // const [isLiked, setIsLiked] = useState<boolean>(false);
   const [isRouteDetailOpen, setIsRouteDetailOpen] = useState(true);
   const [isRouteRecommendOpen, setIsRouteRecommendOpen] = useState(false);
+  // api 사용 시 변경
+  // const [places, setPlaces] = useState(bestPlaces);
+  // const [routes, setRoutes] = useState(bestRoutes);
+  const places = bestPlaces;
+  const routes = bestRoutes;
+  const [selectedRouteId, setSelectedRouteId] = useState<number | null>(null);
+  const [selectedPlaceId, setSelectedPlaceId] = useState<number | null>(null);
 
-  // handler
+  // refs
+  const mapCanvasRef = useRef<MapCanvasRef>(null);
+
+  // 탭 변경 시 선택된 상태 초기화
+  useEffect(() => {
+    setSelectedPlaceId(null);
+    setSelectedRouteId(null);
+  }, [panel]);
+
+  // 현재 루트 데이터
+  const selectedRoute = routes.find((r) => r.id === selectedRouteId);
+
+  // handlers
   function handleToggleLPanelOpen() {
     setIsLPanelOpen((prev) => !prev);
   }
@@ -58,11 +78,36 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
     setIsRouteRecommendOpen((prev) => !prev);
   }
 
+  function handlePlaceClick(placeId: number | null) {
+    setSelectedPlaceId((prev) => (prev === placeId ? null : placeId));
+  }
+
+  function handleRouteClick(routeId: number | null) {
+    setSelectedRouteId((prev) => (prev === routeId ? null : routeId));
+  }
+
+  // effects
+  // 나중에 API로 교체
+  // useEffect(() => {
+  //   fetch("/api/places").then(...).then(setPlaces);
+  //   fetch("/api/routes").then(...).then(setRoutes);
+  // }, []);
+
   return (
     <>
       <S.MapLayoutRoot>
         <S.MapSection>
-          <MapCanvas />
+          <MapCanvas
+            ref={mapCanvasRef}
+            mapType={mapType}
+            places={places}
+            routes={routes}
+            selectedPlaceId={selectedPlaceId}
+            selectedRouteId={selectedRouteId}
+            selectedRoutePlaces={selectedRoute?.places ?? []}
+            onPlaceClick={handlePlaceClick}
+            onRouteClick={handleRouteClick}
+          />
         </S.MapSection>
 
         <S.OverlaySection>
@@ -85,7 +130,19 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
               </S.LeftPanelToggleBtn>
 
               <S.LeftPanelBody>
-                <Outlet context={{ mapType }} />
+                <Outlet
+                  context={{
+                    mapType,
+                    places,
+                    routes,
+                    setSelectedRouteId,
+                    setSelectedPlaceId,
+                    selectedPlaceId,
+                    selectedRouteId,
+                    kakaoMap: mapCanvasRef.current?.kakaoMap,
+                    fitBounds: mapCanvasRef.current?.fitBounds,
+                  }}
+                />
               </S.LeftPanelBody>
             </S.LeftPanelContainer>
             {/* <PlaceCard handleClickLike={handleClickLike} isLiked={isLiked} /> */}
@@ -101,66 +158,85 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
                 />
                 <S.PanelTitle>루트 소개</S.PanelTitle>
               </S.PanelTitleContainer>
-              <S.RouteInfoSection>
-                <S.RouteTitle>해피 경주 여행</S.RouteTitle>
-                <S.RouteIntro>
-                  루트소개글입니다루트소개글입니다루트소개글입니다루트소개글입니다루트소개글입니다루트소개글입니다
-                </S.RouteIntro>
-                <S.RouteTagContainer>
-                  <S.RouteTag># 걸어서</S.RouteTag>
-                  <S.RouteTag># 1박2일</S.RouteTag>
-                  <S.RouteTag># 조용한</S.RouteTag>
-                </S.RouteTagContainer>
-                <VoteBar counts={[60, 30, 10]} />
-              </S.RouteInfoSection>
-              <S.ToggleSection>
-                <S.ToggleTitleContainer onClick={handleToggleRouteDetail}>
-                  <S.ToggleIconWrapper $isOpen={isRouteDetailOpen}>
-                    <img src={ArrowDownIcon} alt="아래화살표아이콘" />
-                  </S.ToggleIconWrapper>
-                  <S.ToggleRouteDetail>루트 보기</S.ToggleRouteDetail>
-                </S.ToggleTitleContainer>
-                <S.ToggleContentContainer $isOpen={isRouteDetailOpen}>
-                  <RouteTimeline />
-                </S.ToggleContentContainer>
-              </S.ToggleSection>
-              <S.ToggleSection>
-                <S.ToggleTitleContainer onClick={handleToggleRouteRecommend}>
-                  <S.ToggleIconWrapper $isOpen={isRouteRecommendOpen}>
-                    <img src={ArrowDownIcon} alt="아래화살표아이콘" />
-                  </S.ToggleIconWrapper>
-                  <S.ToggleRouteDetail>추가 장소 추천</S.ToggleRouteDetail>
-                </S.ToggleTitleContainer>
+              {selectedRoute ? (
+                <>
+                  <S.RouteInfoSection>
+                    <S.RouteTitle>{selectedRoute.name}</S.RouteTitle>
+                    <S.RouteIntro>{selectedRoute.intro}</S.RouteIntro>
+                    <S.RouteTagContainer>
+                      {selectedRoute.tags.map((tag) => (
+                        <S.RouteTag key={tag.id}># {tag.name}</S.RouteTag>
+                      ))}
+                    </S.RouteTagContainer>
+                    <VoteBar
+                      counts={[
+                        selectedRoute.count_real ?? 0,
+                        selectedRoute.count_soso ?? 0,
+                        selectedRoute.count_bad ?? 0,
+                      ]}
+                    />
+                  </S.RouteInfoSection>
+                  <S.ToggleSection>
+                    <S.ToggleTitleContainer onClick={handleToggleRouteDetail}>
+                      <S.ToggleIconWrapper $isOpen={isRouteDetailOpen}>
+                        <img src={ArrowDownIcon} alt="아래화살표아이콘" />
+                      </S.ToggleIconWrapper>
+                      <S.ToggleRouteDetail>루트 보기</S.ToggleRouteDetail>
+                    </S.ToggleTitleContainer>
+                    <S.ToggleContentContainer $isOpen={isRouteDetailOpen}>
+                      <RouteTimeline
+                        places={selectedRoute.places}
+                        transportations={selectedRoute.transportations}
+                      />
+                    </S.ToggleContentContainer>
+                  </S.ToggleSection>
+                  <S.ToggleSection>
+                    <S.ToggleTitleContainer
+                      onClick={handleToggleRouteRecommend}
+                    >
+                      <S.ToggleIconWrapper $isOpen={isRouteRecommendOpen}>
+                        <img src={ArrowDownIcon} alt="아래화살표아이콘" />
+                      </S.ToggleIconWrapper>
+                      <S.ToggleRouteDetail>추가 장소 추천</S.ToggleRouteDetail>
+                    </S.ToggleTitleContainer>
 
-                <S.ToggleContentContainer $isOpen={isRouteRecommendOpen}>
-                  {/* 추후 장소 리스트 컴포넌트화 */}
-                  <S.ItemListContainer>
-                    {bestPlaces.map((place) => (
-                      <S.ItemContainer key={place.id}>
-                        <S.ItemImgWrapper></S.ItemImgWrapper>
-                        <S.ItemContentsContainer>
-                          <S.ItemTitle>{place.name}</S.ItemTitle>
-                          <S.ItemType>{place.type}</S.ItemType>
-                          <S.LikedContainer>
-                            <img src={LikedIcon} alt="담아요아이콘" />
-                            <S.LikedNum>{place.liked}</S.LikedNum>
-                          </S.LikedContainer>
-                        </S.ItemContentsContainer>
-                      </S.ItemContainer>
-                    ))}
-                  </S.ItemListContainer>
-                </S.ToggleContentContainer>
-              </S.ToggleSection>
-              {mapType !== "public" && (
-                <S.BtnContainer>
-                  <S.BtnWrapper>
-                    <img src={EditIcon} alt="수정아이콘" />
-                  </S.BtnWrapper>
-                  <S.BtnWrapper>
-                    <img src={DeleteIcon} alt="삭제아이콘" />
-                  </S.BtnWrapper>
-                </S.BtnContainer>
+                    <S.ToggleContentContainer $isOpen={isRouteRecommendOpen}>
+                      {/* 추후 장소 리스트 컴포넌트화 */}
+                      <S.ItemListContainer>
+                        {bestPlaces.map((place) => (
+                          <S.ItemContainer key={place.id}>
+                            <S.ItemImgWrapper></S.ItemImgWrapper>
+                            <S.ItemContentsContainer>
+                              <S.ItemTitle>{place.name}</S.ItemTitle>
+                              <S.ItemType>{place.type}</S.ItemType>
+                              <S.LikedContainer>
+                                <img src={LikedIcon} alt="담아요아이콘" />
+                                <S.LikedNum>{place.liked}</S.LikedNum>
+                              </S.LikedContainer>
+                            </S.ItemContentsContainer>
+                          </S.ItemContainer>
+                        ))}
+                      </S.ItemListContainer>
+                    </S.ToggleContentContainer>
+                  </S.ToggleSection>
+
+                  {mapType !== "public" && (
+                    <S.BtnContainer>
+                      <S.BtnWrapper>
+                        <img src={EditIcon} alt="수정아이콘" />
+                      </S.BtnWrapper>
+                      <S.BtnWrapper>
+                        <img src={DeleteIcon} alt="삭제아이콘" />
+                      </S.BtnWrapper>
+                    </S.BtnContainer>
+                  )}
+                </>
+              ) : (
+                <S.RouteInfoSection>
+                  <S.RouteTitle>루트를 선택해주세요</S.RouteTitle>
+                </S.RouteInfoSection>
               )}
+
               <S.LocationBadge>경기 수원시 권선구</S.LocationBadge>
             </S.RightPanelContainer>
           </S.PanelSection>

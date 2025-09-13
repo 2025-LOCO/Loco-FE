@@ -6,7 +6,6 @@ import RouteIcon from "@/assets/images/recommend_route.svg";
 import DownIcon from "@/assets/images/down_20.svg";
 import LikedIcon from "@/assets/images/explore_liked.svg";
 import AddIcon from "@/assets/images/add.svg";
-import { bestRoutes } from "@/data/dummy/exploreRoutes";
 import {
   TRANSPORTATION_ICON_SRC,
   type TransportationName,
@@ -14,18 +13,25 @@ import {
 import { useState } from "react";
 import type { LocoRoute } from "@/types/locoRoute";
 
-export default function ProfilePanel() {
+export default function RoutePanel() {
   const context = useOutletContext<MapOutletContext>();
-  const { mapType } = context;
+  const { mapType, routes, setSelectedRouteId, selectedRouteId } = context;
 
   // state
-  const [selectedRoute, setSelectedRoute] = useState<LocoRoute | null>(null);
+  // const [selectedRoute, setSelectedRoute] = useState<LocoRoute | null>(null);
   const [isMyRouteOpened, setIsMyRouteOpened] = useState<boolean>(true);
   const [isLikedRouteOpened, setIsLikedRouteOpened] = useState<boolean>(false);
 
+  // computed
+  const selectedRoute = routes.find((r) => r.id === selectedRouteId) ?? null;
+
   // handler
   function handleSelectRoute(route: LocoRoute) {
-    setSelectedRoute((prev) => (prev?.id === route.id ? null : route));
+    if (selectedRouteId === route.id) {
+      setSelectedRouteId(null);
+    } else {
+      setSelectedRouteId(route.id);
+    }
   }
 
   function handleToggleMyRoute() {
@@ -57,7 +63,7 @@ export default function ProfilePanel() {
               </Common.PanelTitleContainer>
               <S.RouteListSection $isOpened={isMyRouteOpened}>
                 <Common.ItemListContainer>
-                  {bestRoutes.map((route) => (
+                  {routes.map((route) => (
                     <Common.ItemContainer
                       key={route.id}
                       onClick={() => {
@@ -86,7 +92,7 @@ export default function ProfilePanel() {
                           {route.places.map((place) => (
                             <S.PlaceTag
                               key={place.id}
-                              $isSelected={route.id === selectedRoute?.id}
+                              $isSelected={route.id === selectedRouteId}
                             >
                               {place.name}
                             </S.PlaceTag>
@@ -101,7 +107,7 @@ export default function ProfilePanel() {
                             return (
                               <S.TransportSvg
                                 key={by.id}
-                                $isSelected={route.id === selectedRoute?.id}
+                                $isSelected={route.id === selectedRouteId}
                               >
                                 <Icon />
                               </S.TransportSvg>
@@ -131,7 +137,7 @@ export default function ProfilePanel() {
               </Common.PanelTitleContainer>
               <S.RouteListSection $isOpened={isLikedRouteOpened}>
                 <Common.ItemListContainer>
-                  {bestRoutes.map((route) => (
+                  {routes.map((route) => (
                     <Common.ItemContainer
                       key={route.id}
                       onClick={() => {
@@ -199,7 +205,7 @@ export default function ProfilePanel() {
             <Common.ItemListSection>
               <div style={{ paddingTop: "40px" }} />
               <Common.ItemListContainer>
-                {bestRoutes.map((route) => (
+                {routes.map((route) => (
                   <Common.ItemContainer
                     key={route.id}
                     onClick={() => {

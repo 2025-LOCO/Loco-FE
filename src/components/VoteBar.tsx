@@ -1,7 +1,7 @@
 import * as S from "./VoteBar.style";
 
 type VoteBarProps = {
-  counts: number[]; // 각 선택의 투표 수
+  counts: number[] | null; // 각 선택의 투표 수
 };
 
 export default function VoteBar({ counts }: VoteBarProps) {
@@ -14,13 +14,13 @@ export default function VoteBar({ counts }: VoteBarProps) {
   const title = "로코지기들의 의견";
 
   // counts의 모든 값을 더한 합계
-  const total = counts.reduce((sum, n) => sum + n, 0);
+  const total = counts?.reduce((sum, n) => sum + n, 0) || 1;
 
   // 분모에 0이 들어가는 경우 방지
   const safeTotal = Math.max(1, total);
 
   // 투표항목별 퍼센트
-  const partsPct = counts.map(
+  const partsPct = counts?.map(
     (partCount) => +((partCount / safeTotal) * 100).toFixed(2)
   );
 
@@ -32,7 +32,7 @@ export default function VoteBar({ counts }: VoteBarProps) {
       </S.VoteTitleContainer>
 
       <S.Bar aria-label="의견 분포">
-        {partsPct.map((pct, i) => (
+        {partsPct?.map((pct, i) => (
           <S.Segment key={i} $pct={pct} $color={colors[i]} aria-hidden />
         ))}
       </S.Bar>

@@ -9,6 +9,8 @@ export const bestPlaces: Place[] = [
     location: "경기 고양시 일산동구",
     intro: "호수와 산책로가 매력적인 일산 대표 공원",
     type: "공원",
+    latitude: 33.450701,
+    longitude: 126.570667,
   },
   {
     id: 2,
@@ -18,6 +20,8 @@ export const bestPlaces: Place[] = [
     location: "경기 고양시 일산서구",
     intro: "국내 최대 규모의 전시·컨벤션 센터",
     type: "전시/컨벤션",
+    latitude: 33.450901,
+    longitude: 126.570867,
   },
   {
     id: 3,
@@ -27,6 +31,8 @@ export const bestPlaces: Place[] = [
     location: "경기 고양시 일산동구",
     intro: "야외 스트리트형 쇼핑·맛집 거리",
     type: "쇼핑거리",
+    latitude: 33.450501,
+    longitude: 126.570567,
   },
   {
     id: 4,
@@ -36,6 +42,8 @@ export const bestPlaces: Place[] = [
     location: "경기 고양시 일산동구",
     intro: "맛집과 카페가 모인 복합 문화 거리",
     type: "복합문화거리",
+    latitude: 33.451101,
+    longitude: 126.570767,
   },
   {
     id: 5,
@@ -45,6 +53,8 @@ export const bestPlaces: Place[] = [
     location: "경기 고양시 일산동구",
     intro: "정발산 자락의 녹음과 조용한 산책로",
     type: "공원",
+    latitude: 33.450801,
+    longitude: 126.571067,
   },
   {
     id: 6,
@@ -54,6 +64,8 @@ export const bestPlaces: Place[] = [
     location: "경기 고양시 일산동구",
     intro: "호수와 산책로가 매력적인 일산 대표 공원",
     type: "공원",
+    latitude: 33.450401,
+    longitude: 126.570467,
   },
   {
     id: 7,
@@ -63,6 +75,8 @@ export const bestPlaces: Place[] = [
     location: "경기 고양시 일산서구",
     intro: "국내 최대 규모의 전시·컨벤션 센터",
     type: "전시/컨벤션",
+    latitude: 33.451201,
+    longitude: 126.570967,
   },
   {
     id: 8,
@@ -72,6 +86,8 @@ export const bestPlaces: Place[] = [
     location: "경기 고양시 일산동구",
     intro: "야외 스트리트형 쇼핑·맛집 거리",
     type: "쇼핑거리",
+    latitude: 33.450601,
+    longitude: 126.571167,
   },
   {
     id: 9,
@@ -81,6 +97,8 @@ export const bestPlaces: Place[] = [
     location: "경기 고양시 일산동구",
     intro: "맛집과 카페가 모인 복합 문화 거리",
     type: "복합문화거리",
+    latitude: 33.450701,
+    longitude: 126.571367,
   },
   {
     id: 10,
@@ -90,6 +108,8 @@ export const bestPlaces: Place[] = [
     location: "경기 고양시 일산동구",
     intro: "정발산 자락의 녹음과 조용한 산책로",
     type: "공원",
+    latitude: 33.451301,
+    longitude: 126.571567,
   },
   {
     id: 11,
@@ -99,6 +119,8 @@ export const bestPlaces: Place[] = [
     location: "경기 고양시 덕양구",
     intro: "로컬 로스터리 라떼가 인기인 감성 카페",
     type: "카페",
+    latitude: 33.450901,
+    longitude: 126.570367,
   },
   {
     id: 12,
@@ -108,6 +130,8 @@ export const bestPlaces: Place[] = [
     location: "경기 수원시 권선구",
     intro: "추억 감성 가득한 클래식 베이커리",
     type: "베이커리",
+    latitude: 33.451001,
+    longitude: 126.570567,
   },
   {
     id: 13,
@@ -117,6 +141,8 @@ export const bestPlaces: Place[] = [
     location: "경기 고양시 일산서구",
     intro: "반려식물과 소품을 만날 수 있는 힐링 공간",
     type: "플랜트샵",
+    latitude: 33.450301,
+    longitude: 126.570767,
   },
   {
     id: 14,
@@ -126,6 +152,8 @@ export const bestPlaces: Place[] = [
     location: "경기 고양시 덕양구",
     intro: "지역 작가 전시가 열리는 아담한 갤러리",
     type: "갤러리",
+    latitude: 33.450501,
+    longitude: 126.571267,
   },
   {
     id: 15,
@@ -135,6 +163,8 @@ export const bestPlaces: Place[] = [
     location: "경기 성남시 분당구",
     intro: "야경이 근사한 루프탑 라운지 바",
     type: "루프탑 라운지",
+    latitude: 33.451101,
+    longitude: 126.571067,
   },
   {
     id: 16,
@@ -144,6 +174,8 @@ export const bestPlaces: Place[] = [
     location: "경기 고양시 일산동구",
     intro: "호수와 산책로가 매력적인 일산 대표 공원",
     type: "공원",
+    latitude: 33.450801,
+    longitude: 126.570667,
   },
   {
     id: 17,
@@ -153,6 +185,8 @@ export const bestPlaces: Place[] = [
     location: "경기 고양시 일산서구",
     intro: "국내 최대 규모의 전시·컨벤션 센터",
     type: "전시/컨벤션",
+    latitude: 33.451401,
+    longitude: 126.570867,
   },
   {
     id: 18,
@@ -162,6 +196,8 @@ export const bestPlaces: Place[] = [
     location: "경기 고양시 일산동구",
     intro: "야외 스트리트형 쇼핑·맛집 거리",
     type: "쇼핑거리",
+    latitude: 33.450401,
+    longitude: 126.570967,
   },
   {
     id: 19,
@@ -171,6 +207,8 @@ export const bestPlaces: Place[] = [
     location: "경기 고양시 일산동구",
     intro: "맛집과 카페가 모인 복합 문화 거리",
     type: "복합문화거리",
+    latitude: 33.451001,
+    longitude: 126.571167,
   },
   {
     id: 20,
@@ -180,6 +218,8 @@ export const bestPlaces: Place[] = [
     location: "경기 고양시 일산동구",
     intro: "정발산 자락의 녹음과 조용한 산책로",
     type: "공원",
+    latitude: 33.450601,
+    longitude: 126.571367,
   },
   {
     id: 21,
@@ -189,6 +229,8 @@ export const bestPlaces: Place[] = [
     location: "경기 고양시 덕양구",
     intro: "로컬 로스터리 라떼가 인기인 감성 카페",
     type: "카페",
+    latitude: 33.450701,
+    longitude: 126.571567,
   },
   {
     id: 22,
@@ -198,6 +240,8 @@ export const bestPlaces: Place[] = [
     location: "경기 수원시 권선구",
     intro: "추억 감성 가득한 클래식 베이커리",
     type: "베이커리",
+    latitude: 33.450901,
+    longitude: 126.570467,
   },
   {
     id: 23,
@@ -207,6 +251,8 @@ export const bestPlaces: Place[] = [
     location: "경기 고양시 일산서구",
     intro: "반려식물과 소품을 만날 수 있는 힐링 공간",
     type: "플랜트샵",
+    latitude: 33.451201,
+    longitude: 126.570667,
   },
   {
     id: 24,
@@ -216,6 +262,8 @@ export const bestPlaces: Place[] = [
     location: "경기 고양시 덕양구",
     intro: "지역 작가 전시가 열리는 아담한 갤러리",
     type: "갤러리",
+    latitude: 33.450301,
+    longitude: 126.570867,
   },
   {
     id: 25,
@@ -225,6 +273,8 @@ export const bestPlaces: Place[] = [
     location: "경기 성남시 분당구",
     intro: "야경이 근사한 루프탑 라운지 바",
     type: "루프탑 라운지",
+    latitude: 33.451301,
+    longitude: 126.571067,
   },
 ];
 

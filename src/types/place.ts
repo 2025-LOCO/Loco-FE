@@ -22,14 +22,37 @@ export interface Place {
   location: string;
   intro: string;
   type: PlaceType;
+  latitude?: number;
+  longitude?: number;
+  atmosphere?: string;
+  recommend?: string;
+  notice?: string;
+  count_real?: number;
+  count_soso?: number;
+  count_bad?: number;
+  kakao_place_id?: number;
+  link?: string;
+  phone?: string;
+}
+
+export interface KakaoPlace {
+  id?: number;
+  name: string;
+  location: string;
+  link: string;
+  type: PlaceType;
+  latitude: number;
+  longitude: number;
+  kakao_place_id: string;
+  phone: string;
 }
 
 export interface PlaceCardProps {
-  place?: Place;
+  place?: Place | null;
   isCard?: boolean;
   mapType?: MapType;
   isInSelectedPlaceDetail?: boolean;
-  handleClickLike?: () => void;
+  handleClickLike?: (e: React.MouseEvent<HTMLDivElement>) => void;
   isLiked?: boolean;
   //  handleClickLike?: (placeId: number) => void;
 }

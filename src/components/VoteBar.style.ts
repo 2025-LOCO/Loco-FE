@@ -14,7 +14,7 @@ export const VoteTitle = styled.div`
 `;
 
 export const VoteNum = styled.div`
-  color: var(--sub-500);
+  color: var(--color-sub500);
   font-size: 10px;
   font-weight: 700;
 `;
