@@ -6,7 +6,7 @@ export const PlaceDetailKakao = styled.div<{ $isCard: boolean }>`
   display: flex;
   justify-content: center;
   background-color: white;
-  /* margin-top: auto; */
+  margin-top: ${(props) => (props.$isCard ? "0" : "auto")};
 `;
 
 export const Content = styled.div<{

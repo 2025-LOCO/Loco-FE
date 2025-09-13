@@ -9,11 +9,11 @@ import LikedIcon from "@/assets/images/explore_liked.svg";
 import DeleteIcon from "@/assets/images/delete.svg";
 import EditIcon from "@/assets/images/edit.svg";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 // import PlaceCard from "@/components/place/placeCard";
 import VoteBar from "@/components/VoteBar";
 import RouteTimeline from "@/components/route/RouteTimeLine";
-import MapCanvas from "@/components/map/MapCanvas";
+import MapCanvas, { type MapCanvasRef } from "@/components/map/MapCanvas";
 import { bestPlaces } from "@/data/dummy/explorePlaces";
 import { bestRoutes } from "@/data/dummy/exploreRoutes";
 // import { buildDays } from "@/utils/buildDays";
@@ -41,6 +41,9 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
   const [routes, setRoutes] = useState(bestRoutes);
   const [selectedRouteId, setSelectedRouteId] = useState<number | null>(null);
   const [selectedPlaceId, setSelectedPlaceId] = useState<number | null>(null);
+
+  // refs
+  const mapCanvasRef = useRef<MapCanvasRef>(null);
 
   // 탭 변경 시 선택된 상태 초기화
   useEffect(() => {
@@ -92,6 +95,7 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
       <S.MapLayoutRoot>
         <S.MapSection>
           <MapCanvas
+            ref={mapCanvasRef}
             mapType={mapType}
             places={places}
             routes={routes}
@@ -132,6 +136,8 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
                     setSelectedPlaceId,
                     selectedPlaceId,
                     selectedRouteId,
+                    kakaoMap: mapCanvasRef.current?.kakaoMap,
+                    fitBounds: mapCanvasRef.current?.fitBounds,
                   }}
                 />
               </S.LeftPanelBody>

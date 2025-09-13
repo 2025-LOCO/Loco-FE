@@ -30,6 +30,18 @@ export interface Place {
   count_real?: number;
   count_soso?: number;
   count_bad?: number;
+  kakao_place_id?: number;
+}
+
+export interface KakaoPlace {
+  id?: number;
+  name: string;
+  location: string;
+  link: string;
+  type: PlaceType;
+  latitude: number;
+  longitude: number;
+  kakao_place_id: string;
 }
 
 export interface PlaceCardProps {

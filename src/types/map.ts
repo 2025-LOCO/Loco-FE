@@ -11,4 +11,5 @@ export interface MapOutletContext {
   setSelectedPlaceId: (id: number | null) => void;
   selectedPlaceId: number | null;
   selectedRouteId: number | null;
+  kakaoMap?: any;
 }
