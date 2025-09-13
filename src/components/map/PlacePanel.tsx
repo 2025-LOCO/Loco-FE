@@ -9,17 +9,18 @@ import FilledMarkIcon from "@/assets/images/bookmark_filled_17.svg";
 import AddPlaceIcon from "@/assets/images/add_place.svg";
 import BackIcon from "@/assets/images/back.svg";
 import { bestPlaces } from "@/data/dummy/explorePlaces";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchBar from "../SearchBar";
 import type { Place } from "@/types/place";
 import PlaceDetailsKakao from "../place/PlaceDetailsKakao";
 import PlaceDetailsUser from "../place/PlaceDetailsUser";
+import { placeDetails } from "@/data/dummy/placeDetail";
 
 export default function ProfilePanel() {
   const context = useOutletContext<MapOutletContext>();
   const { mapType } = context;
 
-  // state
+  // states
   const [isSearchTabOpened, setIsSearchTabOpened] = useState<boolean>(false);
   // const [placeSearchText, setPlaceSearchText] = useState<string>("");
   const [selectedSearchPlace, setSelectedSearchPlace] = useState<Place | null>(
@@ -27,12 +28,13 @@ export default function ProfilePanel() {
   );
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
   const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [placeDetail, setPlaceDetail] = useState<Place | null>(null);
 
-  // boolean
+  // computed values
   const hasSelectedSearchPlace = selectedSearchPlace !== null;
   const hasSelectedPlace = selectedPlace !== null;
 
-  // handler
+  // handlers
   function handleToggleSearchPlace() {
     setIsSearchTabOpened((prev) => !prev);
   }
@@ -52,6 +54,16 @@ export default function ProfilePanel() {
   function handleClickLike() {
     setIsLiked((prev) => !prev);
   }
+
+  // effects
+  useEffect(() => {
+    if (selectedPlace?.id !== null) {
+      const place = placeDetails.find(
+        (place) => place.id === selectedPlace?.id
+      );
+      setPlaceDetail(place ?? null);
+    }
+  }, [selectedPlace]);
 
   // function handleClickSearchBtn() {
 
@@ -146,6 +158,7 @@ export default function ProfilePanel() {
                 <PlaceDetailsKakao
                   isCard={false}
                   isInSelectedPlaceDetail={true}
+                  place={placeDetail}
                 />
 
                 <PlaceDetailsUser
@@ -153,6 +166,7 @@ export default function ProfilePanel() {
                   mapType={mapType}
                   handleClickLike={handleClickLike}
                   isLiked={isLiked}
+                  place={placeDetail}
                 />
               </>
             ) : (

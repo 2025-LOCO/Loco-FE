@@ -24,10 +24,16 @@ export interface Place {
   type: PlaceType;
   latitude?: number;
   longitude?: number;
+  atmosphere?: string;
+  recommend?: string;
+  notice?: string;
+  count_real?: number;
+  count_soso?: number;
+  count_bad?: number;
 }
 
 export interface PlaceCardProps {
-  place?: Place;
+  place?: Place | null;
   isCard?: boolean;
   mapType?: MapType;
   isInSelectedPlaceDetail?: boolean;
