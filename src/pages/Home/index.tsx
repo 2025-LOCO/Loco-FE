@@ -15,7 +15,12 @@ import FirstButton from "@/components/FirstButton";
 
 export default function HomePage() {
   // constants
-  const exploreMenu = ["로코인", "로코장소", "로코루트", "로코문답"];
+  const exploreMenu = [
+    { name: "로코지기", path: "/explore/loco-guide" },
+    { name: "로코장소", path: "/explore/loco-place" },
+    { name: "로코루트", path: "/explore/loco-route" },
+    { name: "로코문답", path: "/loco-talk" },
+  ];
   const HEADER_PX = 86;
 
   // state
@@ -131,8 +136,11 @@ export default function HomePage() {
         </S.DescriptText>
         <S.ExploreNavigator>
           {exploreMenu.map((menuItem, index) => (
-            <S.ExploreItemWrapper key={`${menuItem}`}>
-              <S.ExploreItem>{menuItem}</S.ExploreItem>
+            <S.ExploreItemWrapper
+              key={`${menuItem.name}`}
+              to={`${menuItem.path}`}
+            >
+              <S.ExploreItem>{menuItem.name}</S.ExploreItem>
               {index < exploreMenu.length - 1 && <S.Divider>ㅣ</S.Divider>}
             </S.ExploreItemWrapper>
           ))}
@@ -205,6 +213,7 @@ export default function HomePage() {
           <FirstButton isRecommendBtn={true}>맞춤 루트 추천받기</FirstButton>
         </S.DestContainer>
       </S.MapSelectSection>
+      <div style={{ height: "40px", width: "100%" }} />
     </>
   );
 }

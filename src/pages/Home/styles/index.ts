@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import styled, { keyframes } from "styled-components";
 
 // ------------------- 메인 섹션 ---------------------
@@ -81,7 +82,7 @@ export const ExploreNavigator = styled.div`
   align-items: center;
 `;
 
-export const ExploreItemWrapper = styled.div`
+export const ExploreItemWrapper = styled(Link)`
   display: inline-flex;
 `;
 
