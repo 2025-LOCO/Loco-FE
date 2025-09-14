@@ -6,7 +6,7 @@ export default function Header() {
   return (
     <>
       <S.HeaderContainer>
-        <S.Logo>
+        <S.Logo to="/">
           <img src={LogoIcon} alt="Logo" />
         </S.Logo>
 

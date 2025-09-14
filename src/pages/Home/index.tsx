@@ -12,6 +12,7 @@ import type {
 import { regions } from "@/data/regions";
 import FirstButton from "@/components/FirstButton";
 import { getSubRegion } from "@/apis/tour/tourService";
+import { useRegionStore } from "@/stores/regionStore";
 
 export default function HomePage() {
   // constants
@@ -32,8 +33,12 @@ export default function HomePage() {
   const [subRegions, setSubRegions] = useState<SubRegionsType | null>(null);
   const [hoveredSubRegion, setHoveredSubRegion] =
     useState<SubRegionType | null>(null);
-  const [selectedSubRegion, setSelectedSubRegion] =
-    useState<SubRegionType | null>(null);
+  const [tempSubRegion, setTempSubRegion] = useState<SubRegionType | null>(
+    null
+  ); // 임시 선택
+  //zustand
+  const { setSelectedSubRegion } = useRegionStore(); // 바로 탐색하기 누른 경우
+
   // 캐시용 전체 하위 지역
   const [allSubRegions, setAllSubRegions] = useState<AllSubRegionsType | null>(
     {}
@@ -71,7 +76,11 @@ export default function HomePage() {
         console.log("api 요청 시작");
         const subRegionData = await getSubRegion(region.code);
         const subRegionDataWithAll = [
-          { cd: `${region.code}000`, addr_name: `${region.korName}전체` },
+          {
+            cd: `${region.code}000`,
+            addr_name: `${region.korName}전체`,
+            full_addr: `${region.korName}전체`,
+          },
           ...subRegionData,
         ];
 
@@ -89,13 +98,13 @@ export default function HomePage() {
 
   function handleSubRegionSelect(subRegion: SubRegionType) {
     // 1. 동일 지역 선택: 선택 해제
-    if (subRegion.cd === selectedSubRegion?.cd) {
-      setSelectedSubRegion(null);
+    if (tempSubRegion?.cd === subRegion.cd) {
+      setTempSubRegion(null);
       return;
     }
 
     // 2. 새로운 지역 선택
-    setSelectedSubRegion(subRegion);
+    setTempSubRegion(subRegion);
     console.log("새로운 지역 선택: ", subRegion);
   }
 
@@ -193,7 +202,7 @@ export default function HomePage() {
                     onClick={() => handleSubRegionSelect(subRegion)}
                     $backgroundColor={
                       hoveredSubRegion?.cd === subRegion.cd ||
-                      selectedSubRegion?.cd === subRegion.cd
+                      tempSubRegion?.cd === subRegion.cd
                         ? "#E3F6F5"
                         : "none"
                     }
@@ -202,7 +211,20 @@ export default function HomePage() {
                   </S.SelectRegion>
                 ))}
           </S.SelectContainer>
-          <FirstButton>바로 탐색하기</FirstButton>
+          <FirstButton
+            isRecommendBtn={false}
+            to="/explore"
+            condition={!!tempSubRegion} // 선택된 지역이 있어야 이동
+            onConditionFail={() => alert("지역을 선택해주세요!")}
+            onClick={() => {
+              if (tempSubRegion) {
+                setSelectedSubRegion(tempSubRegion); // zustand에 최종 등록
+                console.log("zustand 등록됨:", tempSubRegion);
+              }
+            }}
+          >
+            바로 탐색하기
+          </FirstButton>
         </S.DestContainer>
         <S.DestContainer>
           <S.SelectTitle>
@@ -210,7 +232,9 @@ export default function HomePage() {
             찾고 계신가요?
           </S.SelectTitle>
           <S.VerticalLineAndCircle />
-          <FirstButton isRecommendBtn={true}>맞춤 루트 추천받기</FirstButton>
+          <FirstButton to="/custom-trip" isRecommendBtn={true}>
+            맞춤 루트 추천받기
+          </FirstButton>
         </S.DestContainer>
       </S.MapSelectSection>
       <div style={{ height: "40px", width: "100%" }} />

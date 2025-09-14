@@ -1,6 +1,7 @@
 import styled from "styled-components";
 // import { useEffect, useRef, useState } from "react";
 import DownIcon from "@/assets/images/arrow_drop_down_navy.svg";
+import { useRegionStore } from "@/stores/regionStore";
 // import type { RegionType } from "@/types/region";
 
 // interface LocationDropdownProps {
@@ -11,10 +12,14 @@ import DownIcon from "@/assets/images/arrow_drop_down_navy.svg";
 // }
 
 export default function LocationDropDown() {
+  // zustand
+  const { selectedSubRegion } = useRegionStore();
   return (
     <>
       <LocationDropDownComp>
-        <div>고양시 덕양구</div>
+        <div>
+          {selectedSubRegion ? `${selectedSubRegion.full_addr}` : "전체"}
+        </div>
         <img src={DownIcon} alt="아래 화살표" />
       </LocationDropDownComp>
     </>
