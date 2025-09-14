@@ -11,16 +11,20 @@ export default function CustomTripPage() {
 
   const current = questions[step];
   const selected = answers[current.id];
-
   const handleNext = () => {
+    // 현재 질문 답변이 없을 때는 "전체"로 저장
+    if (!selected) {
+      setAnswer(current.id, "전체");
+    }
+
     if (step < questions.length - 1) {
       setStep(step + 1);
     } else {
       console.log("최종 답변:", answers);
-      // API 호출 후 탐색 페이지 이동
-      navigate("/explore", { state: { answers } });
+      navigate("/explore/loco-route", { state: { answers } });
     }
   };
+
   return (
     <>
       <S.CustomTripContainer>
