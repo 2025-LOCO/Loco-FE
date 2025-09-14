@@ -1,10 +1,14 @@
+import { NavLink } from "react-router";
 import styled from "styled-components";
 
-export const FirstButton = styled.button<{ $isRecommendBtn?: boolean }>`
+export const FirstButton = styled(NavLink)<{ $isRecommendBtn?: boolean }>`
   color: var(--color-darknavy);
   font-size: 15px;
   font-weight: 600;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   background: ${({ $isRecommendBtn }) =>
     $isRecommendBtn

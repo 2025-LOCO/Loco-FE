@@ -16,7 +16,6 @@ import RouteTimeline from "@/components/route/RouteTimeLine";
 import MapCanvas, { type MapCanvasRef } from "@/components/map/MapCanvas";
 import { bestPlaces } from "@/data/dummy/explorePlaces";
 import { bestRoutes } from "@/data/dummy/exploreRoutes";
-// import { buildDays } from "@/utils/buildDays";
 
 export default function MapLayout({ mapType }: { mapType: MapType }) {
   // constants
@@ -237,7 +236,7 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
                 </S.RouteInfoSection>
               )}
 
-              <S.LocationBadge>경기 수원시 권선구</S.LocationBadge>
+              <S.LocationBadge>수원시 권선구</S.LocationBadge>
             </S.RightPanelContainer>
           </S.PanelSection>
         </S.OverlaySection>

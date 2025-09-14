@@ -32,6 +32,7 @@ export default function CustomTripPage() {
           </S.NextButtonContainer>
         </S.ContentContainer>
       </S.CustomTripContainer>
+      <div style={{ height: "40px", width: "100%" }} />
     </>
   );
 }
