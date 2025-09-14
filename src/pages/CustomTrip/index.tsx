@@ -1,34 +1,66 @@
 import * as S from "./styles";
 import CheckIcon from "@/assets/images/check_small.svg";
+import { useState } from "react";
+import { useAnswerStore } from "@/stores/answerStore";
+import { questions } from "@/data/questions";
+import { useNavigate } from "react-router";
 export default function CustomTripPage() {
+  const [step, setStep] = useState(0);
+  const { answers, setAnswer } = useAnswerStore();
+  const navigate = useNavigate();
+
+  const current = questions[step];
+  const selected = answers[current.id];
+
+  const handleNext = () => {
+    if (step < questions.length - 1) {
+      setStep(step + 1);
+    } else {
+      console.log("최종 답변:", answers);
+      // API 호출 후 탐색 페이지 이동
+      navigate("/explore", { state: { answers } });
+    }
+  };
   return (
     <>
       <S.CustomTripContainer>
         <S.ProgressBarContainer>
           <S.Progress>
-            <S.ProgressFill style={{ width: "50%" }} />
+            <S.ProgressFill
+              style={{ width: `${((step + 1) / questions.length) * 100}%` }}
+            />
           </S.Progress>
           <S.Description>맞춤 여행을 추천해드릴게요 !</S.Description>
         </S.ProgressBarContainer>
         <S.ContentContainer>
           <S.Question>
-            <S.QuestionHighlight>여행 기간</S.QuestionHighlight>은 어떻게
-            되시나요?
+            <S.QuestionHighlight>{current.highlighted}</S.QuestionHighlight>
+            {current.title}
           </S.Question>
           <S.AnswerContainer>
-            {/* <S.SelectButtonLarge>1박 2일</S.SelectButtonLarge> */}
-            <S.SelectButtonMedium $isSelected={true}>
-              혼자서
-              <S.CheckIcon src={CheckIcon} alt="체크아이콘" />
-            </S.SelectButtonMedium>
-            <S.SelectButtonMedium>가족과 함께</S.SelectButtonMedium>
-            <S.SelectButtonMedium>연인과 함께</S.SelectButtonMedium>
-            <S.SelectButtonMedium>친구와 함께</S.SelectButtonMedium>
-            {/* <S.SelectButtonSmall>걷기 좋은</S.SelectButtonSmall> */}
+            {current.options.map((opt) => (
+              <S.SelectButtonSmall
+                key={opt.toString()}
+                $isSelected={selected === opt}
+                onClick={() => setAnswer(current.id, opt)}
+              >
+                {opt}
+                {selected === opt && (
+                  <S.CheckIcon src={CheckIcon} alt="체크아이콘" />
+                )}
+              </S.SelectButtonSmall>
+            ))}
           </S.AnswerContainer>
           <S.NextButtonContainer>
-            <S.PassButton>상관없어요!</S.PassButton>
-            <S.SelectButton>선택하기 {">"}</S.SelectButton>
+            <S.PassButton
+              onClick={() => {
+                setAnswer(current.id, "전체"); // '상관없어요' → 전체로 저장
+                handleNext();
+              }}
+            >
+              상관없어요!
+            </S.PassButton>
+            <S.SelectButton onClick={handleNext}>선택하기 {">"}</S.SelectButton>
           </S.NextButtonContainer>
         </S.ContentContainer>
       </S.CustomTripContainer>
