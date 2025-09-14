@@ -10,8 +10,8 @@ import type {
   SubRegionType,
 } from "@/types/region";
 import { regions } from "@/data/regions";
-import { getSubRegion } from "@/apis/sgis/sgisService";
 import FirstButton from "@/components/FirstButton";
+import { getSubRegion } from "@/apis/tour/tourService";
 
 export default function HomePage() {
   // constants
@@ -71,7 +71,7 @@ export default function HomePage() {
         console.log("api 요청 시작");
         const subRegionData = await getSubRegion(region.code);
         const subRegionDataWithAll = [
-          { cd: `${region.code}0000`, addr_name: `${region.korName}전체` },
+          { cd: `${region.code}000`, addr_name: `${region.korName}전체` },
           ...subRegionData,
         ];
 

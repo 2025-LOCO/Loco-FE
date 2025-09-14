@@ -7,6 +7,7 @@ const tourInstance = axios.create({
   baseURL: TOUR_BASE_URL,
   params: {
     serviceKey: SERVICE_KEY,
+    _type: "json",
     MobileOS: "WEB",
     MobileApp: "loco",
   },
