@@ -10,6 +10,9 @@ export const PLACE_TYPES = [
   "플랜트샵",
   "갤러리",
   "루프탑 라운지",
+  "관광지",
+  "음식점",
+  "사찰",
 ] as const;
 
 export type PlaceType = (typeof PLACE_TYPES)[number];

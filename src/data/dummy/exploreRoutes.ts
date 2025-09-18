@@ -2,53 +2,46 @@ import type { LocoRoute } from "@/types/locoRoute";
 export const bestRoutes: LocoRoute[] = [
   {
     id: 1,
-    name: "여행 루트 1",
+    name: "해피 경주 여행",
     liked: 799,
     imageUrl: null,
-    location: "도시 1",
-    intro: "이것은 여행 루트 1의 소개입니다.",
+    location: "경상북도 경주시",
+    intro: "힐링하고 싶을 때 찾게되는 경주 여행 루트입니다 :)",
     tags: [
       {
         id: 11,
-        name: "1박2일",
+        name: "잔잔하고 조용한",
       },
       {
         id: 12,
-        name: "자동차",
+        name: "자전거",
       },
       {
         id: 13,
-        name: "가족과",
+        name: "친구와",
       },
     ],
     places: [
       {
         id: 1,
-        name: "1번 장소 A",
-        category: "카페",
+        name: "불국사",
+        category: "관광지",
         day: 1,
         order: 1,
       },
       {
         id: 2,
-        name: "1번 장소 B",
-        category: "시장",
+        name: "한다솥",
+        category: "식당",
         day: 1,
         order: 2,
       },
       {
         id: 3,
-        name: "1번 장소 C",
-        category: "공원",
+        name: "국립경주박물관",
+        category: "문화시설",
         day: 2,
         order: 1,
-      },
-      {
-        id: 4,
-        name: "1번 장소 D",
-        category: "역사",
-        day: 2,
-        order: 2,
       },
     ],
     transportations: [
@@ -71,11 +64,11 @@ export const bestRoutes: LocoRoute[] = [
   },
   {
     id: 2,
-    name: "여행 루트 2",
+    name: "수원시 행궁동 당일치기",
     liked: 798,
     imageUrl: null,
     location: "도시 2",
-    intro: "이것은 여행 루트 2의 소개입니다.",
+    intro: "행궁동에서 즐기는 알찬 당일치기 코스입니다.",
     tags: [
       {
         id: 21,
@@ -83,40 +76,26 @@ export const bestRoutes: LocoRoute[] = [
       },
       {
         id: 22,
-        name: "자동차",
+        name: "걸어서",
       },
       {
         id: 23,
-        name: "가족과",
+        name: "연인과",
       },
     ],
     places: [
       {
         id: 5,
-        name: "2번 장소 A",
+        name: "화성행궁",
         category: "카페",
         day: 1,
         order: 1,
       },
       {
         id: 6,
-        name: "2번 장소 B",
+        name: "장안공원",
         category: "시장",
         day: 1,
-        order: 2,
-      },
-      {
-        id: 7,
-        name: "2번 장소 C",
-        category: "공원",
-        day: 2,
-        order: 1,
-      },
-      {
-        id: 8,
-        name: "2번 장소 D",
-        category: "역사",
-        day: 2,
         order: 2,
       },
     ],
