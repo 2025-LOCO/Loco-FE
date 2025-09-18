@@ -16,7 +16,7 @@ export default function ExploreLayout() {
       <S.ExploreSection>
         <div>
           <LocationDropDown />
-          <S.LocationIntroduce>지역에 대한 한 줄 설명</S.LocationIntroduce>
+          <S.LocationIntroduce>궁금한 지역을 선택해보세요</S.LocationIntroduce>
         </div>
         <S.Title>로코 탐색</S.Title>
 

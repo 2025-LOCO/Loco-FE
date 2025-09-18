@@ -5,6 +5,7 @@ import type { SubRegionType } from "@/types/region";
 const DEFAULT_REGION: SubRegionType = {
   cd: "00000",
   addr_name: "전체",
+  full_addr: "전체",
 };
 
 type RegionStore = {

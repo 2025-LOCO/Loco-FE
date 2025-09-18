@@ -76,11 +76,11 @@ export default function HomePage() {
         console.log("api 요청 시작");
         const subRegionData = await getSubRegion(region.code);
         const subRegionDataWithAll = [
-          {
-            cd: `${region.code}000`,
-            addr_name: `${region.korName}전체`,
-            full_addr: `${region.korName}전체`,
-          },
+          // {
+          //   cd: `${region.code}000`,
+          //   addr_name: `${region.korName}전체`,
+          //   full_addr: `${region.korName}전체`,
+          // },
           ...subRegionData,
         ];
 
@@ -232,7 +232,18 @@ export default function HomePage() {
             찾고 계신가요?
           </S.SelectTitle>
           <S.VerticalLineAndCircle />
-          <FirstButton to="/custom-trip" isRecommendBtn={true}>
+          <FirstButton
+            to="/custom-trip"
+            isRecommendBtn={true}
+            onClick={() => {
+              setSelectedSubRegion({
+                cd: "00000",
+                addr_name: "전체",
+                full_addr: "전체",
+              });
+              console.log("zustand 등록됨: 전체");
+            }}
+          >
             맞춤 루트 추천받기
           </FirstButton>
         </S.DestContainer>
