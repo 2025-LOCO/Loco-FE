@@ -16,6 +16,7 @@ import RouteTimeline from "@/components/route/RouteTimeLine";
 import MapCanvas, { type MapCanvasRef } from "@/components/map/MapCanvas";
 import { bestPlaces } from "@/data/dummy/explorePlaces";
 import { bestRoutes } from "@/data/dummy/exploreRoutes";
+import PopupPlaceEdit from "@/components/PopupPlaceEdit";
 
 export default function MapLayout({ mapType }: { mapType: MapType }) {
   // constants
@@ -95,6 +96,7 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
   return (
     <>
       <S.MapLayoutRoot>
+        <PopupPlaceEdit />
         <S.MapSection>
           <MapCanvas
             ref={mapCanvasRef}

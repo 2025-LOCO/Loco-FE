@@ -67,7 +67,7 @@ export const bestRoutes: LocoRoute[] = [
     name: "수원시 행궁동 당일치기",
     liked: 798,
     imageUrl: null,
-    location: "도시 2",
+    location: "경기도 수원시",
     intro: "행궁동에서 즐기는 알찬 당일치기 코스입니다.",
     tags: [
       {
@@ -141,44 +141,24 @@ export const bestRoutes: LocoRoute[] = [
     places: [
       {
         id: 9,
-        name: "3번 장소 A",
+        name: "스포츠몬스터",
         category: "카페",
         day: 1,
         order: 1,
       },
       {
         id: 10,
-        name: "3번 장소 B",
+        name: "스타벅스",
         category: "시장",
         day: 1,
-        order: 2,
-      },
-      {
-        id: 11,
-        name: "3번 장소 C",
-        category: "공원",
-        day: 2,
-        order: 1,
-      },
-      {
-        id: 12,
-        name: "3번 장소 D",
-        category: "역사",
-        day: 2,
         order: 2,
       },
     ],
     transportations: [
       {
         id: 3001,
-        name: "걸어서",
+        name: "자전거",
         day: 1,
-        order: 1,
-      },
-      {
-        id: 3002,
-        name: "버스",
-        day: 2,
         order: 1,
       },
     ],

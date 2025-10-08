@@ -72,6 +72,18 @@ const MapCanvas = forwardRef<MapCanvasRef, MapCanvasProps>(
         );
       }
     }, []);
+    // 지도 bounds 자동 조정
+    useEffect(() => {
+      if (!kakaoMapRef.current || places.length === 0) return;
+
+      const bounds = new window.kakao.maps.LatLngBounds();
+
+      places.forEach((p) => {
+        bounds.extend(new window.kakao.maps.LatLng(p.latitude, p.longitude));
+      });
+
+      kakaoMapRef.current.setBounds(bounds);
+    }, [places]);
 
     // selectedPlaceId가 바뀔 때 placeDetail 세팅
     useEffect(() => {
