@@ -34,7 +34,6 @@ export default function ExploreLayout() {
           backgroundColor="color-mix(in srgb, var(--color-navy) 30%, white);"
           maxWidth="100%"
         />
-
         <Outlet />
       </S.ExploreSection>
 

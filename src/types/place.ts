@@ -22,7 +22,8 @@ export interface Place {
   name: string;
   imageUrl: string | null;
   liked: number;
-  location: string;
+  short_location?: string;
+  location?: string;
   intro: string;
   type: PlaceType;
   latitude?: number;
@@ -36,6 +37,7 @@ export interface Place {
   kakao_place_id?: number;
   link?: string;
   phone?: string;
+  member_id?: number;
 }
 
 export interface KakaoPlace {

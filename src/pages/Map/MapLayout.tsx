@@ -93,10 +93,17 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
   //   fetch("/api/routes").then(...).then(setRoutes);
   // }, []);
 
+  const { pathname } = useLocation();
+
+  // 페이지 이동 시 스크롤 최상단으로 이동
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
   return (
     <>
       <S.MapLayoutRoot>
-        <PopupPlaceEdit />
+        {/* <PopupPlaceEdit /> */}
         <S.MapSection>
           <MapCanvas
             ref={mapCanvasRef}

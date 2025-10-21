@@ -1,18 +1,26 @@
+import type { AnswerValueMap } from "@/data/answers";
+import { questions } from "@/data/questions";
 import { create } from "zustand";
 
-type TripAnswers = {
-  [key: number]: string | number; // id별 답변
-};
-
 type AnswerStore = {
-  answers: TripAnswers;
-  setAnswer: (id: number, answer: string | number) => void;
+  answers: Partial<AnswerValueMap>;
+  setAnswer: <Id extends keyof AnswerValueMap>(
+    id: Id,
+    answer: AnswerValueMap[Id]
+  ) => void;
   reset: () => void;
 };
 
+// 초기 상태: 모든 답변은 "전체"
+const initialAnswers = Object.fromEntries(
+  questions.map((q) => [q.id, "전체"])
+) as Partial<AnswerValueMap>;
+
 export const useAnswerStore = create<AnswerStore>((set) => ({
-  answers: {},
+  answers: initialAnswers,
   setAnswer: (id, answer) =>
-    set((state) => ({ answers: { ...state.answers, [id]: answer } })),
-  reset: () => set({ answers: {} }),
+    set((state) => ({
+      answers: { ...state.answers, [id]: answer },
+    })),
+  reset: () => set({ answers: initialAnswers }),
 }));
