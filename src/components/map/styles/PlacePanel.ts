@@ -117,12 +117,13 @@ export const ItemContainer = styled.div<{ $isSelected?: boolean }>`
   }
 `;
 
-export const ItemImgWrapper = styled.div`
+export const ItemImgWrapper = styled.div<{ $hasImg: boolean }>`
   width: 75px;
   height: 55px;
-
+  overflow: hidden;
   border-radius: 8px;
-  border: 1px solid var(--color-sub300);
+  border: ${(props) =>
+    props.$hasImg ? "none" : "2px solid var(--color-sub300)"};
   background-color: white;
 `;
 

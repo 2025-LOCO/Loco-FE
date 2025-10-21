@@ -19,7 +19,18 @@ export default function PlaceDetailsKakao({
         <div>
           <S.PlaceTitle>{place?.name}</S.PlaceTitle>
           <S.PlaceType>{place?.type}</S.PlaceType>
-          <S.ImgWrapper $isCard={isCard}></S.ImgWrapper>
+          <S.ImgWrapper
+            $isCard={isCard}
+            $hasImg={place?.imageUrl ? true : false}
+          >
+            {place?.imageUrl ? (
+              <img
+                src={place?.imageUrl}
+                alt={place?.name}
+                style={{ width: 114, height: 84 }}
+              />
+            ) : null}
+          </S.ImgWrapper>
         </div>
         <div style={{ paddingTop: "4px" }} />
         <S.DetailListContainer $isCard={isCard}>
