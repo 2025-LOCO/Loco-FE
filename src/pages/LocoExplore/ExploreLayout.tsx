@@ -38,7 +38,9 @@ export default function ExploreLayout() {
       </S.ExploreSection>
 
       {/* 지역 행사 섹션 */}
-      <S.LocalEventSection>지역행사리스트</S.LocalEventSection>
+      <S.LocalEventSection>
+        지역행사리스트를 불러오고 있습니다 ..
+      </S.LocalEventSection>
     </>
   );
 }

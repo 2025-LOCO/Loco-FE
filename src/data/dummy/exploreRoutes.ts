@@ -4,7 +4,7 @@ export const bestRoutes: LocoRoute[] = [
     id: 1,
     name: "해피 경주 여행",
     liked: 799,
-    imageUrl: null,
+    imageUrl: "/images/bicycle-travel.png",
     location: "경상북도 경주시",
     intro: "힐링하고 싶을 때 찾게되는 경주 여행 루트입니다 :)",
     tags: [

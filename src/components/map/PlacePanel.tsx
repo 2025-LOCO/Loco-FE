@@ -314,7 +314,13 @@ export default function PlacePanel() {
                         handleSelectPlace(place);
                       }}
                     >
-                      <S.ItemImgWrapper></S.ItemImgWrapper>
+                      <S.ItemImgWrapper $hasImg={place.imageUrl ? true : false}>
+                        {place.imageUrl ? (
+                          <img src={place.imageUrl} width={75} height={55} />
+                        ) : (
+                          <></>
+                        )}
+                      </S.ItemImgWrapper>
                       <S.ItemContentsContainer>
                         <S.ItemTitle>{place.name}</S.ItemTitle>
                         <S.ItemType>{place.type}</S.ItemType>

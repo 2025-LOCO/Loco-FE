@@ -13,7 +13,23 @@ export default function RouteCard({ data }: { data: LocoRoute }) {
         <div>
           <S.Route.ImgWrapper $hasImg={data.imageUrl ? true : false}>
             <S.Route.LocationBadge>{data.location}</S.Route.LocationBadge>
-            {data.imageUrl && <img src={data.imageUrl} alt="장소이미지" />}
+            {data.imageUrl && (
+              <div
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  overflow: "hidden",
+                  borderRadius: "8px",
+                }}
+              >
+                <img
+                  src={data.imageUrl}
+                  alt="장소이미지"
+                  width={180}
+                  height={110}
+                />
+              </div>
+            )}
           </S.Route.ImgWrapper>
 
           <S.Route.TagContainer>

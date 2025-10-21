@@ -76,7 +76,16 @@ export default function RoutePanel() {
                         ))}
                       </S.TagContainer>
                       <S.ItemHeaderContentsContainer>
-                        <Common.ItemImgWrapper></Common.ItemImgWrapper>
+                        <Common.ItemImgWrapper>
+                          {route.imageUrl && (
+                            <img
+                              src={route.imageUrl}
+                              alt="루트이미지"
+                              width={180}
+                              height={110}
+                            />
+                          )}
+                        </Common.ItemImgWrapper>
 
                         <Common.ItemContentsContainer>
                           <Common.ItemTitle>{route.name}</Common.ItemTitle>
