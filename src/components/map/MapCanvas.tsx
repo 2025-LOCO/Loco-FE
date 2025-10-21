@@ -92,6 +92,16 @@ const MapCanvas = forwardRef<MapCanvasRef, MapCanvasProps>(
           (place) => place.id === selectedPlaceId
         );
         setPlaceDetail(place ?? null);
+
+        // 선택된 장소를 중심으로 이동
+        if (place && kakaoMapRef.current) {
+          const offsetLat = 0.007; // 이동할 위도 차이
+          const center = new window.kakao.maps.LatLng(
+            (place?.latitude ?? 0) + offsetLat,
+            place?.longitude ?? 0
+          );
+          kakaoMapRef.current.panTo(center);
+        }
       }
     }, [selectedPlaceId]);
 
@@ -169,10 +179,15 @@ const MapCanvas = forwardRef<MapCanvasRef, MapCanvasProps>(
           container.style.height = "auto";
           container.style.transform = "translate(-50%, -120%)";
           container.style.position = "relative";
+          container.style.pointerEvents = "none";
 
           // 컴포넌트 마운트
           const root = ReactDOM.createRoot(container);
-          root.render(<PlaceCard isCard={true} place={placeDetail} />);
+          root.render(
+            <div style={{ pointerEvents: "auto" }}>
+              <PlaceCard isCard={true} place={placeDetail} />
+            </div>
+          );
 
           overlayRef.current = new window.kakao.maps.CustomOverlay({
             position: markerPosition,
@@ -181,7 +196,7 @@ const MapCanvas = forwardRef<MapCanvasRef, MapCanvasProps>(
             xAnchor: 0.5, // 마커 기준 가로 가운데 정렬
             yAnchor: 1, // 마커 기준 위쪽에 붙임
             zIndex: 2000,
-            clickable: true,
+            clickable: false,
           });
         }
       });

@@ -4,18 +4,24 @@ import PlusIcon from "@/assets/images/plus_icon.svg";
 import RankIcon from "@/assets/images/rank.svg";
 import GradeIcon from "@/assets/images/grade.svg";
 import PointIcon from "@/assets/images/point.svg";
+import ArrowRightIcon from "@/assets/images/arrow_right.svg";
+import VoteBar from "@/components/VoteBar";
 
 export default function MyPage() {
   return (
     <>
       <S.MypageContainer>
+        <S.TownCertifyButton>
+          <div>동네인증</div>
+          <img src={ArrowRightIcon} alt="바로가기 아이콘" />
+        </S.TownCertifyButton>
         <S.ProfileInfoSection>
           <S.ProfileContainer>
             <S.ProfileImgWrapper>
               <S.ProfileImg src={ProfileImg} alt="프로필이미지" />
               <S.PlusIcon src={PlusIcon} alt="플러스아이콘" />
             </S.ProfileImgWrapper>
-            <div>
+            <div style={{ paddingLeft: 10 }}>
               <S.NickName>
                 닉네임
                 <span
@@ -73,8 +79,70 @@ export default function MyPage() {
             </S.FigureItem>
           </S.FigureListContainer>
         </S.ProfileInfoSection>
-        <S.MypageTitle>내 장소</S.MypageTitle>
+        <S.StatCardSection>
+          <S.StatCardContainer>
+            <S.MypageTitle>내 장소</S.MypageTitle>
+            <S.StatContainer>
+              <S.StatValue>
+                150<S.StatLabel>개</S.StatLabel>
+              </S.StatValue>
+              <div
+                style={{
+                  height: "30px",
+                  width: "2px",
+                  backgroundColor: "var(--color-sub300)",
+                  margin: "0 15px",
+                }}
+              ></div>
+              <S.StatValue>
+                <S.StatLabel>담아요 </S.StatLabel>1,251
+              </S.StatValue>
+            </S.StatContainer>
+            <VoteBar counts={[30, 40, 10]} />
+          </S.StatCardContainer>
+          <S.StatCardContainer>
+            <S.MypageTitle>내 루트</S.MypageTitle>
+            <S.StatContainer>
+              <S.StatValue>
+                150<S.StatLabel>개</S.StatLabel>
+              </S.StatValue>
+              <div
+                style={{
+                  height: "30px",
+                  width: "2px",
+                  backgroundColor: "var(--color-sub300)",
+                  margin: "0 15px",
+                }}
+              ></div>
+              <S.StatValue>
+                <S.StatLabel>담아요 </S.StatLabel>1,251
+              </S.StatValue>
+            </S.StatContainer>
+            <VoteBar counts={[96, 52, 10]} />
+          </S.StatCardContainer>
+          <S.StatCardContainer>
+            <S.MypageTitle>내 답변</S.MypageTitle>
+            <S.StatContainer>
+              <S.StatValue>
+                150<S.StatLabel>개</S.StatLabel>
+              </S.StatValue>
+              <div
+                style={{
+                  height: "30px",
+                  width: "2px",
+                  backgroundColor: "var(--color-sub300)",
+                  margin: "0 15px",
+                }}
+              ></div>
+              <S.StatValue>
+                <S.StatLabel>담아요 </S.StatLabel>1,251
+              </S.StatValue>
+            </S.StatContainer>
+            <VoteBar counts={[12, 5, 1]} />
+          </S.StatCardContainer>
+        </S.StatCardSection>
       </S.MypageContainer>
+      <div style={{ padding: "40px" }}></div>
     </>
   );
 }

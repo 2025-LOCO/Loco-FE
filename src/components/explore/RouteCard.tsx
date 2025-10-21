@@ -8,7 +8,7 @@ import {
 
 export default function RouteCard({ data }: { data: LocoRoute }) {
   return (
-    <S.Route.Card>
+    <S.Route.Card to="/public-map/route">
       <S.Route.CardContentContainer>
         <div>
           <S.Route.ImgWrapper $hasImg={data.imageUrl ? true : false}>

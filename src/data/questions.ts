@@ -14,7 +14,7 @@ export const questions = [
   {
     id: 3,
     highlighted: "누구",
-    title: "와 함께 하시나요",
+    title: "와 함께 하시나요?",
     options: ["혼자", "친구", "연인", "가족", "반려동물"],
   },
   {
@@ -29,10 +29,10 @@ export const questions = [
     title: "를 원하시나요?",
     options: [
       "잔잔하고 조용한",
-      "활기차고 신나는",
-      "자연을 느끼는",
-      "도시를 즐기는",
-      "색다른 경험",
+      "신나는 액티비티",
+      "다채로운 경험",
+      "맛있는 여행",
+      "아늑하고 로맨틱한",
     ],
   },
   {
@@ -41,4 +41,6 @@ export const questions = [
     title: "는 어느 정도가 적당하다고 생각하시나요?",
     options: ["1", "2", "3", "4", "5"],
   },
-];
+] as const;
+
+export type Questions = typeof questions;
