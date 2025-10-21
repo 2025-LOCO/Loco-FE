@@ -1,9 +1,9 @@
 import * as S from "./styles";
 import CheckIcon from "@/assets/images/check_small.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAnswerStore } from "@/stores/answerStore";
 import { questions } from "@/data/questions";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 export default function CustomTripPage() {
   const [step, setStep] = useState(0);
   const { answers, setAnswer } = useAnswerStore();
@@ -24,6 +24,13 @@ export default function CustomTripPage() {
       navigate("/explore/loco-route", { state: { answers } });
     }
   };
+
+  const { pathname } = useLocation();
+
+  // 페이지 이동 시 스크롤 최상단으로 이동
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return (
     <>
