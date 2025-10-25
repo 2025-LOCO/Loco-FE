@@ -61,14 +61,15 @@ export default function PopupHashTagEdit() {
             <S.Inputtag>
               <S.Label>분위기</S.Label>
               <CustomDropdown
-                index={4}
+                index={5}
                 openIndex={openIndex}
                 setOpenIndex={setOpenIndex}
                 options={[
+                  "잔잔하고 조용한",
                   "신나는 액티비티",
                   "다채로운 경험",
                   "맛있는 여행",
-                  "감성적인 분위기",
+                  "아늑하고 로맨틱한",
                 ]}
               />
             </S.Inputtag>

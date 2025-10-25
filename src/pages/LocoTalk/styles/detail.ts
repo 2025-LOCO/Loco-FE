@@ -223,3 +223,197 @@ export const Emoji = styled.img<{ $isSelected: boolean }>`
     }
   `}
 `;
+
+// import styled from "styled-components";
+
+// /* ===== 게시글 상세 ===== */
+// export const PostDetailContainer = styled.div`
+//   background-color: white;
+//   border: 1px solid #e0e0e0;
+//   border-radius: 12px;
+//   padding: 40px;
+//   margin: 40px 87px 80px 87px;
+//   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+// `;
+
+// export const PostTitle = styled.h1`
+//   font-size: 24px;
+//   font-weight: 700;
+//   color: #222;
+//   margin-bottom: 30px;
+//   line-height: 1.4;
+// `;
+
+// export const PostContent = styled.div`
+//   color: #555;
+//   font-size: 15px;
+//   line-height: 1.6;
+//   margin-bottom: 50px;
+//   white-space: pre-wrap;
+
+//   p {
+//     margin-bottom: 8px;
+//   }
+// `;
+
+// /* ===== 댓글 섹션 ===== */
+// export const CommentSection = styled.div`
+//   border-top: 1px solid #f0f0f0;
+//   padding-top: 30px;
+// `;
+
+// export const CommentHeader = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   margin-bottom: 20px;
+// `;
+
+// export const CommentCount = styled.div`
+//   background-color: var(--color-sub300);
+//   color: var(--color-darknavy);
+//   padding: 8px 16px;
+//   border-radius: 20px;
+//   font-size: 14px;
+//   font-weight: 500;
+// `;
+
+// export const SortSelect = styled.select`
+//   padding: 6px 12px;
+//   border: 1px solid #e0e0e0;
+//   border-radius: 6px;
+//   background-color: white;
+//   font-size: 13px;
+//   color: #666;
+// `;
+
+// /* ===== 댓글 작성 ===== */
+export const CommentForm = styled.form`
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 25px;
+`;
+
+export const CommentInput = styled.textarea`
+  flex: 1;
+  min-height: 70px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  resize: none;
+  color: #333;
+  line-height: 1.5;
+  background-color: #fafafa;
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-sub400);
+    background-color: #fff;
+  }
+`;
+
+export const CommentSubmitButton = styled.button`
+  background-color: var(--color-yellow);
+  color: var(--color-navy);
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border: 1.5px solid var(--color-navy);
+    background-color: #ffe680;
+  }
+`;
+
+// /* ===== 댓글 목록 ===== */
+// export const CommentList = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   max-height: 400px;
+//   overflow-y: auto;
+//   padding-right: 16px;
+
+//   &::-webkit-scrollbar {
+//     width: 6px;
+//   }
+//   &::-webkit-scrollbar-thumb {
+//     background: #ffd23f;
+//     border-radius: 3px;
+//   }
+// `;
+
+// export const CommentItem = styled.div`
+//   display: flex;
+//   padding: 20px 0;
+//   border-bottom: 1px solid #f0f0f0;
+
+//   &:last-child {
+//     border-bottom: none;
+//   }
+// `;
+
+// export const CommentContent = styled.div`
+//   flex: 1;
+//   display: flex;
+//   flex-direction: column;
+//   gap: 10px;
+// `;
+
+// export const CommentAuthorRow = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   margin: 0 10px;
+// `;
+
+// export const CommentAuthor = styled.div`
+//   font-size: 14px;
+//   font-weight: 600;
+//   color: #333;
+// `;
+
+// export const CommentDate = styled.span`
+//   font-size: 12px;
+//   color: #999;
+// `;
+
+// export const CommentBodyRow = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: flex-start;
+//   gap: 10px;
+//   margin: 0 10px;
+// `;
+
+// export const CommentText = styled.div`
+//   flex: 1;
+//   color: #555;
+//   font-size: 14px;
+//   line-height: 1.5;
+//   margin-right: 12px;
+//   word-break: break-word;
+// `;
+
+// export const HeartContainer = styled.div`
+//   display: flex;
+//   gap: 6px;
+//   align-items: flex-start;
+//   flex-shrink: 0;
+// `;
+
+// export const Emoji = styled.img<{ $isSelected: boolean }>`
+//   width: 18px;
+//   height: 18px;
+//   cursor: pointer;
+//   transition: all 0.2s ease;
+//   opacity: ${({ $isSelected }) => ($isSelected ? 1 : 0.5)};
+//   filter: ${({ $isSelected }) => ($isSelected ? "none" : "grayscale(100%)")};
+//   &:hover {
+//     transform: ${({ $isSelected }) => ($isSelected ? "scale(1.1)" : "none")};
+//   }
+// `;
