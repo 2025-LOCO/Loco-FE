@@ -244,7 +244,7 @@ export const TextArea = styled.textarea`
   /* 내용 많을 때만 스크롤 (근데 스크롤바는 안보임) */
   overflow-y: auto;
 
-  /* ✅ 스크롤바 숨기기 */
+  /*  스크롤바 숨기기 */
   &::-webkit-scrollbar {
     display: none;
   }

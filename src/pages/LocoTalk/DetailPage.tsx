@@ -1,92 +1,74 @@
 import { useState } from "react";
-import { useParams, useNavigate } from "react-router";
+import { useParams } from "react-router-dom";
 import * as S from "./styles/detail";
-import LocationDropDown from "@/components/LocationDropDown";
-import Divider from "@/components/Divider";
 
 // 이모지 이미지 import
 import HeartFace from "@/assets/images/Heart-face.svg";
 import SlightlyHappy from "@/assets/images/Slightly-happy.svg";
 import Pleading from "@/assets/images/Pleading.svg";
 
-export default function PostDetailPage() {
+export default function DetailPage() {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [sortOrder, setSortOrder] = useState("최신순");
   const [selectedHearts, setSelectedHearts] = useState<Record<number, string>>({});
+  const [newComment, setNewComment] = useState(""); // ✅ 댓글 입력 상태
+  const [replies, setReplies] = useState([
+    {
+      id: 1,
+      author: "수원지기",
+      content:
+        "북부시 근처에 000 공원이 있는데 , 다른곳보다 여기가 돗자리 펴고 놀기 좋아요! 그리고 버스랑 자전거로도 갈 수 있는 거리입니다.!",
+      createdAt: "2025.08.10",
+    },
+    {
+      id: 2,
+      author: "진또배기",
+      content:
+        "저는 사거리 옆에 00 공원을 추천해요. 교통은 자전거 버스 다 가능하고 공원이 비교적 한산해서 편하게 쉬었다가기 좋아요!",
+      createdAt: "2025.08.10",
+    },
+  ]);
 
-  const TabMenus = [
-    { name: "로코지기", to: "loco-guide" },
-    { name: "로코장소", to: "loco-place" },
-    { name: "로코루트", to: "loco-route" },
-    { name: "로코문답", to: "/loco-talk" },
-  ];
-
-  // 임시 데이터 (실제로는 API에서 가져올 데이터)
+  // ✅ 게시글 더미 데이터
   const postData = {
-    id: 1,
+    id: Number(id),
     title: "청주에 돗자리 펴고 있을 수 있는 공원 있을까요?",
     content: `여행가는날 일찍 도착할 것 같아서요 돗자리 펴고 한강처럼 좋을 수 있는 공원이 있을 까요?
 렌트는 안할 예정이어서 자전거나 버스로 이동할 수 있는 공원이면 좋겠어요!`,
     author: "작성자",
     createdAt: "2025.08.10",
     views: 5,
-    replies: [],
   };
 
-  const replies = [
-    {
-      id: 1,
-      author: "인돌돌기",
-      content: "북부시 근처에 000 공원이 있는데 , 다른곳보다 여기가 돗자리 펴고 놀기 좋아요! 그리고 버스랑 자전거로도 갈 수 있는 거리입니다.!",
-      createdAt: "2025.08.10",
-    },
-    {
-      id: 2,
-      author: "전또해기",
-      content: "콘국시 근저에 000 공원이 있는데 팜구 시원한 주댔에 어기서 뽓차리 퍼고 놀이요!",
-      createdAt: "2025.08.10",
-    },
-    { id: 3, author: "사용자3", content: "추가 댓글 내용입니다.", createdAt: "2025.08.10" },
-    { id: 4, author: "사용자4", content: "또 다른 댓글입니다.", createdAt: "2025.08.10" },
-    { id: 5, author: "사용자5", content: "마지막 댓글입니다.", createdAt: "2025.08.10" },
-  ];
-
-  // 이모지 선택 핸들러
+  // ✅ 이모지 선택 핸들러
   const handleHeartClick = (commentId: number, emoji: string) => {
-  setSelectedHearts((prev) => ({
-    ...prev,
-    [commentId]: emoji,
-  }));
-};
+    setSelectedHearts((prev) => ({
+      ...prev,
+      [commentId]: emoji,
+    }));
+  };
 
+  // ✅ 댓글 작성 핸들러
+  const handleAddComment = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newComment.trim()) return;
+
+    const newReply = {
+      id: replies.length + 1,
+      author: "익명 로코",
+      content: newComment.trim(),
+      createdAt: new Date().toISOString().split("T")[0],
+    };
+
+    setReplies((prev) => [newReply, ...prev]);
+    setNewComment("");
+  };
 
   return (
-    <S.TalkSection>
-      {/* 헤더 섹션 */}
-      <div>
-        <LocationDropDown />
-        <S.LocationIntroduce>지역에 대한 한 줄 설명</S.LocationIntroduce>
-      </div>
-      <S.Title>로코 문답</S.Title>
-
-      {/* 네비게이션 탭 */}
-      <S.TabContainer>
-        {TabMenus.map((tabMenu) => (
-          <S.TabItem to={tabMenu.to} key={tabMenu.name}>
-            {tabMenu.name}
-          </S.TabItem>
-        ))}
-      </S.TabContainer>
-
-      <Divider
-        height="1px"
-        backgroundColor="color-mix(in srgb, var(--color-navy) 30%, white);"
-        maxWidth="100%"
-      />
-
-      {/* 게시글 상세 내용 */}
+    <>
+      {/* ✅ TalkLayout이 공통 헤더를 렌더링하므로 이 컴포넌트는 본문만 렌더링 */}
       <S.PostDetailContainer>
+        {/* 게시글 제목 및 본문 */}
         <S.PostTitle>{postData.title}</S.PostTitle>
         <S.PostContent>
           {postData.content.split("\n").map((line, index) => (
@@ -94,49 +76,63 @@ export default function PostDetailPage() {
           ))}
         </S.PostContent>
 
-        {/* 댓글 섹션 */}
+        {/* ✅ 댓글 섹션 */}
         <S.CommentSection>
           <S.CommentHeader>
-            <S.CommentCount>댓글</S.CommentCount>
+            <S.CommentCount>댓글 {replies.length}</S.CommentCount>
             <S.SortSelect value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
               <option>최신순</option>
               <option>인기순</option>
             </S.SortSelect>
           </S.CommentHeader>
 
+          {/* ✅ 댓글 작성 박스 */}
+          <S.CommentForm onSubmit={handleAddComment}>
+            <S.CommentInput
+              placeholder="댓글을 입력하세요."
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+            />
+            <S.CommentSubmitButton type="submit">등록</S.CommentSubmitButton>
+          </S.CommentForm>
+
+          {/* ✅ 댓글 리스트 */}
           <S.CommentList>
             {replies.map((reply) => (
-                <S.CommentItem key={reply.id}>
-                   <S.CommentContent>
-                   {/* 작성자 + 날짜 */}
-                    <S.CommentAuthorRow>
-                        <S.CommentAuthor>{reply.author}</S.CommentAuthor>
-                    </S.CommentAuthorRow>
+              <S.CommentItem key={reply.id}>
+                <S.CommentContent>
+                  {/* 작성자 */}
+                  <S.CommentAuthorRow>
+                    <S.CommentAuthor>{reply.author}</S.CommentAuthor>
+                  </S.CommentAuthorRow>
 
-                   {/* 댓글 내용 + 이모지 */}
-                       <S.CommentBodyRow>
-                         <S.CommentText>{reply.content}</S.CommentText>
-                         <S.HeartContainer>
-                           {[HeartFace, SlightlyHappy, Pleading].map((emoji) => (
-                             <S.Emoji
-                             key={emoji}
-                             src={emoji}
-                             alt={emoji}
-                             $isSelected={selectedHearts[reply.id] === emoji}
-                             onClick={() => handleHeartClick(reply.id, emoji)}
-                             />
-                           ))}
-                         </S.HeartContainer>
-                        </S.CommentBodyRow>
-                          <S.CommentAuthorRow> 
-                            <S.CommentDate>{reply.createdAt}</S.CommentDate>
-                         </S.CommentAuthorRow>
-                    </S.CommentContent>
-                 </S.CommentItem>
-              ))}
+                  {/* 본문 + 이모지 */}
+                  <S.CommentBodyRow>
+                    <S.CommentText>{reply.content}</S.CommentText>
+
+                    <S.HeartContainer>
+                      {[HeartFace, SlightlyHappy, Pleading].map((emoji) => (
+                        <S.Emoji
+                          key={emoji}
+                          src={emoji}
+                          alt={emoji}
+                          $isSelected={selectedHearts[reply.id] === emoji}
+                          onClick={() => handleHeartClick(reply.id, emoji)}
+                        />
+                      ))}
+                    </S.HeartContainer>
+                  </S.CommentBodyRow>
+
+                  {/* 날짜 */}
+                  <S.CommentAuthorRow>
+                    <S.CommentDate>{reply.createdAt}</S.CommentDate>
+                  </S.CommentAuthorRow>
+                </S.CommentContent>
+              </S.CommentItem>
+            ))}
           </S.CommentList>
         </S.CommentSection>
       </S.PostDetailContainer>
-    </S.TalkSection>
+    </>
   );
 }

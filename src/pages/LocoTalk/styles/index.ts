@@ -1,6 +1,37 @@
 import { NavLink } from "react-router";
 // import { Link, NavLink } from "react-router";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+
+export const Section = styled.div`
+  margin-top: 30px;
+  padding: 0 35px;
+  display: flex;
+  flex-direction: column;
+  gap: 37px;
+`;
+
+export const CardContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`;
+
+export const TitleContainer = styled.div`
+  display: inline-flex;
+  gap: 5px;
+`;
+export const Title = styled.div`
+  color: var(--color-navy);
+  font-size: 30px;
+  font-weight: 700;
+`;
+
+export const SubTitle = styled.div`
+  color: var(--color-navy);
+  font-size: 22px;
+  font-weight: 700;
+`;
 
 export const TalkSection = styled.div`
   padding: 60px 87px;
@@ -14,12 +45,6 @@ export const LocationIntroduce = styled.span`
   font-size: 15px;
   font-weight: 300;
   padding-left: 20px;
-`;
-
-export const Title = styled.div`
-  color: black;
-  font-size: 30px;
-  font-weight: 700;
 `;
 
 export const TabContainer = styled.div`
@@ -44,6 +69,35 @@ export const TabItem = styled(NavLink)`
     background-color: var(--color-darknavy);
     border: 1px solid var(--color-darknavy);
   }
+`;
+
+export const AskButton = styled(Link)`
+  margin-left: 12px;
+  padding: 6px 14px;
+  background-color:  #ffe769;;
+  color: var(--color-navy);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+
+  &:hover {
+    background-color: #ffe769; /* 약간 밝은 톤으로 */
+  }
+
+  &:active {
+    transform: scale(0.98); /* 클릭시 살짝 눌림 효과 */
+  }
+`;
+
+export const VerticalBar = styled.div`
+  width: 2px;
+  height: 24px;
+  background-color: #dcdcdc;
+  margin: 0 12px;
+  align-self: center;
 `;
 
 export const ContentArea = styled.div`
@@ -101,7 +155,6 @@ export const SortSelect = styled.select`
 `;
 
 export const TableContainer = styled.div`
-  border: 1px solid #e0e0e0;
   border-radius: 8px;
   overflow: hidden;
   margin-bottom: 30px;
@@ -141,12 +194,25 @@ export const PostTitle = styled.span`
   text-align: left;
   color: #333;
   cursor: pointer;
-  
+
   &:hover {
     color: var(--color-navy);
     text-decoration: underline;
   }
 `;
+
+export const PostLink = styled(Link)`
+  font-size: 16px;
+  color: var(--color-navy);
+  text-decoration: none;
+  cursor: pointer;
+  text-align: left;  
+  
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
 
 export const Pagination = styled.div`
   display: flex;
@@ -190,3 +256,5 @@ export const PageNumber = styled.span`
     background-color: #f0f0f0;
   }
 `;
+
+
