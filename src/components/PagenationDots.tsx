@@ -1,6 +1,6 @@
 // components/PagenationDots.tsx
 import styled from "styled-components";
-import { useCallback, useEffect, useRef } from "react";
+import { useRef } from "react";
 
 type DotsProps = {
   active: number; // 활성화된 dot 인덱스

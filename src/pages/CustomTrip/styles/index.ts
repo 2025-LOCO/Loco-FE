@@ -81,9 +81,11 @@ export const SelectButtonMedium = styled.button<{ $isSelected?: boolean }>`
   flex: 0 1 180px;
 `;
 
-export const SelectButtonSmall = styled.button`
+export const SelectButtonSmall = styled.button<{ $isSelected?: boolean }>`
+  border: ${({ $isSelected }) => $isSelected && "2px solid var(--color-navy)"};
   ${selectButtonCommon}
   flex: 0 1 142px;
+  cursor: pointer;
 `;
 
 export const CheckIcon = styled.img`
@@ -107,6 +109,7 @@ export const PassButton = styled.button`
   font-size: 20px;
   font-weight: 400;
   color: var(--color-sub400);
+  cursor: pointer;
 `;
 
 export const SelectButton = styled.button`
@@ -116,4 +119,5 @@ export const SelectButton = styled.button`
   font-size: 20px;
   font-weight: 400;
   color: white;
+  cursor: pointer;
 `;

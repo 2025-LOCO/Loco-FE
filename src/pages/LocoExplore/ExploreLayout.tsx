@@ -16,7 +16,7 @@ export default function ExploreLayout() {
       <S.ExploreSection>
         <div>
           <LocationDropDown />
-          <S.LocationIntroduce>지역에 대한 한 줄 설명</S.LocationIntroduce>
+          <S.LocationIntroduce>궁금한 지역을 선택해보세요</S.LocationIntroduce>
         </div>
         <S.Title>로코 탐색</S.Title>
 
@@ -34,12 +34,13 @@ export default function ExploreLayout() {
           backgroundColor="color-mix(in srgb, var(--color-navy) 30%, white);"
           maxWidth="100%"
         />
-
         <Outlet />
       </S.ExploreSection>
 
       {/* 지역 행사 섹션 */}
-      <S.LocalEventSection>지역행사리스트</S.LocalEventSection>
+      <S.LocalEventSection>
+        지역행사리스트를 불러오고 있습니다 ..
+      </S.LocalEventSection>
     </>
   );
 }

@@ -1,4 +1,4 @@
-import * as S from "./styles/header";
+import * as S from "./styles/Header";
 import LogoIcon from "@/assets/images/logo_header.svg";
 import MyIcon from "@/assets/images/profile_small.svg";
 
@@ -6,7 +6,7 @@ export default function Header() {
   return (
     <>
       <S.HeaderContainer>
-        <S.Logo>
+        <S.Logo to="/">
           <img src={LogoIcon} alt="Logo" />
         </S.Logo>
 
@@ -15,8 +15,6 @@ export default function Header() {
           <S.MenuItem to="custom-trip">맞춤여정</S.MenuItem>
           <S.MenuItem to="explore">로코탐색</S.MenuItem>
           <S.MenuItem to="loco-talk">로코톡톡</S.MenuItem>
-          <S.MenuItem to="map-maker">지도제작</S.MenuItem>
-          <S.MenuItem to="guide">이용안내</S.MenuItem>
         </S.MenuContainer>
 
         {/* <S.LoginContainer>

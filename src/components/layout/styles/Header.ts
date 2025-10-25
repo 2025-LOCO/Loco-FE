@@ -12,7 +12,7 @@ export const HeaderContainer = styled.div`
   z-index: 1000;
 `;
 
-export const Logo = styled.div`
+export const Logo = styled(Link)`
   padding: 10px;
   cursor: pointer;
 `;

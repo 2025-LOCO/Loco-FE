@@ -8,59 +8,181 @@ import SmallCheckIcon from "@/assets/images/check circle_17.svg";
 import FilledMarkIcon from "@/assets/images/bookmark_filled_17.svg";
 import AddPlaceIcon from "@/assets/images/add_place.svg";
 import BackIcon from "@/assets/images/back.svg";
-import { bestPlaces } from "@/data/dummy/explorePlaces";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SearchBar from "../SearchBar";
-import type { Place } from "@/types/place";
+import type { KakaoPlace, Place } from "@/types/place";
 import PlaceDetailsKakao from "../place/PlaceDetailsKakao";
 import PlaceDetailsUser from "../place/PlaceDetailsUser";
+import { placeDetails } from "@/data/dummy/placeDetail";
 
-export default function ProfilePanel() {
+export default function PlacePanel() {
   const context = useOutletContext<MapOutletContext>();
-  const { mapType } = context;
+  const {
+    mapType,
+    places,
+    setSelectedPlaceId,
+    selectedPlaceId,
+    kakaoMap,
+    fitBounds,
+  } = context;
 
-  // state
+  // states
   const [isSearchTabOpened, setIsSearchTabOpened] = useState<boolean>(false);
   // const [placeSearchText, setPlaceSearchText] = useState<string>("");
   const [selectedSearchPlace, setSelectedSearchPlace] = useState<Place | null>(
     null
   );
-  const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
+  const [searchPlaces, setSearchPlaces] = useState<any[]>([]); // 카카오 검색 결과
   const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [placeDetail, setPlaceDetail] = useState<Place | null>(null);
 
-  // boolean
+  // refs
+  const infowindowRef = useRef<any>(null);
+  const searchMarkersRef = useRef<any[]>([]);
+
+  // computed values
   const hasSelectedSearchPlace = selectedSearchPlace !== null;
-  const hasSelectedPlace = selectedPlace !== null;
+  const hasSelectedPlace = selectedPlaceId !== null;
 
-  // handler
+  // handlers
   function handleToggleSearchPlace() {
-    setIsSearchTabOpened((prev) => !prev);
+    setIsSearchTabOpened((prev) => {
+      const willClose = prev === true;
+
+      if (willClose) {
+        setSearchPlaces([]);
+        setSelectedSearchPlace(null);
+
+        // 검색 마커 제거
+        searchMarkersRef.current.forEach((m) => m.setMap(null));
+        searchMarkersRef.current = [];
+
+        // infowindow 닫기
+        if (infowindowRef.current) {
+          infowindowRef.current.close();
+        }
+
+        // bounds 복원
+        if (kakaoMap) {
+          if (places.length > 0) {
+            const bounds = new window.kakao.maps.LatLngBounds();
+            places.forEach((p) => {
+              bounds.extend(
+                new window.kakao.maps.LatLng(p.latitude, p.longitude)
+              );
+            });
+            kakaoMap.setBounds(bounds);
+          } else {
+            kakaoMap.setCenter(
+              new window.kakao.maps.LatLng(37.566826, 126.9786567)
+            );
+            kakaoMap.setLevel(3);
+          }
+        }
+      }
+
+      return !prev;
+    });
   }
 
   function handleSelectSearchPlace(place: Place) {
-    setSelectedSearchPlace((prev) => (prev?.id === place.id ? null : place));
+    setSelectedSearchPlace((prev) =>
+      prev?.kakao_place_id === place.kakao_place_id ? null : place
+    );
   }
 
   function handleSelectPlace(place: Place) {
-    setSelectedPlace((prev) => (prev?.id === place.id ? null : place));
+    setSelectedPlaceId(place.id);
   }
 
   function handleClickBack() {
-    window.location.reload();
+    setSelectedPlaceId(null);
   }
 
-  function handleClickLike() {
+  function handleClickLike(e: React.MouseEvent<HTMLDivElement>) {
+    e.stopPropagation();
     setIsLiked((prev) => !prev);
   }
+
+  // effects
+  useEffect(() => {
+    if (selectedPlaceId !== null) {
+      const place = placeDetails.find((place) => place.id === selectedPlaceId);
+      setPlaceDetail(place ?? null);
+    }
+  }, [selectedPlaceId]);
 
   // function handleClickSearchBtn() {
 
   // }
 
+  // 검색 실행
+  function handleSearchPlaces(keyword: string) {
+    if (!keyword.trim()) return;
+
+    const ps = new window.kakao.maps.services.Places();
+    ps.keywordSearch(keyword, (data: any, status: any) => {
+      if (status === window.kakao.maps.services.Status.OK) {
+        // 카카오 응답 -> 우리 Place 타입으로 변환
+        const mapped = data.map((d: any, idx: number) => ({
+          kakao_place_id: d.id ?? String(idx), // 카카오 id 없으면 fallback
+          name: d.place_name,
+          latitude: parseFloat(d.y),
+          longitude: parseFloat(d.x),
+          type: d.category_group_name,
+          link: d.place_url,
+          location: d.address_name,
+          phone: d.phone,
+        })) as KakaoPlace[];
+
+        setSearchPlaces(mapped);
+        displayMarkers(mapped);
+      }
+    });
+  }
+
+  // 마커 표시
+  function displayMarkers(data: any[]) {
+    if (!kakaoMap) return;
+
+    // 기존 검색 마커 제거
+    searchMarkersRef.current.forEach((m) => m.setMap(null));
+    searchMarkersRef.current = [];
+
+    if (!infowindowRef.current) {
+      infowindowRef.current = new window.kakao.maps.InfoWindow({ zIndex: 1 });
+    }
+
+    data.forEach((place) => {
+      const position = new window.kakao.maps.LatLng(
+        place.latitude,
+        place.longitude
+      );
+
+      const marker = new window.kakao.maps.Marker({
+        map: kakaoMap,
+        position,
+      });
+
+      window.kakao.maps.event.addListener(marker, "click", () => {
+        infowindowRef.current.setContent(
+          `<div style="padding:5px;font-size:12px;color:black">${place.name}</div>`
+        );
+        infowindowRef.current.open(kakaoMap, marker);
+        setSelectedSearchPlace(place);
+      });
+
+      searchMarkersRef.current.push(marker);
+    });
+
+    // 여기서 직접 kakaoMap.setBounds 안 쓰고 fitBounds 사용
+    fitBounds?.(data);
+  }
+
   return (
     <>
-      <S.PlacePanel>
-        {hasSelectedPlace ? (
+      <S.Panel>
+        {hasSelectedPlace && !isSearchTabOpened ? (
           <div
             style={{
               display: "flex",
@@ -94,59 +216,64 @@ export default function ProfilePanel() {
         )}
         {/* 탐색창이 열린 경우 */}
         {isSearchTabOpened ? (
-          <S.PlaceSection>
+          <S.Section>
             <div style={{ paddingRight: "45px", paddingTop: "15px" }}></div>
             {hasSelectedSearchPlace ? (
               <>
-                <S.PlaceItem
-                  key={selectedSearchPlace.id}
+                <S.ItemContainer
+                  key={selectedSearchPlace.kakao_place_id}
                   $isSelected={true}
                   onClick={() => {
                     handleSelectSearchPlace(selectedSearchPlace);
                   }}
                 >
                   <S.SearchPlaceContentsContainer $isSelected={true}>
-                    <S.PlaceTitle>{selectedSearchPlace.name}</S.PlaceTitle>
-                    <S.PlaceLocation>장소 위치</S.PlaceLocation>
+                    <S.ItemTitle>{selectedSearchPlace.name}</S.ItemTitle>
+                    <S.PlaceLocation>
+                      {selectedSearchPlace.location}
+                    </S.PlaceLocation>
                   </S.SearchPlaceContentsContainer>
-                </S.PlaceItem>
+                </S.ItemContainer>
                 <S.AddPlaceBtn>
                   <div>장소 추가하기</div>
                   <img src={AddPlaceIcon} alt="장소추가아이콘" />
                 </S.AddPlaceBtn>
-                <div style={{ paddingTop: "190px" }} />
-                <PlaceDetailsKakao isCard={false}></PlaceDetailsKakao>
+                <PlaceDetailsKakao
+                  isCard={false}
+                  place={selectedSearchPlace}
+                ></PlaceDetailsKakao>
               </>
             ) : (
               <>
                 {/* 장소 검색 결과 리스트 - 추후 데이터 변경 필요  */}
-                <SearchBar width="170px" />
-                <S.PlaceContainer>
-                  {bestPlaces.map((place) => (
-                    <S.PlaceItem
-                      key={place.id}
+                <SearchBar width="170px" onSearch={handleSearchPlaces} />
+                <S.ItemListContainer>
+                  {searchPlaces.map((place) => (
+                    <S.ItemContainer
+                      key={place.kakao_place_id}
                       onClick={() => {
                         handleSelectSearchPlace(place);
                       }}
                     >
                       <S.SearchPlaceContentsContainer>
-                        <S.PlaceTitle>{place.name}</S.PlaceTitle>
-                        <S.PlaceLocation>장소 위치</S.PlaceLocation>
+                        <S.ItemTitle>{place.name}</S.ItemTitle>
+                        <S.PlaceLocation>{place.location}</S.PlaceLocation>
                       </S.SearchPlaceContentsContainer>
-                    </S.PlaceItem>
+                    </S.ItemContainer>
                   ))}
-                </S.PlaceContainer>
+                </S.ItemListContainer>
               </>
             )}
-          </S.PlaceSection>
+          </S.Section>
         ) : (
           // 탐색창이 닫힌 경우
-          <S.PlaceSection>
+          <S.Section>
             {hasSelectedPlace ? (
               <>
                 <PlaceDetailsKakao
                   isCard={false}
                   isInSelectedPlaceDetail={true}
+                  place={placeDetail}
                 />
 
                 <PlaceDetailsUser
@@ -154,6 +281,7 @@ export default function ProfilePanel() {
                   mapType={mapType}
                   handleClickLike={handleClickLike}
                   isLiked={isLiked}
+                  place={placeDetail}
                 />
               </>
             ) : (
@@ -161,48 +289,54 @@ export default function ProfilePanel() {
                 {mapType === "public" ? (
                   ""
                 ) : mapType === "loco" ? (
-                  <S.PlaceListTypeContainer>
-                    <S.PlaceListTypeImg
+                  <S.ItemListTypeContainer>
+                    <S.ItemListTypeImg
                       src={SmallCheckIcon}
                       alt="작은체크아이콘"
                     />
-                    <S.PlaceListTypeTitle>인증 장소</S.PlaceListTypeTitle>
-                  </S.PlaceListTypeContainer>
+                    <S.ItemListTypeTitle>인증 장소</S.ItemListTypeTitle>
+                  </S.ItemListTypeContainer>
                 ) : (
-                  <S.PlaceListTypeContainer>
-                    <S.PlaceListTypeImg
+                  <S.ItemListTypeContainer>
+                    <S.ItemListTypeImg
                       src={FilledMarkIcon}
                       alt="담아요아이콘"
                     />
-                    <S.PlaceListTypeTitle>담은 장소</S.PlaceListTypeTitle>
-                  </S.PlaceListTypeContainer>
+                    <S.ItemListTypeTitle>담은 장소</S.ItemListTypeTitle>
+                  </S.ItemListTypeContainer>
                 )}
                 {/* 장소 리스트 - 추후 데이터 변경 필요  */}
-                <S.PlaceContainer>
-                  {bestPlaces.map((place) => (
-                    <S.PlaceItem
+                <S.ItemListContainer>
+                  {places.map((place) => (
+                    <S.ItemContainer
                       key={place.id}
                       onClick={() => {
                         handleSelectPlace(place);
                       }}
                     >
-                      <S.PlaceImgWrapper></S.PlaceImgWrapper>
-                      <S.PlaceContentsContainer>
-                        <S.PlaceTitle>{place.name}</S.PlaceTitle>
-                        <S.PlaceType>{place.type}</S.PlaceType>
+                      <S.ItemImgWrapper $hasImg={place.imageUrl ? true : false}>
+                        {place.imageUrl ? (
+                          <img src={place.imageUrl} width={75} height={55} />
+                        ) : (
+                          <></>
+                        )}
+                      </S.ItemImgWrapper>
+                      <S.ItemContentsContainer>
+                        <S.ItemTitle>{place.name}</S.ItemTitle>
+                        <S.ItemType>{place.type}</S.ItemType>
                         <S.LikedContainer>
                           <img src={LikedIcon} alt="담아요아이콘" />
                           <S.LikedNum>{place.liked}</S.LikedNum>
                         </S.LikedContainer>
-                      </S.PlaceContentsContainer>
-                    </S.PlaceItem>
+                      </S.ItemContentsContainer>
+                    </S.ItemContainer>
                   ))}
-                </S.PlaceContainer>
+                </S.ItemListContainer>
               </>
             )}
-          </S.PlaceSection>
+          </S.Section>
         )}
-      </S.PlacePanel>
+      </S.Panel>
       {/* <div>{mapType} 장소패널</div> */}
     </>
   );

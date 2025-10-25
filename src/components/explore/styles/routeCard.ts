@@ -1,6 +1,7 @@
+import { Link } from "react-router";
 import styled from "styled-components";
 
-export const Card = styled.div`
+export const Card = styled(Link)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -23,7 +24,8 @@ export const ImgWrapper = styled.div<{ $hasImg: boolean }>`
   position: relative;
   height: 110px;
   border-radius: 8px;
-  border: 2px solid var(--color-sub200);
+  border: ${(props) =>
+    props.$hasImg ? "none" : "2px solid var(--color-sub200)"};
   margin-bottom: 20px;
 `;
 

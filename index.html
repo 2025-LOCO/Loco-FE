@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -8,6 +8,12 @@
   </head>
   <body>
     <div id="root"></div>
+    <!-- 카카오 map sdk 로드 -->
+    <script
+      type="text/javascript"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=%VITE_KAKAO_MAP_API_KEY%&libraries=services"
+    ></script>
+    <!-- React app 진입 -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

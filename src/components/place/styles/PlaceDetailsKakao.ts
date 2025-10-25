@@ -6,6 +6,7 @@ export const PlaceDetailKakao = styled.div<{ $isCard: boolean }>`
   display: flex;
   justify-content: center;
   background-color: white;
+  margin-top: ${(props) => (props.$isCard ? "0" : "auto")};
 `;
 
 export const Content = styled.div<{
@@ -38,14 +39,16 @@ export const PlaceType = styled.div`
   font-weight: 700;
 `;
 
-export const ImgWrapper = styled.div<{ $isCard: boolean }>`
+export const ImgWrapper = styled.div<{ $isCard: boolean; $hasImg: boolean }>`
   width: 114px;
   height: 84px;
 
   margin: 3px 0;
   margin-top: ${(props) => (props.$isCard ? "3px" : "10px")};
   border-radius: 8px;
-  border: 2px solid var(--color-sub300);
+  overflow: hidden;
+  border: ${(props) =>
+    props.$hasImg ? "none" : "2px solid var(--color-sub300)"};
   background-color: white;
 `;
 
@@ -77,4 +80,5 @@ export const DetailDescription = styled.div`
   font-size: 9px;
   font-weight: 300;
   overflow-wrap: anywhere;
+  color: black;
 `;

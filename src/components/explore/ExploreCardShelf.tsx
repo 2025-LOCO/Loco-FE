@@ -36,7 +36,7 @@ export default function ExploreCardShelf<T extends { id: Key }>({
               <div key={visibleItem.id}>{exploreCard(visibleItem, i)}</div>
             ))
           ) : (
-            <Empty>표시할 항목이 없습니다.</Empty>
+            <div>표시할 항목이 없습니다.</div>
           )}
         </S.CardContainer>
         <PagenationDots active={page} onChange={setPage} />

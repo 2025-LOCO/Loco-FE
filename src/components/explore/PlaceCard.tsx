@@ -4,11 +4,27 @@ import LikedIcon from "@/assets/images/explore_liked.svg";
 
 export default function PlaceCard({ data }: { data: Place }) {
   return (
-    <S.Common.Card>
+    <S.Common.Card to="/public-map/place">
       <S.Place.CardContentContainer>
         <S.Place.ImgWrapper $hasImg={data.imageUrl ? true : false}>
-          <S.Place.LocationBadge>{data.location}</S.Place.LocationBadge>
-          {data.imageUrl && <img src={data.imageUrl} alt="장소이미지" />}
+          <S.Place.LocationBadge>{data.short_location}</S.Place.LocationBadge>
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              overflow: "hidden",
+              borderRadius: "8px",
+            }}
+          >
+            {data.imageUrl && (
+              <img
+                src={data.imageUrl}
+                alt="장소이미지"
+                width={170}
+                height={110}
+              />
+            )}
+          </div>
         </S.Place.ImgWrapper>
 
         <S.Common.Title>{data.name}</S.Common.Title>

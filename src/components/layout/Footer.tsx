@@ -1,4 +1,4 @@
-import * as S from "./styles/footer";
+import * as S from "./styles/Footer";
 import LogoIcon from "@/assets/images/logo_footer.svg";
 import XLogo from "@/assets/images/footer_logo_x.svg";
 import InstaLogo from "@/assets/images/footer_logo_instagram.svg";

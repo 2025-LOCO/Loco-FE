@@ -1,4 +1,5 @@
 export interface LocoRoute {
+  user_id?: number;
   id: number;
   name: string;
   imageUrl: string | null;
@@ -6,8 +7,11 @@ export interface LocoRoute {
   intro: string;
   liked: number;
   tags: HashTag[];
-  places: Place[];
+  places: RoutePlace[];
   transportations: Transportation[];
+  count_real?: number;
+  count_soso?: number;
+  count_bad?: number;
 }
 
 interface HashTag {
@@ -16,13 +20,18 @@ interface HashTag {
 }
 
 // 순서는 day, order로 정렬된 상태로 백엔드에서 받아야 함
-interface Place {
+export interface RoutePlace {
   id: number;
   name: string;
+  category: string;
+  day: number;
+  order: number;
 }
 
 // 순서는 day,order로 중복없이 정렬된 상태로 백엔드에서 받아야 함
-interface Transportation {
+export interface Transportation {
   id: number;
   name: string;
+  day: number;
+  order: number;
 }

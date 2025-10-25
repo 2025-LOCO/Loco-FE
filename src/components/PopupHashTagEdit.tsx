@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import * as S from "./PopupPlaceEdit.style"; // 스타일 재사용
 import CustomDropdown from "./CustomDropdown";
 
 export default function PopupHashTagEdit() {
   const [open, setOpen] = useState(true);
-  const [openIndex, setOpenIndex] = useState<number | null>(null); // 
+  const [openIndex, setOpenIndex] = useState<number | null>(null); //
 
   if (!open) return null;
 

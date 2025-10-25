@@ -7,9 +7,21 @@ export const MypageContainer = styled.div`
 `;
 export const MypageTitle = styled.div`
   color: var(--color-navy);
-  font-size: 30px;
+  font-size: 20px;
   font-weight: 700;
 `;
+
+export const TownCertifyButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  color: var(--color-navy);
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  cursor: pointer;
+`;
+
 export const ProfileInfoSection = styled.div`
   display: grid;
   grid-template-columns: 445fr 700fr; /* 왼쪽:오른쪽 = 445:700 */
@@ -27,8 +39,8 @@ export const ProfileContainer = styled.div`
 `;
 
 export const ProfileImgWrapper = styled.div`
-  width: 114px;
-  height: 114px;
+  width: 130px;
+  height: 130px;
   position: relative;
   margin-left: 44px;
   margin-right: 20px;
@@ -77,7 +89,7 @@ export const FigureItemName = styled.div`
 export const FigureItemNum = styled.div`
   color: var(--color-navy);
   text-align: center;
-  font-size: 50px;
+  font-size: 35px;
   font-weight: 700;
 `;
 export const NickName = styled.div`
@@ -90,5 +102,39 @@ export const Introduce = styled.div`
   color: white;
   font-size: 13px;
   font-style: normal;
+  font-weight: 600;
+`;
+
+export const StatCardSection = styled.div`
+  margin-top: 50px;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+`;
+
+export const StatCardContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  border-radius: 7.618px;
+  background: rgba(224, 226, 235, 0.5);
+  width: 260px;
+  padding: 35px;
+`;
+
+export const StatContainer = styled.div`
+  display: flex;
+  color: #4e567e;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  justify-content: center;
+`;
+
+export const StatValue = styled.div`
+  font-size: 30px;
+  font-weight: 700;
+`;
+export const StatLabel = styled.span`
+  font-size: 14px;
   font-weight: 600;
 `;

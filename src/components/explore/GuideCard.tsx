@@ -6,7 +6,7 @@ import ProfileAvatarImg from "@/assets/images/avatar2.svg";
 
 export default function GuideCard({ data }: { data: Guide }) {
   return (
-    <S.Common.Card>
+    <S.Common.Card to="/public-map/profile">
       <S.Guide.CardContentContainer>
         <S.Guide.ImgWrapper $hasImg={data.imageUrl ? true : false}>
           <S.Guide.LocationBadge>{data.location}</S.Guide.LocationBadge>
