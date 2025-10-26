@@ -20,6 +20,8 @@ export interface GetMyInformationResponse {
   my_answers_count: number;
   my_places_liked_count: number;
   my_routes_liked_count: number;
+  places_loco_count: number[];
+  routes_loco_count: number[];
 }
 
 export async function getMyInformation(): Promise<GetMyInformationResponse> {

@@ -49,3 +49,10 @@ export const Label = styled.div`
   font-size: 9px;
   font-weight: 400;
 `;
+
+export const EmptyMessage = styled.div`
+  text-align: center;
+  color: var(--color-sub300);
+  font-size: 13px;
+  margin-top: 10px;
+`;

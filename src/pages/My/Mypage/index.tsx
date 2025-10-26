@@ -123,7 +123,7 @@ export default function MyPage() {
                 {user.my_places_liked_count}
               </S.StatValue>
             </S.StatContainer>
-            <VoteBar counts={[30, 40, 10]} />
+            <VoteBar counts={user.places_loco_count} />
           </S.StatCardContainer>
           <S.StatCardContainer>
             <S.MypageTitle>내 루트</S.MypageTitle>
@@ -145,7 +145,7 @@ export default function MyPage() {
                 {user.my_routes_liked_count}
               </S.StatValue>
             </S.StatContainer>
-            <VoteBar counts={[96, 52, 10]} />
+            <VoteBar counts={user.routes_loco_count} />
           </S.StatCardContainer>
           <S.StatCardContainer>
             <S.MypageTitle>내 답변</S.MypageTitle>
@@ -158,7 +158,7 @@ export default function MyPage() {
                 <S.StatLabel>담아요 </S.StatLabel>1,251
               </S.StatValue> */}
             </S.StatContainer>
-            <VoteBar counts={[12, 5, 1]} />
+            <VoteBar counts={[0, 0, 0]} />
           </S.StatCardContainer>
         </S.StatCardSection>
       </S.MypageContainer>
