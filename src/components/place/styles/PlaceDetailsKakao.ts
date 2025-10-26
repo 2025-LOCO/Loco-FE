@@ -79,6 +79,8 @@ export const DetailTitle = styled.div`
 export const DetailDescription = styled.div`
   font-size: 9px;
   font-weight: 300;
-  overflow-wrap: anywhere;
+  overflow-wrap: anywhere; /* 아무 데서나 줄바꿈 가능 */
+  white-space: normal; /* 줄바꿈 허용 */
+  width: 100%;
   color: black;
 `;
