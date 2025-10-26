@@ -19,7 +19,7 @@ export default function LoginPage() {
 
       localStorage.setItem("accessToken", data.access_token);
       setLoggedIn(true);
-      alert("로그인 성공!");
+      alert("로그인 되었습니다.");
       navigate("/");
     } catch (error) {
       alert("로그인 실패. 아이디나 비밀번호를 확인해주세요.");

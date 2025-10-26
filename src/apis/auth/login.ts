@@ -11,7 +11,23 @@ interface LoginResponse {
   token_type: string;
 }
 
-export async function loginUser(data: LoginRequest): Promise<LoginResponse> {
-  const res = await apiInstance.post<LoginResponse>("api/v1/auth/login", data);
+export async function loginUser({
+  username,
+  password,
+}: LoginRequest): Promise<LoginResponse> {
+  const formData = new URLSearchParams();
+  formData.append("username", username);
+  formData.append("password", password);
+
+  const res = await apiInstance.post<LoginResponse>(
+    "/api/v1/auth/login",
+    formData,
+    {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    }
+  );
+
   return res.data;
 }
