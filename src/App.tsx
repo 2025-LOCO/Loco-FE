@@ -23,8 +23,16 @@ import RoutePanel from "./components/map/RoutePanel";
 
 import TalkEdit from "@/pages/LocoTalk/TalkEdit";
 import TalkLayout from "@/pages/LocoTalk/TalkLayout";
+import { useAuthStore } from "./stores/authStore";
+import { useEffect } from "react";
 
 function App() {
+  const setLoggedIn = useAuthStore((s) => s.setLoggedIn);
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    setLoggedIn(!!token); // 토큰 존재 여부로 로그인 상태 초기화
+  }, [setLoggedIn]);
+
   return (
     <>
       <Routes>
