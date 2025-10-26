@@ -39,8 +39,8 @@ function App() {
           </Route>
 
           <Route path="loco-talk" element={<TalkLayout />}>
-            <Route index element={<LocoTalkPage />} />    {/* 문답 리스트 */}
-            <Route path="edit" element={<TalkEdit />} />  {/* 질문 작성 */}
+            <Route index element={<LocoTalkPage />} /> {/* 문답 리스트 */}
+            <Route path="edit" element={<TalkEdit />} /> {/* 질문 작성 */}
             <Route path=":id" element={<DetailPage />} /> {/* 상세 보기 */}
           </Route>
 
