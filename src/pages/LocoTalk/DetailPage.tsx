@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import * as S from "./styles/detail";
 
 // 이모지 이미지 import
@@ -10,7 +10,9 @@ import Pleading from "@/assets/images/Pleading.svg";
 export default function DetailPage() {
   const { id } = useParams();
   const [sortOrder, setSortOrder] = useState("최신순");
-  const [selectedHearts, setSelectedHearts] = useState<Record<number, string>>({});
+  const [selectedHearts, setSelectedHearts] = useState<Record<number, string>>(
+    {}
+  );
   const [newComment, setNewComment] = useState(""); // ✅ 댓글 입력 상태
   const [replies, setReplies] = useState([
     {
@@ -80,7 +82,10 @@ export default function DetailPage() {
         <S.CommentSection>
           <S.CommentHeader>
             <S.CommentCount>댓글 {replies.length}</S.CommentCount>
-            <S.SortSelect value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
+            <S.SortSelect
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value)}
+            >
               <option>최신순</option>
               <option>인기순</option>
             </S.SortSelect>
