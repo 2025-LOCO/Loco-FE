@@ -78,12 +78,21 @@ export default function RoutePanel() {
                       <S.ItemHeaderContentsContainer>
                         <Common.ItemImgWrapper>
                           {route.imageUrl && (
-                            <img
-                              src={route.imageUrl}
-                              alt="루트이미지"
-                              width={180}
-                              height={110}
-                            />
+                            <div
+                              style={{
+                                width: "100%",
+                                height: "100%",
+                                overflow: "hidden",
+                                borderRadius: "8px",
+                              }}
+                            >
+                              <img
+                                src={route.imageUrl}
+                                alt="루트이미지"
+                                width={75}
+                                height={55}
+                              />
+                            </div>
                           )}
                         </Common.ItemImgWrapper>
 
