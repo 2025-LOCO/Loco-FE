@@ -17,7 +17,7 @@ function convertToPlace(data: ExplorePlaceItem[]): Place[] {
     name: item.name,
     imageUrl: item.image_url ?? "",
     liked: item.liked,
-    location: item.short_location,
+    short_location: item.short_location,
     intro: item.intro,
     type: "공원",
   }));
