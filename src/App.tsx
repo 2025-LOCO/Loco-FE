@@ -21,6 +21,8 @@ import ProfilePanel from "./components/map/ProfilePanel";
 import PlacePanel from "./components/map/PlacePanel";
 import RoutePanel from "./components/map/RoutePanel";
 
+import TalkEdit from "@/pages/LocoTalk/TalkEdit";
+import TalkLayout from "@/pages/LocoTalk/TalkLayout";
 
 function App() {
   return (
@@ -35,8 +37,13 @@ function App() {
             <Route path="loco-place" element={<LocoPlacePage />} />
             <Route path="loco-route" element={<LocoRoutePage />} />
           </Route>
-          <Route path="loco-talk" element={<LocoTalkPage />} />
-          <Route path="loco-talk-detail" element={<DetailPage />} />
+
+          <Route path="loco-talk" element={<TalkLayout />}>
+            <Route index element={<LocoTalkPage />} />    {/* 문답 리스트 */}
+            <Route path="edit" element={<TalkEdit />} />  {/* 질문 작성 */}
+            <Route path=":id" element={<DetailPage />} /> {/* 상세 보기 */}
+          </Route>
+
           <Route path="map-maker" element={<MapMakerPage />} />
           <Route path="guide" element={<GuidePage />} />
           <Route path="login" element={<LoginPage />} />
