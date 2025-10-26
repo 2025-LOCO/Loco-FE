@@ -78,3 +78,35 @@ export const Posts = [
     ],
   },
 ];
+
+export const NoCommentPosts = [
+  {
+    user_id: 10,
+    user_name: "여행가",
+    post_id: 4,
+    created_at: "2025.08.14",
+    title: "여수 야경 볼만한 포인트 있을까요?",
+    content: "낮에는 오동도 갈 거고, 밤에는 야경 명소를 알고 싶어요!",
+    views: 44,
+  },
+  {
+    user_id: 11,
+    user_name: "트래블러",
+    post_id: 5,
+    created_at: "2025.08.15",
+    title: "대전 성심당 말고 숨은 맛집 있을까요?",
+    content:
+      "성심당은 이미 유명해서 제외하고, 현지인만 아는 빵집이나 카페 추천 부탁드려요 ☕️",
+    views: 23,
+  },
+  {
+    user_id: 12,
+    user_name: "자연러버",
+    post_id: 6,
+    created_at: "2025.08.16",
+    title: "속초에서 캠핑하기 좋은 곳 있을까요?",
+    content:
+      "텐트 치기 편하고, 주변에 화장실 있는 자연 캠핑장 추천해주시면 감사하겠습니다!",
+    views: 51,
+  },
+];
