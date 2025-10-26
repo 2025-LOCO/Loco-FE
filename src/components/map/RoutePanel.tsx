@@ -90,7 +90,7 @@ export default function RoutePanel() {
                                 src={route.imageUrl}
                                 alt="루트이미지"
                                 width={75}
-                                height={55}
+                                height={56}
                               />
                             </div>
                           )}
