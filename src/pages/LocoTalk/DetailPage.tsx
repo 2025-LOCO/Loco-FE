@@ -2,6 +2,15 @@ import { useState } from "react";
 import { useParams } from "react-router";
 import * as S from "./styles/detail";
 
+type ReplyType = {
+  id: number;
+  user_id: number;
+  user_name: string;
+  content: string;
+  react: string;
+  created_at: string;
+};
+
 // 이모지 이미지 import
 import HeartFace from "@/assets/images/Heart-face.svg";
 import SlightlyHappy from "@/assets/images/Slightly-happy.svg";
@@ -16,20 +25,22 @@ export default function DetailPage() {
   const [selectedHearts, setSelectedHearts] = useState<Record<number, string>>(
     {}
   );
-  const [newComment, setNewComment] = useState(""); // ✅ 댓글 입력 상태
+  const [newComment, setNewComment] = useState("");
 
   // ✅ 게시글 데이터 가져오기
   const allPosts = [...Posts, ...NoCommentPosts];
   const post = allPosts.find((p) => p.post_id === Number(id));
 
-  // ✅ 기본 댓글 (또는 post.comments가 있으면 그걸 사용)
-  const [replies, setReplies] = useState(
+  // ✅ 댓글 초기값
+  const [replies, setReplies] = useState<ReplyType[]>(
     post?.comments
-      ? post.comments.map((c, idx) => ({
-          id: idx + 1,
-          author: c.user_name,
+      ? post.comments.map((c, index) => ({
+          id: index + 1,
+          user_id: c.user_id,
+          user_name: c.user_name,
           content: c.content,
-          createdAt: c.created_at,
+          react: c.react,
+          created_at: c.created_at,
         }))
       : []
   );
@@ -42,16 +53,18 @@ export default function DetailPage() {
     }));
   };
 
-  // ✅ 댓글 작성 핸들러
+  // ✅ 댓글 작성 핸들러 (Posts 구조에 맞게)
   const handleAddComment = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newComment.trim()) return;
 
     const newReply = {
       id: replies.length + 1,
-      author: "익명 로코",
+      user_id: Math.floor(Math.random() * 10000),
+      user_name: "익명 로코",
       content: newComment.trim(),
-      createdAt: new Date().toISOString().split("T")[0],
+      react: "real",
+      created_at: new Date().toISOString().split("T")[0],
     };
 
     setReplies((prev) => [newReply, ...prev]);
@@ -106,10 +119,12 @@ export default function DetailPage() {
             {replies.map((reply) => (
               <S.CommentItem key={reply.id}>
                 <S.CommentContent>
+                  {/* 작성자 */}
                   <S.CommentAuthorRow>
-                    <S.CommentAuthor>{reply.author}</S.CommentAuthor>
+                    <S.CommentAuthor>{reply.user_name}</S.CommentAuthor>
                   </S.CommentAuthorRow>
 
+                  {/* 본문 + 이모지 */}
                   <S.CommentBodyRow>
                     <S.CommentText>{reply.content}</S.CommentText>
 
@@ -126,8 +141,9 @@ export default function DetailPage() {
                     </S.HeartContainer>
                   </S.CommentBodyRow>
 
+                  {/* 날짜 */}
                   <S.CommentAuthorRow>
-                    <S.CommentDate>{reply.createdAt}</S.CommentDate>
+                    <S.CommentDate>{reply.created_at}</S.CommentDate>
                   </S.CommentAuthorRow>
                 </S.CommentContent>
               </S.CommentItem>
