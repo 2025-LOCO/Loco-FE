@@ -4,6 +4,7 @@ export const BodySection = styled.div`
   margin: auto;
   max-width: 500px;
   max-height: 570px;
+  padding-bottom: 50px;
 `;
 
 export const Title = styled.div`

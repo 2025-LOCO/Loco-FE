@@ -36,9 +36,9 @@ export const registerInfos: RegisterInfosType[] = [
     hasDupCheckButton: false,
   },
   {
-    name: "user_birth",
-    label: "생년월일",
-    placeholder: "8자리 입력",
+    name: "user_intro",
+    label: "한줄소개",
+    placeholder: "한줄소개를 입력하세요.",
     type: "text",
     hasDupCheckButton: false,
   },
