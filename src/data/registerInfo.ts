@@ -25,14 +25,14 @@ export const registerInfos: RegisterInfosType[] = [
     name: "user_password",
     label: "비밀번호",
     placeholder: "비밀번호",
-    type: "text",
+    type: "password",
     hasDupCheckButton: false,
   },
   {
     name: "user_password_check",
     label: "비밀번호 확인",
     placeholder: "비밀번호 확인",
-    type: "text",
+    type: "password",
     hasDupCheckButton: false,
   },
   {
