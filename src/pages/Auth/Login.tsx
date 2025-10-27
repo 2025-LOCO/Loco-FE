@@ -9,8 +9,8 @@ export default function LoginPage() {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const setLoggedIn = useAuthStore((s) => s.setLoggedIn);
-  const navigate = useNavigate();
   const setUser = useAuthStore((s) => s.setUser);
+  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,6 +21,7 @@ export default function LoginPage() {
       setUser(data.user_id, data.nickname);
       localStorage.setItem("accessToken", data.access_token);
       setLoggedIn(true);
+
       alert("로그인 되었습니다.");
       navigate("/");
     } catch (error) {
@@ -28,11 +29,13 @@ export default function LoginPage() {
       console.error(error);
     }
   };
+
   return (
-    <>
-      <S.Common.BodySection>
-        <S.Common.Title>로그인</S.Common.Title>
-        <Divider />
+    <S.Common.BodySection>
+      <S.Common.Title>로그인</S.Common.Title>
+      <Divider />
+
+      <form onSubmit={handleLogin}>
         <S.LoginContainer>
           <S.LoginFieldInput
             placeholder="아이디"
@@ -46,11 +49,12 @@ export default function LoginPage() {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <S.LoginButton onClick={handleLogin}>로그인</S.LoginButton>
+          <S.LoginButton type="submit">로그인</S.LoginButton>
           <S.SignUpButton to="/sign-up">회원가입</S.SignUpButton>
         </S.LoginContainer>
-        <div style={{ paddingTop: "100px" }} />
-      </S.Common.BodySection>
-    </>
+      </form>
+
+      <div style={{ paddingTop: "100px" }} />
+    </S.Common.BodySection>
   );
 }
