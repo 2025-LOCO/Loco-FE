@@ -77,3 +77,18 @@ export const MyItem = styled(NavLink)`
     color: #272343;
   }
 `;
+
+export const LogoutButton = styled.button`
+  background: none;
+  border: none;
+  color: var(--color-navy);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: color 0.2s;
+
+  &:hover {
+    color: var(--color-blue);
+  }
+`;

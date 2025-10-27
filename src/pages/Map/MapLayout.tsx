@@ -20,6 +20,7 @@ import { useAuthStore } from "@/stores/authStore";
 import type { Place } from "@/types/place";
 import { getRouteDetail, type RouteDetail } from "@/apis/routes/getRouteDetail";
 import { toKoreanValue } from "@/lib/mapping";
+import { getMyPlaces } from "@/apis/favorite/getMyPlaceList";
 
 export default function MapLayout({ mapType }: { mapType: MapType }) {
   // constants
@@ -65,13 +66,24 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
   const { user_id: paramUserId } = useParams(); // URL 파라미터로 받은 userId
 
   useEffect(() => {
-    async function fetchFavoritePlaces() {
+    async function fetchPlaces() {
       try {
         const targetId = mapType === "public" ? Number(paramUserId) : myId;
-
         if (!targetId) return;
-        const data = await getFavoritePlaces(targetId);
-        console.log("찜한 장소 API 응답:", data);
+
+        let data;
+
+        // mapType에 따라 다른 API 호출
+        if (mapType === "travel") {
+          data = await getFavoritePlaces(targetId);
+        } else if (mapType === "loco" || mapType === "public") {
+          data = await getMyPlaces(targetId);
+        } else {
+          console.warn("알 수 없는 mapType:", mapType);
+          return;
+        }
+
+        console.log("API 응답:", data);
         console.log(
           "내 아이디:",
           myId,
@@ -82,8 +94,7 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
         );
 
         const mappedPlaces = data.map((item) => {
-          const p = item.place;
-          console.log("찜한 장소 데이터:", p);
+          const p = item.place ?? item; // favorite 구조일 수도 있고 myPlace일 수도 있어서
           return {
             id: p.place_id,
             name: p.name,
@@ -110,12 +121,12 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
 
         setPlaces(mappedPlaces);
       } catch (err) {
-        console.error("찜한 장소 불러오기 실패:", err);
+        console.error("장소 불러오기 실패:", err);
       }
     }
 
-    fetchFavoritePlaces();
-  }, [myId, paramUserId, mapType]); // 의존성에 추가
+    fetchPlaces();
+  }, [myId, paramUserId, mapType]);
 
   useEffect(() => {
     if (!selectedRouteId) return;

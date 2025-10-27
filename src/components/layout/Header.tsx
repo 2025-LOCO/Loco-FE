@@ -4,7 +4,15 @@ import MyIcon from "@/assets/images/profile_small.svg";
 import { useAuthStore } from "@/stores/authStore";
 
 export default function Header() {
-  const isLoggedIn = useAuthStore((s) => s.isLoggedIn);
+  const { isLoggedIn, setLogout } = useAuthStore();
+
+  const handleLogout = () => {
+    if (confirm("로그아웃 하시겠습니까?")) {
+      setLogout();
+      alert("로그아웃 되었습니다.");
+      window.location.href = "/"; // 홈으로 리다이렉트
+    }
+  };
   return (
     <>
       <S.HeaderContainer>
@@ -29,6 +37,9 @@ export default function Header() {
             <S.MyItem to="my-page">마이</S.MyItem>
             <S.MyItem to="my-loco-map">로코지도</S.MyItem>
             <S.MyItem to="my-travel-map">여행지도</S.MyItem>
+            <S.LogoutButton type="button" onClick={handleLogout}>
+              로그아웃
+            </S.LogoutButton>
           </S.MyContainer>
         ) : (
           <S.LoginContainer>

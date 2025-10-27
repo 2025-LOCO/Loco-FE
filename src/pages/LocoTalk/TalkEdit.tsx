@@ -1,28 +1,31 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import * as S from "./styles/TalkEdit";
+import { postQuestion } from "@/apis/qna/questions";
 
 export default function TalkEdit() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const postData = {
-      id: Date.now(),
-      title,
-      content,
-      author: "작성자",
-      createdAt: new Date().toISOString().split("T")[0],
-      views: 0,
-      replies: [],
-    };
+    if (!title.trim() || !content.trim()) {
+      alert("제목과 내용을 모두 입력해주세요.");
+      return;
+    }
 
-    console.log("✅ postData:", postData);
-    alert("게시글이 등록되었습니다!");
-    navigate("/loco-talk");
+    try {
+      // 실제 서버로 질문 등록
+      await postQuestion({ title, content });
+
+      alert("질문이 성공적으로 등록되었습니다!");
+      navigate("/loco-talk");
+    } catch (error) {
+      alert("질문 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
+      console.error("질문 등록 실패:", error);
+    }
   };
 
   return (
