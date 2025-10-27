@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiInstance = axios.create({
-  baseURL: "http://54.180.81.204:8000/",
+  baseURL: "https://api.loco-map.store/",
   headers: {
     "Content-Type": "application/json",
   },
