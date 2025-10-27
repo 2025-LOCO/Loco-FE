@@ -330,11 +330,9 @@ export default function RoutePanel() {
                             TRANSPORTATION_ICON_SRC[
                               by.name as TransportationName
                             ];
+                          if (!Icon) return null;
                           return (
-                            <S.TransportSvg
-                              key={by.id}
-                              $isSelected={route.id === selectedRoute?.id}
-                            >
+                            <S.TransportSvg key={by.id}>
                               <Icon />
                             </S.TransportSvg>
                           );

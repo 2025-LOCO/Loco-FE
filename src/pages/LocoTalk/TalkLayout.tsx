@@ -17,7 +17,7 @@ export default function TalkLayout() {
       <S.TalkSection>
         <div>
           <LocationDropDown />
-          <S.LocationIntroduce>지역에 대한 한 줄 설명</S.LocationIntroduce>
+          <S.LocationIntroduce>궁금한 지역을 선택해보세요</S.LocationIntroduce>
         </div>
         <S.Title>로코 문답</S.Title>
 
@@ -28,7 +28,7 @@ export default function TalkLayout() {
               {tab.name}
             </S.TabItem>
           ))}
-        
+
           <S.VerticalBar />
           <S.AskButton to="/loco-talk/edit">+ 질문하기</S.AskButton>
         </S.TabContainer>

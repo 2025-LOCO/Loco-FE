@@ -4,7 +4,7 @@ import LikedIcon from "@/assets/images/explore_liked.svg";
 
 export default function PlaceCard({ data }: { data: Place }) {
   return (
-    <S.Common.Card to={`/u/${data.member_id}/map`}>
+    <S.Common.Card to={`/u/${data.member_id}/map/place`}>
       <S.Place.CardContentContainer>
         <S.Place.ImgWrapper $hasImg={data.imageUrl ? true : false}>
           <S.Place.LocationBadge>{data.short_location}</S.Place.LocationBadge>

@@ -19,6 +19,7 @@ import { getFavoritePlaces } from "@/apis/favorite/getFavoritePlaces";
 import { useAuthStore } from "@/stores/authStore";
 import type { Place } from "@/types/place";
 import { getRouteDetail, type RouteDetail } from "@/apis/routes/getRouteDetail";
+import { toKoreanValue } from "@/lib/mapping";
 
 export default function MapLayout({ mapType }: { mapType: MapType }) {
   // constants
@@ -249,10 +250,14 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
                     <S.RouteTagContainer>
                       <S.RouteTagContainer>
                         {Object.entries(selectedRoute.tags).map(
-                          ([key, value]) =>
-                            value && (
-                              <S.RouteTag key={key}># {value}</S.RouteTag>
-                            )
+                          ([key, value]) => {
+                            if (!value) return null;
+
+                            const koreanValue = toKoreanValue(key, value);
+                            return (
+                              <S.RouteTag key={key}># {koreanValue}</S.RouteTag>
+                            );
+                          }
                         )}
                       </S.RouteTagContainer>
                     </S.RouteTagContainer>

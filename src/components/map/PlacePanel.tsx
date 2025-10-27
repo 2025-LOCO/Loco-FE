@@ -14,6 +14,7 @@ import type { KakaoPlace, Place } from "@/types/place";
 import PlaceDetailsKakao from "../place/PlaceDetailsKakao";
 import PlaceDetailsUser from "../place/PlaceDetailsUser";
 import { placeDetails } from "@/data/dummy/placeDetail";
+import { getPlaceDetail } from "@/apis/favorite/getPlaceDetail";
 
 export default function PlacePanel() {
   const context = useOutletContext<MapOutletContext>();
@@ -107,8 +108,37 @@ export default function PlacePanel() {
   // effects
   useEffect(() => {
     if (selectedPlaceId !== null) {
-      const place = placeDetails.find((place) => place.id === selectedPlaceId);
-      setPlaceDetail(place ?? null);
+      (async () => {
+        try {
+          const data = await getPlaceDetail(selectedPlaceId);
+          // 백엔드 응답 필드를 프론트 구조에 맞게 변환
+          const mappedPlace = {
+            id: data.place_id,
+            name: data.name,
+            imageUrl: data.image_url,
+            liked: data.liked,
+            intro: data.intro,
+            type: data.type,
+            latitude: data.latitude,
+            longitude: data.longitude,
+            atmosphere: data.atmosphere,
+            recommend: data.pros,
+            notice: data.cons,
+            count_real: data.count_real,
+            count_soso: data.count_normal,
+            count_bad: data.count_bad,
+            kakao_place_id: data.kakao_place_id,
+            link: data.link,
+            phone: data.phone,
+            member_id: data.user_id,
+            short_location: data.city_name,
+            location: data.address_name,
+          };
+          setPlaceDetail(mappedPlace);
+        } catch (err) {
+          console.error("장소 상세 불러오기 실패:", err);
+        }
+      })();
     }
   }, [selectedPlaceId]);
 
