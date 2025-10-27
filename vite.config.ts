@@ -18,5 +18,4 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
     },
   },
-  base: "./", // 배포 경로 깨짐 방지
 });
