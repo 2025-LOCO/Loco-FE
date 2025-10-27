@@ -1,5 +1,5 @@
 export interface LocoRoute {
-  user_id?: number;
+  userId?: number;
   id: number;
   name: string;
   imageUrl: string | null;

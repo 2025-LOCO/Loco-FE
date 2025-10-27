@@ -6,8 +6,28 @@ import GradeIcon from "@/assets/images/grade.svg";
 import PointIcon from "@/assets/images/point.svg";
 import ArrowRightIcon from "@/assets/images/arrow_right.svg";
 import VoteBar from "@/components/VoteBar";
+import {
+  getMyInformation,
+  type GetMyInformationResponse,
+} from "@/apis/auth/getMyInformation";
+import { useEffect, useState } from "react";
 
 export default function MyPage() {
+  const [user, setUser] = useState<GetMyInformationResponse | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getMyInformation();
+        setUser(data);
+      } catch (err) {
+        console.error("[MyPage] 유저 정보 불러오기 실패:", err);
+      }
+    };
+    fetchData();
+  }, []);
+
+  if (!user) return <div style={{ padding: "40px" }}>로딩 중...</div>;
   return (
     <>
       <S.MypageContainer>
@@ -27,7 +47,7 @@ export default function MyPage() {
                 <span
                   style={{ color: "var(--color-sub300)", paddingLeft: "6px" }}
                 >
-                  수원 왕갈비
+                  {user.nickname || "수원왕갈비"}
                 </span>
               </S.NickName>
               <S.Introduce>
@@ -35,7 +55,7 @@ export default function MyPage() {
                 <span
                   style={{ color: "var(--color-sub300)", paddingLeft: "6px" }}
                 >
-                  한 줄 소개 또는 상태메시지
+                  {user.intro || "한 줄 소개 또는 상태메시지"}
                 </span>
               </S.Introduce>
             </div>
@@ -55,7 +75,7 @@ export default function MyPage() {
                 >
                   상위
                 </span>
-                12
+                {user.ranking || 98}
                 <span
                   style={{
                     color: "var(--color-navy)",
@@ -70,12 +90,15 @@ export default function MyPage() {
             <S.FigureItem>
               <img src={GradeIcon} alt="등급아이콘" />
               <S.FigureItemName>등급</S.FigureItemName>
-              <S.FigureItemNum>B</S.FigureItemNum>
+              <S.FigureItemNum>{user.grade || "B"}</S.FigureItemNum>
             </S.FigureItem>
             <S.FigureItem>
               <img src={PointIcon} alt="포인트아이콘" />
               <S.FigureItemName>포인트</S.FigureItemName>
-              <S.FigureItemNum>100,000</S.FigureItemNum>
+              <S.FigureItemNum>
+                {" "}
+                {user.points.toLocaleString() || "0"}
+              </S.FigureItemNum>
             </S.FigureItem>
           </S.FigureListContainer>
         </S.ProfileInfoSection>
@@ -84,7 +107,8 @@ export default function MyPage() {
             <S.MypageTitle>내 장소</S.MypageTitle>
             <S.StatContainer>
               <S.StatValue>
-                150<S.StatLabel>개</S.StatLabel>
+                {user.my_places_count}
+                <S.StatLabel>개</S.StatLabel>
               </S.StatValue>
               <div
                 style={{
@@ -95,16 +119,18 @@ export default function MyPage() {
                 }}
               ></div>
               <S.StatValue>
-                <S.StatLabel>담아요 </S.StatLabel>1,251
+                <S.StatLabel>담아요 </S.StatLabel>
+                {user.my_places_liked_count}
               </S.StatValue>
             </S.StatContainer>
-            <VoteBar counts={[30, 40, 10]} />
+            <VoteBar counts={user.places_loco_count} />
           </S.StatCardContainer>
           <S.StatCardContainer>
             <S.MypageTitle>내 루트</S.MypageTitle>
             <S.StatContainer>
               <S.StatValue>
-                150<S.StatLabel>개</S.StatLabel>
+                {user.my_routes_count}
+                <S.StatLabel>개</S.StatLabel>
               </S.StatValue>
               <div
                 style={{
@@ -115,30 +141,24 @@ export default function MyPage() {
                 }}
               ></div>
               <S.StatValue>
-                <S.StatLabel>담아요 </S.StatLabel>1,251
+                <S.StatLabel>담아요 </S.StatLabel>
+                {user.my_routes_liked_count}
               </S.StatValue>
             </S.StatContainer>
-            <VoteBar counts={[96, 52, 10]} />
+            <VoteBar counts={user.routes_loco_count} />
           </S.StatCardContainer>
           <S.StatCardContainer>
             <S.MypageTitle>내 답변</S.MypageTitle>
             <S.StatContainer>
               <S.StatValue>
-                150<S.StatLabel>개</S.StatLabel>
+                {user.my_answers_count} <S.StatLabel>개</S.StatLabel>
               </S.StatValue>
-              <div
-                style={{
-                  height: "30px",
-                  width: "2px",
-                  backgroundColor: "var(--color-sub300)",
-                  margin: "0 15px",
-                }}
-              ></div>
-              <S.StatValue>
+
+              {/* <S.StatValue>
                 <S.StatLabel>담아요 </S.StatLabel>1,251
-              </S.StatValue>
+              </S.StatValue> */}
             </S.StatContainer>
-            <VoteBar counts={[12, 5, 1]} />
+            <VoteBar counts={[0, 0, 0]} />
           </S.StatCardContainer>
         </S.StatCardSection>
       </S.MypageContainer>

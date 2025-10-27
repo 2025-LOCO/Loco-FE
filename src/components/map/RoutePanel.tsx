@@ -1,5 +1,5 @@
 import type { MapOutletContext } from "@/types/map";
-import { useOutletContext } from "react-router";
+import { useOutletContext, useParams } from "react-router";
 import * as Common from "./styles/common"; // 추후 S.Common으로 변경 (index 사용)
 import * as S from "./styles/RoutePanel"; // 추후 S.Route로 변경 (index 사용)
 import RouteIcon from "@/assets/images/recommend_route.svg";
@@ -8,25 +8,52 @@ import LikedIcon from "@/assets/images/explore_liked.svg";
 import AddIcon from "@/assets/images/add.svg";
 import {
   TRANSPORTATION_ICON_SRC,
+  transportationNameMap,
   type TransportationName,
 } from "@/constants/transportationIcons";
-import { useState } from "react";
-import type { LocoRoute } from "@/types/locoRoute";
+import { useEffect, useState } from "react";
+import {
+  getRouteListByUser,
+  type RouteItem,
+} from "@/apis/routes/getRouteListByUser";
+import { toKoreanValue } from "@/lib/mapping";
 
 export default function RoutePanel() {
   const context = useOutletContext<MapOutletContext>();
-  const { mapType, routes, setSelectedRouteId, selectedRouteId } = context;
-
+  const {
+    mapType,
+    routes: contextRoutes,
+    setSelectedRouteId,
+    selectedRouteId,
+  } = context;
+  const { user_id } = useParams<{ user_id: string }>();
   // state
   // const [selectedRoute, setSelectedRoute] = useState<LocoRoute | null>(null);
+  const [routes, setRoutes] = useState<RouteItem[]>([]);
   const [isMyRouteOpened, setIsMyRouteOpened] = useState<boolean>(true);
   const [isLikedRouteOpened, setIsLikedRouteOpened] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (mapType === "public" && user_id) {
+      (async () => {
+        try {
+          const data = await getRouteListByUser(Number(user_id));
+          setRoutes(data);
+        } catch (err) {
+          console.error("공개 루트 불러오기 실패:", err);
+        }
+      })();
+    } else {
+      // 내 지도에서는 context 데이터 사용
+      setRoutes([]);
+    }
+  }, [mapType, user_id, contextRoutes]);
 
   // computed
   const selectedRoute = routes.find((r) => r.id === selectedRouteId) ?? null;
 
   // handler
-  function handleSelectRoute(route: LocoRoute) {
+  function handleSelectRoute(route: RouteItem) {
     if (selectedRouteId === route.id) {
       setSelectedRouteId(null);
     } else {
@@ -71,9 +98,10 @@ export default function RoutePanel() {
                       }}
                     >
                       <S.TagContainer>
-                        {route.tags.map((tag) => (
-                          <div key={tag.id}># {tag.name}</div>
-                        ))}
+                        {Object.entries(route.tags).map(([key, value], idx) => {
+                          const koreanTag = toKoreanValue(key, value);
+                          return <div key={idx}># {koreanTag}</div>;
+                        })}
                       </S.TagContainer>
                       <S.ItemHeaderContentsContainer>
                         <Common.ItemImgWrapper>
@@ -118,10 +146,22 @@ export default function RoutePanel() {
                         </S.PlaceContainer>
                         <S.TransportContainer>
                           {route.transportations.map((by) => {
+                            // 한글/영문 섞인 데이터 매핑 처리
+                            const mappedName =
+                              transportationNameMap[by.name] ?? by.name;
+
                             const Icon =
                               TRANSPORTATION_ICON_SRC[
-                                by.name as TransportationName
+                                mappedName as TransportationName
                               ];
+                            if (!Icon) {
+                              // console.warn(
+                              //   "Unknown transportation name:",
+                              //   by.name
+                              // );
+                              return null;
+                            }
+
                             return (
                               <S.TransportSvg
                                 key={by.id}
@@ -163,9 +203,10 @@ export default function RoutePanel() {
                       }}
                     >
                       <S.TagContainer>
-                        {route.tags.map((tag) => (
-                          <div key={tag.id}># {tag.name}</div>
-                        ))}
+                        {Object.entries(route.tags).map(([key, value], idx) => {
+                          const koreanTag = toKoreanValue(key, value);
+                          return <div key={idx}># {koreanTag}</div>;
+                        })}
                       </S.TagContainer>
                       <S.ItemHeaderContentsContainer>
                         <Common.ItemImgWrapper></Common.ItemImgWrapper>
@@ -231,9 +272,10 @@ export default function RoutePanel() {
                     }}
                   >
                     <S.TagContainer>
-                      {route.tags.map((tag) => (
-                        <div key={tag.id}># {tag.name}</div>
-                      ))}
+                      {Object.entries(route.tags).map(([key, value], idx) => {
+                        const koreanTag = toKoreanValue(key, value);
+                        return <div key={idx}># {koreanTag}</div>;
+                      })}
                     </S.TagContainer>
                     <S.ItemHeaderContentsContainer>
                       <Common.ItemImgWrapper></Common.ItemImgWrapper>
