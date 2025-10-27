@@ -17,6 +17,7 @@ import ReactDOM from "react-dom/client";
 import PlaceCard from "@/components/place/PlaceCard";
 import { placeDetails } from "@/data/dummy/placeDetail";
 import type { RouteDetail } from "@/apis/routes/getRouteDetail";
+import { getPlaceDetail } from "@/apis/favorite/getPlaceDetail";
 
 export interface MapCanvasRef {
   kakaoMap: any;
@@ -89,20 +90,46 @@ const MapCanvas = forwardRef<MapCanvasRef, MapCanvasProps>(
     // selectedPlaceId가 바뀔 때 placeDetail 세팅
     useEffect(() => {
       if (selectedPlaceId !== null) {
-        const place = placeDetails.find(
-          (place) => place.id === selectedPlaceId
-        );
-        setPlaceDetail(place ?? null);
+        (async () => {
+          try {
+            const data = await getPlaceDetail(selectedPlaceId);
+            const mapped = {
+              id: data.place_id,
+              name: data.name,
+              imageUrl: data.image_url,
+              liked: data.liked,
+              intro: data.intro,
+              type: data.type,
+              latitude: data.latitude,
+              longitude: data.longitude,
+              atmosphere: data.atmosphere,
+              recommend: data.pros,
+              notice: data.cons,
+              count_real: data.count_real,
+              count_soso: data.count_normal,
+              count_bad: data.count_bad,
+              kakao_place_id: data.kakao_place_id,
+              link: data.link,
+              phone: data.phone,
+              member_id: data.user_id,
+              short_location: data.city_name,
+              location: data.address_name,
+            };
+            setPlaceDetail(mapped);
 
-        // 선택된 장소를 중심으로 이동
-        if (place && kakaoMapRef.current) {
-          const offsetLat = 0.007; // 이동할 위도 차이
-          const center = new window.kakao.maps.LatLng(
-            (place?.latitude ?? 0) + offsetLat,
-            place?.longitude ?? 0
-          );
-          kakaoMapRef.current.panTo(center);
-        }
+            // 지도 중심 이동
+            if (data.latitude && data.longitude && kakaoMapRef.current) {
+              const offsetLat = 0.007;
+              const center = new window.kakao.maps.LatLng(
+                data.latitude + offsetLat,
+                data.longitude
+              );
+              kakaoMapRef.current.panTo(center);
+            }
+          } catch (err) {
+            console.error("장소 상세 불러오기 실패:", err);
+          }
+        })();
       }
     }, [selectedPlaceId]);
 
