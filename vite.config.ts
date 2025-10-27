@@ -3,20 +3,15 @@ import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
 import path from "path";
 
-// styled-components Babel 설정 추가
+// https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    react({
-      babel: {
-        plugins: ["styled-components"],
-      },
-    }),
-    svgr(),
-  ],
+  plugins: [react(), svgr()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
     },
   },
-  base: "./", // 배포 경로 깨짐 방지
+
+  // Vercel 배포 시 CSS, 이미지, 폰트 경로 깨짐 방지
+  base: "./",
 });
