@@ -11,4 +11,7 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
     },
   },
+
+  // Vercel 배포 시 CSS, 이미지, 폰트 경로 깨짐 방지
+  base: "./",
 });
