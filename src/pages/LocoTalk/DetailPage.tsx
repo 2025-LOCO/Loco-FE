@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import * as S from "./styles/detail";
 
 import HeartFace from "@/assets/images/Heart-face.svg";
@@ -8,9 +8,13 @@ import Pleading from "@/assets/images/Pleading.svg";
 
 import { getQnADetail } from "@/apis/qna/getQnaDetail";
 import { postQnaAnswer } from "@/apis/qna/postQnaAnswer";
+import { useAuthStore } from "@/stores/authStore";
+import { deleteQnaPost } from "@/apis/qna/deleteQnaPost";
+import { deleteQnaAnswer } from "@/apis/qna/deleteQnaAnswer";
 
 export default function DetailPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [post, setPost] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [replies, setReplies] = useState<any[]>([]);
@@ -19,6 +23,8 @@ export default function DetailPage() {
     {}
   );
   const [newComment, setNewComment] = useState("");
+
+  const myUserId = useAuthStore((s) => s.userId); // 현재 로그인한 사용자 정보
 
   // 게시글 불러오기
   useEffect(() => {
@@ -31,15 +37,16 @@ export default function DetailPage() {
         setPost(data);
 
         setReplies(
-          data.answers?.map((ans: any, index: number) => ({
+          data.answers?.map((ans: any) => ({
             id: ans.answer_id,
             author: ans.user_nickname || "익명",
+            authorId: ans.user_id, // 댓글 작성자 id 저장
             content: ans.content,
             createdAt: ans.created_at?.split("T")[0],
           })) ?? []
         );
       } catch (err) {
-        console.error("❌ QnA 상세 불러오기 실패:", err);
+        console.error("QnA 상세 불러오기 실패:", err);
       } finally {
         setLoading(false);
       }
@@ -47,6 +54,21 @@ export default function DetailPage() {
 
     fetchQnADetail();
   }, [id]);
+
+  // 게시글 삭제 핸들러
+  const handleDeletePost = async () => {
+    if (!id) return;
+    if (!window.confirm("정말 이 게시글을 삭제하시겠습니까?")) return;
+
+    try {
+      await deleteQnaPost(Number(id));
+      alert("게시글이 삭제되었습니다.");
+      navigate("/loco-talk"); // 삭제 후 목록으로 이동
+    } catch (error) {
+      console.error("게시글 삭제 실패:", error);
+      alert("게시글 삭제에 실패했습니다.");
+    }
+  };
 
   // 이모지 선택 핸들러
   const handleHeartClick = (commentId: number, emoji: string) => {
@@ -56,23 +78,22 @@ export default function DetailPage() {
     }));
   };
 
-  // 댓글 작성 핸들러 (서버 전송)
+  // 댓글 작성 핸들러
   const handleAddComment = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newComment.trim() || !id) return;
 
     try {
-      // 서버에 댓글 등록
       const newAnswer = await postQnaAnswer({
         question_id: Number(id),
         content: newComment.trim(),
         like: null,
       });
 
-      // 응답값을 로컬 상태에도 반영
       const formatted = {
         id: newAnswer.answer_id,
         author: newAnswer.user_nickname,
+        authorId: newAnswer.user_id, // 본인 댓글 저장
         content: newAnswer.content,
         createdAt: newAnswer.created_at.split("T")[0],
       };
@@ -85,6 +106,19 @@ export default function DetailPage() {
     }
   };
 
+  // 댓글 삭제 핸들러
+  const handleDelete = async (answerId: number) => {
+    if (!window.confirm("정말 댓글을 삭제하시겠습니까?")) return;
+
+    try {
+      await deleteQnaAnswer(answerId);
+      alert("댓글이 삭제되었습니다.");
+      setReplies((prev) => prev.filter((r) => r.id !== answerId));
+    } catch (error) {
+      console.error("댓글 삭제 실패:", error);
+    }
+  };
+
   if (loading) return <S.PostTitle>로딩 중...</S.PostTitle>;
   if (!post)
     return (
@@ -92,10 +126,19 @@ export default function DetailPage() {
         <S.PostTitle>게시글을 찾을 수 없습니다 😢</S.PostTitle>
       </S.PostDetailContainer>
     );
+  // console.log("게시글 작성자:", post.user_id, "로그인한 사용자:", myUserId);
 
   return (
     <S.PostDetailContainer>
-      <S.PostTitle>{post.title}</S.PostTitle>
+      <S.PostTitleRow>
+        <S.PostTitle>{post.title}</S.PostTitle>
+
+        {/* 내 게시글일 때만 삭제 버튼 표시 */}
+        {Number(post.user_id) === Number(myUserId) && (
+          <S.DeleteButton onClick={handleDeletePost}>삭제하기</S.DeleteButton>
+        )}
+      </S.PostTitleRow>
+
       <S.PostContent>
         {post.content.split("\n").map((line: string, index: number) => (
           <p key={index}>{line}</p>
@@ -132,6 +175,15 @@ export default function DetailPage() {
               <S.CommentContent>
                 <S.CommentAuthorRow>
                   <S.CommentAuthor>{reply.author}</S.CommentAuthor>
+
+                  {/* 본인 댓글일 때만 삭제 버튼 표시 */}
+                  {Number(reply.authorId) === Number(myUserId) && (
+                    <S.CommentDeleteButton
+                      onClick={() => handleDelete(reply.id)}
+                    >
+                      삭제하기
+                    </S.CommentDeleteButton>
+                  )}
                 </S.CommentAuthorRow>
 
                 <S.CommentBodyRow>

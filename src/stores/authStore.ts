@@ -10,15 +10,25 @@ interface AuthState {
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
+  // 앱 시작 시 localStorage 값 기반으로 초기화
   isLoggedIn: !!localStorage.getItem("accessToken"),
-  userId: null,
-  nickname: null,
-  setLoggedIn: (v) => set({ isLoggedIn: v }),
-  setUser: (id, nickname) => set({ userId: id, nickname }),
+  userId: Number(localStorage.getItem("userId")) || null,
+  nickname: localStorage.getItem("nickname") || null,
 
-  // 로그아웃 시 상태 초기화 + localStorage 정리
+  setLoggedIn: (v) => set({ isLoggedIn: v }),
+
+  // 로그인 시 userId, nickname을 localStorage에도 저장
+  setUser: (id, nickname) => {
+    localStorage.setItem("userId", String(id));
+    localStorage.setItem("nickname", nickname);
+    set({ userId: id, nickname });
+  },
+
+  // 로그아웃 시 localStorage 및 상태 초기화
   setLogout: () => {
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("nickname");
     set({
       isLoggedIn: false,
       userId: null,

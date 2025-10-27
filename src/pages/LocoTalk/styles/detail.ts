@@ -62,6 +62,12 @@ export const PostTitle = styled.h1`
   line-height: 1.4;
 `;
 
+export const PostTitleRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 export const PostContent = styled.div`
   color: #666;
   font-size: 15px;
@@ -153,7 +159,7 @@ export const CommentAuthorRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-right:10px;
+  margin-right: 10px;
   margin-left: 5px;
 `;
 
@@ -175,7 +181,7 @@ export const CommentBodyRow = styled.div`
   align-items: flex-start; /* 이모지를 항상 위쪽에 맞춤 */
   gap: 10px;
   margin-left: 5px;
-  margin-right:10px;
+  margin-right: 10px;
 `;
 
 export const CommentText = styled.div`
@@ -417,3 +423,44 @@ export const CommentSubmitButton = styled.button`
 //     transform: ${({ $isSelected }) => ($isSelected ? "scale(1.1)" : "none")};
 //   }
 // `;
+
+export const DeleteButton = styled.button`
+  background-color: #fe7f7f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #e04848; /* hover 시 어두운 레드 */
+  }
+
+  &:active {
+    background-color: #cc3a3a;
+  }
+`;
+
+// 댓글 삭제 버튼
+export const CommentDeleteButton = styled.button`
+  background-color: transparent;
+  border: 1px solid #081949ff;
+  color: #081949ff;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  margin-left: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #081949ff;
+    color: white;
+  }
+
+  &:active {
+    opacity: 0.8;
+  }
+`;
