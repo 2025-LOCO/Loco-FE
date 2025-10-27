@@ -4,7 +4,16 @@ import Subway from "@/assets/images/transport_subway.svg?react";
 import Car from "@/assets/images/transport_car.svg?react";
 import Bicycle from "@/assets/images/transport_bicycle.svg?react";
 import Train from "@/assets/images/transport_train.svg?react";
-
+export const transportationNameMap: Record<string, TransportationName> = {
+  walk: "걸어서",
+  도보: "걸어서",
+  bus: "버스",
+  subway: "지하철",
+  car: "자동차",
+  bicycle: "자전거",
+  bike: "자전거",
+  train: "기차",
+};
 export const TRANSPORTATION_NAMES = [
   "걸어서",
   "버스",

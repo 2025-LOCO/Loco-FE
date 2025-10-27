@@ -184,3 +184,10 @@ export const AddPlaceBtn = styled.button`
   font-size: 13px;
   font-weight: 700;
 `;
+
+export const EmptyMessage = styled.div`
+  text-align: center;
+  color: var(--color-sub300);
+  font-size: 13px;
+  margin-top: 10px;
+`;
