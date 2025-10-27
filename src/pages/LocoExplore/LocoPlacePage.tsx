@@ -13,6 +13,7 @@ import {
 
 function convertToPlace(data: ExplorePlaceItem[]): Place[] {
   return data.map((item) => ({
+    member_id: item.member_id,
     id: item.place_id,
     name: item.name,
     imageUrl: item.image_url ?? "",

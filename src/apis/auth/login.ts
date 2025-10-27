@@ -7,6 +7,8 @@ interface LoginRequest {
 }
 
 interface LoginResponse {
+  user_id: number;
+  nickname: string;
   access_token: string;
   token_type: string;
 }

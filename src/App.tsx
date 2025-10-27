@@ -24,14 +24,18 @@ import RoutePanel from "./components/map/RoutePanel";
 import TalkEdit from "@/pages/LocoTalk/TalkEdit";
 import TalkLayout from "@/pages/LocoTalk/TalkLayout";
 import { useAuthStore } from "./stores/authStore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
   const setLoggedIn = useAuthStore((s) => s.setLoggedIn);
+  const [authChecked, setAuthChecked] = useState(false);
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
-    setLoggedIn(!!token); // 토큰 존재 여부로 로그인 상태 초기화
+    setLoggedIn(!!token);
+    setAuthChecked(true);
   }, [setLoggedIn]);
+
+  if (!authChecked) return null;
 
   return (
     <>
@@ -77,7 +81,7 @@ function App() {
           </Route>
           {/* 2. 다른 사람들이 보는 map 페이지 (readOnly)*/}
           {/* <Route path="u/:nickname/map" element={<MapLayout mapType="public" />}> */}
-          <Route path="public-map" element={<MapLayout mapType="public" />}>
+          <Route path="u/:user_id/map" element={<MapLayout mapType="public" />}>
             <Route index element={<Navigate to="profile" replace />} />
             <Route path="profile" element={<ProfilePanel />} />
             <Route path="place" element={<PlacePanel />} />

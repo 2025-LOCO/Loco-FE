@@ -1,4 +1,3 @@
-import type { Guide } from "@/types/guide";
 import * as S from "./styles";
 import RankIcon from "@/assets/images/explore_rank.svg";
 import LikedIcon from "@/assets/images/explore_liked.svg";
@@ -6,8 +5,10 @@ import ProfileAvatarImg from "@/assets/images/avatar2.svg";
 import type { ExploreMemberItem } from "@/apis/explore/getExploreMembers";
 
 export default function GuideCard({ data }: { data: ExploreMemberItem }) {
+  // 닉네임 기반 동적 라우팅
+  const link = `/u/${data.id}/map/profile`;
   return (
-    <S.Common.Card to="/public-map/profile">
+    <S.Common.Card to={link}>
       <S.Guide.CardContentContainer>
         <S.Guide.ImgWrapper $hasImg={data.avatar_url ? true : false}>
           <S.Guide.LocationBadge>{data.city_name}</S.Guide.LocationBadge>

@@ -1,7 +1,14 @@
 import apiInstance from "@/apis/apiInstance";
 
 // 요청 타입
-export type GetExploreRouteListRequest = void;
+export interface GetExploreRouteListRequest {
+  tag_period?: number;
+  tag_env?: string;
+  tag_with?: string;
+  tag_move?: string;
+  tag_atmosphere?: string;
+  tag_place_count?: number;
+}
 
 // 태그 타입
 export interface ExploreRouteTag {
@@ -45,17 +52,21 @@ export interface ExploreRouteItem {
   countReal: number;
   countSoso: number;
   countBad: number;
+  created_at: string;
 }
 
 export type GetExploreRouteListResponse = ExploreRouteItem[];
 
 /**
- * [GET] /api/v1/route/explore
- * 탐색 탭에서 루트 목록 조회
+ * [GET] /api/v1/routes/search
+ * 탐색 탭에서 루트 목록 조회 (태그 검색 포함)
  */
-export async function getExploreRouteList(): Promise<GetExploreRouteListResponse> {
+export async function getExploreRouteList(
+  params?: GetExploreRouteListRequest
+): Promise<GetExploreRouteListResponse> {
   const res = await apiInstance.get<GetExploreRouteListResponse>(
-    "/api/v1/route/explore"
+    "/api/v1/routes/search",
+    { params } // 쿼리 파라미터 전달
   );
   return res.data;
 }

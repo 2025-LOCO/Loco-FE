@@ -1,5 +1,5 @@
 import type { MapType } from "@/types/map";
-import { Outlet, useLocation } from "react-router";
+import { Outlet, useLocation, useParams } from "react-router";
 
 import * as S from "./mapLayout.style";
 import ArrowLeftIcon from "@/assets/images/arrow_left.svg";
@@ -16,6 +16,9 @@ import RouteTimeline from "@/components/route/RouteTimeLine";
 import MapCanvas, { type MapCanvasRef } from "@/components/map/MapCanvas";
 import { bestPlaces } from "@/data/dummy/explorePlaces";
 import { bestRoutes } from "@/data/dummy/exploreRoutes";
+import { getFavoritePlaces } from "@/apis/favorite/getFavoritePlaces";
+import { useAuthStore } from "@/stores/authStore";
+import type { Place } from "@/types/place";
 
 export default function MapLayout({ mapType }: { mapType: MapType }) {
   // constants
@@ -30,6 +33,9 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
   const panel = location.pathname.split("/").pop();
   const showRightPanel = panel === "route";
 
+  const [places, setPlaces] = useState<Place[]>([]);
+  const myId = useAuthStore((s) => s.userId);
+
   // states
   const [isLPanelOpen, setIsLPanelOpen] = useState(true);
   const [isRPanelOpen, setIsRPanelOpen] = useState(true);
@@ -39,7 +45,6 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
   // api 사용 시 변경
   // const [places, setPlaces] = useState(bestPlaces);
   // const [routes, setRoutes] = useState(bestRoutes);
-  const places = bestPlaces;
   const routes = bestRoutes;
   const [selectedRouteId, setSelectedRouteId] = useState<number | null>(null);
   const [selectedPlaceId, setSelectedPlaceId] = useState<number | null>(null);
@@ -52,6 +57,62 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
     setSelectedPlaceId(null);
     setSelectedRouteId(null);
   }, [panel]);
+
+  // favorite 장소 불러오기
+  const { user_id: paramUserId } = useParams(); // URL 파라미터로 받은 userId
+
+  useEffect(() => {
+    async function fetchFavoritePlaces() {
+      try {
+        const targetId = mapType === "public" ? Number(paramUserId) : myId;
+
+        if (!targetId) return;
+        const data = await getFavoritePlaces(targetId);
+        console.log("찜한 장소 API 응답:", data);
+        console.log(
+          "내 아이디:",
+          myId,
+          "파람 아이디:",
+          paramUserId,
+          "맵타입:",
+          mapType
+        );
+
+        const mappedPlaces = data.map((item) => {
+          const p = item.place;
+          console.log("찜한 장소 데이터:", p);
+          return {
+            id: p.place_id,
+            name: p.name,
+            imageUrl: p.image_url || null,
+            liked: p.liked,
+            intro: p.intro,
+            type: p.type,
+            latitude: p.latitude,
+            longitude: p.longitude,
+            atmosphere: p.atmosphere,
+            recommend: p.pros,
+            notice: p.cons,
+            count_real: p.count_real,
+            count_soso: p.count_normal,
+            count_bad: p.count_bad,
+            kakao_place_id: Number(p.kakao_place_id),
+            link: p.link,
+            phone: p.phone,
+            member_id: p.user_id,
+            short_location: p.city_name,
+            location: p.address_name,
+          } as Place;
+        });
+
+        setPlaces(mappedPlaces);
+      } catch (err) {
+        console.error("찜한 장소 불러오기 실패:", err);
+      }
+    }
+
+    fetchFavoritePlaces();
+  }, [myId, paramUserId, mapType]); // 의존성에 추가
 
   // 현재 루트 데이터
   const selectedRoute = routes.find((r) => r.id === selectedRouteId);

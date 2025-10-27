@@ -10,6 +10,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const setLoggedIn = useAuthStore((s) => s.setLoggedIn);
   const navigate = useNavigate();
+  const setUser = useAuthStore((s) => s.setUser);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,6 +18,7 @@ export default function LoginPage() {
     try {
       const data = await loginUser({ username: id, password });
 
+      setUser(data.user_id, data.nickname);
       localStorage.setItem("accessToken", data.access_token);
       setLoggedIn(true);
       alert("로그인 되었습니다.");
