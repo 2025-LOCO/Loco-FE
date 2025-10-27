@@ -99,7 +99,7 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
             count_real: p.count_real,
             count_soso: p.count_normal,
             count_bad: p.count_bad,
-            kakao_place_id: Number(p.kakao_place_id),
+            kakao_place_id: p.kakao_place_id,
             link: p.link,
             phone: p.phone,
             member_id: p.user_id,
