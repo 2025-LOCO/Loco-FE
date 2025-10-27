@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import * as S from "./styles/detail";
 
-// 이모지 이미지 import
 import HeartFace from "@/assets/images/Heart-face.svg";
 import SlightlyHappy from "@/assets/images/Slightly-happy.svg";
 import Pleading from "@/assets/images/Pleading.svg";
+
 import { getQnADetail } from "@/apis/qna/getQnaDetail";
+import { postQnaAnswer } from "@/apis/qna/postQnaAnswer";
 
 export default function DetailPage() {
   const { id } = useParams();
@@ -19,7 +20,7 @@ export default function DetailPage() {
   );
   const [newComment, setNewComment] = useState("");
 
-  // ✅ 게시글 불러오기
+  // 게시글 불러오기
   useEffect(() => {
     async function fetchQnADetail() {
       try {
@@ -27,13 +28,12 @@ export default function DetailPage() {
         setLoading(true);
 
         const data = await getQnADetail(Number(id));
-
         setPost(data);
-        // answers 배열이 있다면 댓글 리스트로 설정
+
         setReplies(
           data.answers?.map((ans: any, index: number) => ({
-            id: index + 1,
-            author: ans.user_name || "익명",
+            id: ans.answer_id,
+            author: ans.user_nickname || "익명",
             content: ans.content,
             createdAt: ans.created_at?.split("T")[0],
           })) ?? []
@@ -56,35 +56,45 @@ export default function DetailPage() {
     }));
   };
 
-  // 댓글 작성 핸들러 (임시 클라이언트만 추가)
-  const handleAddComment = (e: React.FormEvent) => {
+  // 댓글 작성 핸들러 (서버 전송)
+  const handleAddComment = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newComment.trim()) return;
+    if (!newComment.trim() || !id) return;
 
-    const newReply = {
-      id: replies.length + 1,
-      author: "익명 로코",
-      content: newComment.trim(),
-      createdAt: new Date().toISOString().split("T")[0],
-    };
+    try {
+      // 서버에 댓글 등록
+      const newAnswer = await postQnaAnswer({
+        question_id: Number(id),
+        content: newComment.trim(),
+        like: null,
+      });
 
-    setReplies((prev) => [newReply, ...prev]);
-    setNewComment("");
+      // 응답값을 로컬 상태에도 반영
+      const formatted = {
+        id: newAnswer.answer_id,
+        author: newAnswer.user_nickname,
+        content: newAnswer.content,
+        createdAt: newAnswer.created_at.split("T")[0],
+      };
+
+      setReplies((prev) => [formatted, ...prev]);
+      setNewComment("");
+    } catch (error) {
+      console.error("댓글 등록 실패:", error);
+      alert("댓글 등록에 실패했습니다.");
+    }
   };
 
   if (loading) return <S.PostTitle>로딩 중...</S.PostTitle>;
-
-  if (!post) {
+  if (!post)
     return (
       <S.PostDetailContainer>
         <S.PostTitle>게시글을 찾을 수 없습니다 😢</S.PostTitle>
       </S.PostDetailContainer>
     );
-  }
 
   return (
     <S.PostDetailContainer>
-      {/* 제목 및 본문 */}
       <S.PostTitle>{post.title}</S.PostTitle>
       <S.PostContent>
         {post.content.split("\n").map((line: string, index: number) => (
