@@ -21,6 +21,8 @@ function convertToPlace(data: ExplorePlaceItem[]): Place[] {
     short_location: item.short_location,
     intro: item.intro,
     type: "공원",
+    latitude: 0,
+    longitude: 0,
   }));
 }
 

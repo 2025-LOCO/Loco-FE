@@ -5,7 +5,6 @@ import * as S from "./mapLayout.style";
 import ArrowLeftIcon from "@/assets/images/arrow_left.svg";
 import ArrowRightIcon from "@/assets/images/arrow_right.svg";
 import ArrowDownIcon from "@/assets/images/arrow_down.svg";
-import LikedIcon from "@/assets/images/explore_liked.svg";
 import DeleteIcon from "@/assets/images/delete.svg";
 import EditIcon from "@/assets/images/edit.svg";
 
@@ -14,7 +13,6 @@ import { useEffect, useRef, useState } from "react";
 import VoteBar from "@/components/VoteBar";
 import RouteTimeline from "@/components/route/RouteTimeLine";
 import MapCanvas, { type MapCanvasRef } from "@/components/map/MapCanvas";
-import { bestPlaces } from "@/data/dummy/explorePlaces";
 import { getFavoritePlaces } from "@/apis/favorite/getFavoritePlaces";
 import { useAuthStore } from "@/stores/authStore";
 import type { Place } from "@/types/place";
@@ -307,7 +305,7 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
                     <S.ToggleContentContainer $isOpen={isRouteRecommendOpen}>
                       {/* 추후 장소 리스트 컴포넌트화 */}
                       <S.ItemListContainer>
-                        {bestPlaces.map((place) => (
+                        {/* {bestPlaces.map((place) => (
                           <S.ItemContainer key={place.id}>
                             <S.ItemImgWrapper></S.ItemImgWrapper>
                             <S.ItemContentsContainer>
@@ -319,7 +317,7 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
                               </S.LikedContainer>
                             </S.ItemContentsContainer>
                           </S.ItemContainer>
-                        ))}
+                        ))} */}
                       </S.ItemListContainer>
                     </S.ToggleContentContainer>
                   </S.ToggleSection>
