@@ -13,7 +13,6 @@ import SearchBar from "../SearchBar";
 import type { KakaoPlace, Place } from "@/types/place";
 import PlaceDetailsKakao from "../place/PlaceDetailsKakao";
 import PlaceDetailsUser from "../place/PlaceDetailsUser";
-import { placeDetails } from "@/data/dummy/placeDetail";
 import { getPlaceDetail } from "@/apis/favorite/getPlaceDetail";
 
 export default function PlacePanel() {

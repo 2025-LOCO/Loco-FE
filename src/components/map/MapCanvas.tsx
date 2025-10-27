@@ -15,7 +15,6 @@ import type { RoutePlace } from "@/types/locoRoute";
 import { useLocation } from "react-router";
 import ReactDOM from "react-dom/client";
 import PlaceCard from "@/components/place/PlaceCard";
-import { placeDetails } from "@/data/dummy/placeDetail";
 import type { RouteDetail } from "@/apis/routes/getRouteDetail";
 import { getPlaceDetail } from "@/apis/favorite/getPlaceDetail";
 

@@ -1,22 +1,5 @@
 import type { MapType } from "./map";
 
-export const PLACE_TYPES = [
-  "공원",
-  "전시/컨벤션",
-  "쇼핑거리",
-  "복합문화거리",
-  "카페",
-  "베이커리",
-  "플랜트샵",
-  "갤러리",
-  "루프탑 라운지",
-  "관광지",
-  "음식점",
-  "사찰",
-] as const;
-
-export type PlaceType = (typeof PLACE_TYPES)[number];
-
 export interface Place {
   id: number;
   name: string;
@@ -25,7 +8,7 @@ export interface Place {
   short_location?: string;
   location?: string;
   intro: string;
-  type: PlaceType;
+  type: string;
   latitude?: number;
   longitude?: number;
   atmosphere?: string;
@@ -34,7 +17,7 @@ export interface Place {
   count_real?: number;
   count_soso?: number;
   count_bad?: number;
-  kakao_place_id?: number;
+  kakao_place_id?: string;
   link?: string;
   phone?: string;
   member_id?: number;
@@ -45,7 +28,7 @@ export interface KakaoPlace {
   name: string;
   location: string;
   link: string;
-  type: PlaceType;
+  type: string;
   latitude: number;
   longitude: number;
   kakao_place_id: string;
