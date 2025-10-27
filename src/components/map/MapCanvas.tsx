@@ -11,11 +11,12 @@ import RoutePlaceMarker from "@/assets/images/marker_route_place.svg";
 import SelectedMarker from "@/assets/images/marker_selected.svg";
 import type { MapType } from "@/types/map";
 import type { Place } from "@/types/place";
-import type { LocoRoute, RoutePlace } from "@/types/locoRoute";
+import type { RoutePlace } from "@/types/locoRoute";
 import { useLocation } from "react-router";
 import ReactDOM from "react-dom/client";
 import PlaceCard from "@/components/place/PlaceCard";
 import { placeDetails } from "@/data/dummy/placeDetail";
+import type { RouteDetail } from "@/apis/routes/getRouteDetail";
 
 export interface MapCanvasRef {
   kakaoMap: any;
@@ -25,7 +26,7 @@ export interface MapCanvasRef {
 type MapCanvasProps = {
   mapType: MapType;
   places: Place[];
-  routes: LocoRoute[];
+  routes: RouteDetail[];
   selectedPlaceId: number | null;
   selectedRouteId: number | null;
   selectedRoutePlaces: RoutePlace[];

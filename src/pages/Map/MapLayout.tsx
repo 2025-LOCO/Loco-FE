@@ -15,10 +15,10 @@ import VoteBar from "@/components/VoteBar";
 import RouteTimeline from "@/components/route/RouteTimeLine";
 import MapCanvas, { type MapCanvasRef } from "@/components/map/MapCanvas";
 import { bestPlaces } from "@/data/dummy/explorePlaces";
-import { bestRoutes } from "@/data/dummy/exploreRoutes";
 import { getFavoritePlaces } from "@/apis/favorite/getFavoritePlaces";
 import { useAuthStore } from "@/stores/authStore";
 import type { Place } from "@/types/place";
+import { getRouteDetail, type RouteDetail } from "@/apis/routes/getRouteDetail";
 
 export default function MapLayout({ mapType }: { mapType: MapType }) {
   // constants
@@ -45,7 +45,9 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
   // api 사용 시 변경
   // const [places, setPlaces] = useState(bestPlaces);
   // const [routes, setRoutes] = useState(bestRoutes);
-  const routes = bestRoutes;
+  // const routes = bestRoutes;
+  const [routes, setRoutes] = useState<RouteDetail[]>([]);
+
   const [selectedRouteId, setSelectedRouteId] = useState<number | null>(null);
   const [selectedPlaceId, setSelectedPlaceId] = useState<number | null>(null);
 
@@ -113,6 +115,19 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
 
     fetchFavoritePlaces();
   }, [myId, paramUserId, mapType]); // 의존성에 추가
+
+  useEffect(() => {
+    if (!selectedRouteId) return;
+
+    (async () => {
+      try {
+        const data = await getRouteDetail(selectedRouteId);
+        setRoutes([data]); // 단일 상세 데이터를 배열 형태로 저장 (기존 구조 유지용)
+      } catch (err) {
+        console.error("루트 상세 조회 실패:", err);
+      }
+    })();
+  }, [selectedRouteId]);
 
   // 현재 루트 데이터
   const selectedRoute = routes.find((r) => r.id === selectedRouteId);
@@ -232,15 +247,20 @@ export default function MapLayout({ mapType }: { mapType: MapType }) {
                     <S.RouteTitle>{selectedRoute.name}</S.RouteTitle>
                     <S.RouteIntro>{selectedRoute.intro}</S.RouteIntro>
                     <S.RouteTagContainer>
-                      {selectedRoute.tags.map((tag) => (
-                        <S.RouteTag key={tag.id}># {tag.name}</S.RouteTag>
-                      ))}
+                      <S.RouteTagContainer>
+                        {Object.entries(selectedRoute.tags).map(
+                          ([key, value]) =>
+                            value && (
+                              <S.RouteTag key={key}># {value}</S.RouteTag>
+                            )
+                        )}
+                      </S.RouteTagContainer>
                     </S.RouteTagContainer>
                     <VoteBar
                       counts={[
-                        selectedRoute.count_real ?? 0,
-                        selectedRoute.count_soso ?? 0,
-                        selectedRoute.count_bad ?? 0,
+                        selectedRoute.countReal ?? 0,
+                        selectedRoute.countSoso ?? 0,
+                        selectedRoute.countBad ?? 0,
                       ]}
                     />
                   </S.RouteInfoSection>

@@ -135,14 +135,31 @@ export default function RoutePanel() {
                       <Common.ItemType>{route.intro}</Common.ItemType>
                       <S.PlaceTransportContainer>
                         <S.PlaceContainer>
-                          {route.places.map((place) => (
-                            <S.PlaceTag
-                              key={place.id}
-                              $isSelected={route.id === selectedRouteId}
-                            >
-                              {place.name}
-                            </S.PlaceTag>
-                          ))}
+                          {route.transportations.map((by) => {
+                            const mappedName =
+                              transportationNameMap[by.name] ?? by.name;
+                            const Icon =
+                              TRANSPORTATION_ICON_SRC[
+                                mappedName as TransportationName
+                              ];
+
+                            if (!Icon) {
+                              // console.warn(
+                              //   "Unknown transportation name:",
+                              //   by.name
+                              // );
+                              return null; // undefined 컴포넌트 렌더링 방지
+                            }
+
+                            return (
+                              <S.TransportSvg
+                                key={by.id}
+                                $isSelected={route.id === selectedRouteId}
+                              >
+                                <Icon />
+                              </S.TransportSvg>
+                            );
+                          })}
                         </S.PlaceContainer>
                         <S.TransportContainer>
                           {route.transportations.map((by) => {
