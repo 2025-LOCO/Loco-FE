@@ -250,10 +250,17 @@ export default function RoutePanel() {
                         </S.PlaceContainer>
                         <S.TransportContainer>
                           {route.transportations.map((by) => {
+                            const mappedName =
+                              transportationNameMap[by.name] ?? by.name;
                             const Icon =
                               TRANSPORTATION_ICON_SRC[
-                                by.name as TransportationName
+                                mappedName as TransportationName
                               ];
+
+                            if (!Icon) {
+                              return null; // undefined 렌더링 방지
+                            }
+
                             return (
                               <S.TransportSvg
                                 key={by.id}
