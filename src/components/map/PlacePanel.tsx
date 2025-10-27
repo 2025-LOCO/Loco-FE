@@ -14,6 +14,8 @@ import type { KakaoPlace, Place } from "@/types/place";
 import PlaceDetailsKakao from "../place/PlaceDetailsKakao";
 import PlaceDetailsUser from "../place/PlaceDetailsUser";
 import { getPlaceDetail } from "@/apis/favorite/getPlaceDetail";
+import PopupPlaceEdit from "../PopupPlaceEdit";
+import { addPlace } from "@/apis/places/postPlace";
 
 export default function PlacePanel() {
   const context = useOutletContext<MapOutletContext>();
@@ -35,6 +37,55 @@ export default function PlacePanel() {
   const [searchPlaces, setSearchPlaces] = useState<any[]>([]); // 카카오 검색 결과
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [placeDetail, setPlaceDetail] = useState<Place | null>(null);
+  const [showEditPopup, setShowEditPopup] = useState(false);
+
+  const handleOpenEditPopup = () => {
+    if (!selectedSearchPlace) {
+      alert("추가할 장소를 먼저 선택해주세요!");
+      return;
+    }
+    setShowEditPopup(true);
+  };
+
+  // 팝업 닫기
+  const handleCloseEditPopup = () => setShowEditPopup(false);
+
+  // 팝업 완료 클릭 시 → 장소 추가 API
+  const handleSubmitPlace = async (form: {
+    atmosphere: string;
+    pros: string;
+    cons: string;
+    image_url: string;
+  }) => {
+    if (!selectedSearchPlace) return;
+
+    const requestBody = {
+      name: selectedSearchPlace.name,
+      type: selectedSearchPlace.type || "기타",
+      is_frequent: false,
+      atmosphere: form.atmosphere,
+      pros: form.pros,
+      cons: form.cons,
+      image_url: form.image_url,
+      latitude: selectedSearchPlace.latitude,
+      longitude: selectedSearchPlace.longitude,
+      kakao_place_id: selectedSearchPlace.kakao_place_id || "",
+      intro: "",
+      phone: selectedSearchPlace.phone || "",
+      address_name: selectedSearchPlace.location || "",
+      short_location: selectedSearchPlace.location?.split(" ")[0] || "",
+      link: selectedSearchPlace.link || "",
+    };
+
+    try {
+      await addPlace(requestBody);
+      alert("장소가 성공적으로 등록되었습니다!");
+      setShowEditPopup(false);
+    } catch (err) {
+      console.error("장소 추가 실패:", err);
+      alert("등록 중 오류가 발생했습니다.");
+    }
+  };
 
   // refs
   const infowindowRef = useRef<any>(null);
@@ -263,10 +314,13 @@ export default function PlacePanel() {
                     </S.PlaceLocation>
                   </S.SearchPlaceContentsContainer>
                 </S.ItemContainer>
-                <S.AddPlaceBtn>
-                  <div>장소 추가하기</div>
-                  <img src={AddPlaceIcon} alt="장소추가아이콘" />
-                </S.AddPlaceBtn>
+                {/* 장소 추가 버튼 클릭 시 팝업 열기 */}
+                {hasSelectedSearchPlace && (
+                  <S.AddPlaceBtn onClick={handleOpenEditPopup}>
+                    <div>장소 추가하기</div>
+                    <img src={AddPlaceIcon} alt="장소추가아이콘" />
+                  </S.AddPlaceBtn>
+                )}
                 <PlaceDetailsKakao
                   isCard={false}
                   place={selectedSearchPlace}
@@ -365,8 +419,16 @@ export default function PlacePanel() {
             )}
           </S.Section>
         )}
+
+        {/* <div>{mapType} 장소패널</div> */}
+        {showEditPopup && (
+          <PopupPlaceEdit
+            place={selectedSearchPlace}
+            onClose={handleCloseEditPopup}
+            onSubmit={handleSubmitPlace}
+          />
+        )}
       </S.Panel>
-      {/* <div>{mapType} 장소패널</div> */}
     </>
   );
 }

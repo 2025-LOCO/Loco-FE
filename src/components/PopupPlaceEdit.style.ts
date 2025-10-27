@@ -11,7 +11,7 @@ export const Overlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 9999;
 `;
 
 /* 팝업 컨테이너 */
@@ -20,13 +20,13 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between; /* 카드 위, 버튼 아래 */
+  align-items: center;
   gap: 20px;
   padding: 30px;
   background: white;
   border-radius: 16px;
-  width: 95%;
-  max-width: 1200px;
-  min-height: 70vh; /* ✅ 팝업 크기 통일 */
+  width: 70%;
+  height: 80%;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 `;
 
@@ -51,9 +51,8 @@ export const CardWrapper = styled.div`
   display: flex;
   flex-direction: row;
   gap: 20px;
-  width: 100%;
-  flex-wrap: wrap;
-  justify-content: center;
+  width: 70%;
+  justify-content: space-between;
   align-items: stretch; /* ✅ 카드 높이 통일 */
 `;
 
@@ -72,12 +71,12 @@ export const Card = styled.div`
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 
   aspect-ratio: 3 / 4;
-  min-width: 280px;
+  min-width: 300px;
   min-height: 400px; /* 카드 높이 강제 */
 `;
 /* 해시태그 전용 카드 */
 export const TagCard = styled(Card)`
-  gap: 12px;  
+  gap: 12px;
 `;
 
 /* 섹션 제목 */
@@ -116,7 +115,7 @@ export const Label = styled.div`
 `;
 
 /* 인풋 */
-export const InputBox = styled.textarea`
+export const InputBox = styled.input`
   flex: 1;
   width: 100%;
   min-height: 63px;
@@ -145,8 +144,8 @@ export const InputBox = styled.textarea`
   &::-webkit-scrollbar {
     display: none;
   }
-  -ms-overflow-style: none;  /* IE, Edge */
-  scrollbar-width: none;     /* Firefox */
+  -ms-overflow-style: none; /* IE, Edge */
+  scrollbar-width: none; /* Firefox */
 `;
 
 /* 인풋 2*/
@@ -154,12 +153,12 @@ export const Input_1 = styled.input`
   width: 100%;
   min-height: 18px;
   max-width: 270px;
-  padding: 13px 40px 12px 15px; 
+  padding: 13px 40px 12px 15px;
   border-radius: 25px;
   border: none;
   background: #1d274b;
   color: white;
- 
+
   &::placeholder {
     color: white;
     font-size: 15px;
@@ -171,7 +170,7 @@ export const Input_1 = styled.input`
 export const Select = styled.select`
   flex: 1;
   min-width: 150px;
-  padding: 13px 40px 12px 13px; 
+  padding: 13px 40px 12px 13px;
 
   border-radius: 25px;
   border: none;
@@ -196,7 +195,6 @@ export const Select = styled.select`
   }
 `;
 
-
 /* 사진 업로드 박스 */
 export const PhotoUpload = styled.div`
   width: 100%;
@@ -212,7 +210,7 @@ export const PhotoUpload = styled.div`
   cursor: pointer;
 
   &:hover {
-    color:  #1d274b;
+    color: #1d274b;
   }
 `;
 
@@ -228,15 +226,15 @@ export const TextArea = styled.textarea`
   padding: 12px;
   font-size: 15px;
   resize: none;
-  outline: none; 
+  outline: none;
 
   &::placeholder {
     color: #8c8c8c;
   }
   // &:focus {
-  // background: #e9fafa; 
+  // background: #e9fafa;
 
-    /* 줄바꿈 처리 */
+  /* 줄바꿈 처리 */
   white-space: pre-wrap;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -248,10 +246,9 @@ export const TextArea = styled.textarea`
   &::-webkit-scrollbar {
     display: none;
   }
-  -ms-overflow-style: none;  /* IE, Edge */
-  scrollbar-width: none;     /* Firefox */
+  -ms-overflow-style: none; /* IE, Edge */
+  scrollbar-width: none; /* Firefox */
 `;
-
 
 /* 완료 버튼 */
 export const Button = styled.button`

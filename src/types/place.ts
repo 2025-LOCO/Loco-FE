@@ -9,8 +9,8 @@ export interface Place {
   location?: string;
   intro: string;
   type: string;
-  latitude?: number;
-  longitude?: number;
+  latitude: number;
+  longitude: number;
   atmosphere?: string;
   recommend?: string;
   notice?: string;
