@@ -124,7 +124,9 @@ export default function HomePage() {
     <>
       <S.MainSection>
         <S.MainContainer>
-          <img src={LogoIcon} alt="logo" />
+          <S.LogoContainer>
+            <img src={LogoIcon} alt="logo" />
+          </S.LogoContainer>
           <S.SubContainer>
             <S.Subtitle>
               <S.YelloDot>광</S.YelloDot>

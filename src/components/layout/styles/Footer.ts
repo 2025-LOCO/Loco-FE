@@ -30,4 +30,8 @@ export const SocialLogoContainer = styled.div`
     width: 24px;
     height: 24px;
   }
+
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;

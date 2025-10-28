@@ -4,9 +4,19 @@ import styled, { keyframes } from "styled-components";
 // ------------------- 메인 섹션 ---------------------
 export const MainSection = styled.div`
   background-color: var(--color-mint100);
-  padding: 130px 355px;
+  padding: 130px 0;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   display: flex;
   align-items: center;
+
+  @media (max-width: 1200px) {
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    padding: 130px 20px;
+  }
 `;
 
 export const MainContainer = styled.div`
@@ -20,6 +30,12 @@ export const SubContainer = styled.div`
   flex-direction: column;
 
   gap: 5px;
+`;
+
+export const LogoContainer = styled.div`
+  @media (max-width: 1200px) {
+    display: none;
+  }
 `;
 
 export const Subtitle = styled.div`
@@ -94,6 +110,14 @@ export const ExploreItem = styled.div`
   font-weight: 300;
   padding: 15px 80px;
   cursor: pointer;
+
+  @media (max-width: 900px) {
+    padding: 15px 40px;
+  }
+
+  @media (max-width: 600px) {
+    padding: 15px 10px;
+  }
 `;
 
 export const Divider = styled.span`
@@ -157,6 +181,15 @@ export const MapSelectSection = styled.div`
   justify-content: space-between;
   padding: 0 130px;
   min-height: 630px;
+
+  @media (max-width: 1200px) {
+    flex-direction: column;
+    gap: 50px;
+  }
+
+  @media (max-width: 600px) {
+    padding: 0 20px;
+  }
 `;
 
 // 지도: 절대배치
@@ -167,6 +200,10 @@ export const MapLayer = styled.div`
   display: flex;
   justify-content: center;
   padding-left: 80px;
+
+  @media (max-width: 1200px) {
+    display: none;
+  }
 `;
 
 export const DestContainer = styled.div`

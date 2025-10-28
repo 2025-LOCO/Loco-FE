@@ -49,6 +49,10 @@ export const LoginButton = styled(Link)`
   padding: 8px 24px;
   border-radius: 8px;
   cursor: pointer;
+
+  @media (max-width: 650px) {
+    padding: 8px 8px;
+  }
 `;
 
 export const SignUpButton = styled(Link)`
@@ -57,6 +61,10 @@ export const SignUpButton = styled(Link)`
   padding: 8px 24px;
   border-radius: 8px;
   cursor: pointer;
+
+  @media (max-width: 650px) {
+    padding: 8px 8px;
+  }
 `;
 
 export const MyContainer = styled.div`
